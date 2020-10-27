@@ -9,6 +9,7 @@ module.exports = {
             return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
         }
         
+        //else if chain (switch to switch please) to check if the sent message is a valid timer and set the timer accordingly
         if (args.length < 1) {
             message.channe.send('Please provide a timer length.');
             return;
@@ -30,6 +31,8 @@ module.exports = {
         } else if (args[1] == "hours"|| args[1] == "hour") {
             message.react('👍');
             setTimeout(function() {message.channel.send(`${message.author}, your ${args[0]} ${args[1]} timer has expired.`);}, args[0]*3600000);
+
+        // Check if the argument is help
         } else if (args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
