@@ -9,6 +9,7 @@ module.exports = {
             return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
         }
 
+        // Check if the argument is help
         if (args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
@@ -20,12 +21,13 @@ module.exports = {
             return;
           }
 
+        //maps the mentioned users in an array and sends an embed for each element of the array
         const avatarList = message.mentions.users.map(user => {
             const embed = new Discord.MessageEmbed()
                 .setTitle(`${user.username}\'s avatar:`)
                 .setImage(user.avatarURL({dynamic: true, format: 'png', size: 2048}));
-                return embed;
-            });
+            return embed;
+        });
         message.channel.send(avatarList);
 	},
 };

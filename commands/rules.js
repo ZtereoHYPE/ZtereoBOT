@@ -4,6 +4,7 @@ module.exports = {
   description: 'Prints the rules',
   args: true,
 	execute(message, args) {
+    // Check if the argument is help
     if (args[0] == 'help') {
       const embed = new Discord.MessageEmbed()
       .setColor('#00cc00')
@@ -14,6 +15,7 @@ module.exports = {
       message.channel.send(embed);
       return;
     }
+    //sends the rules list, only if the author is ZtereoHYPE THIS IS FLAWED AS A PERSON NICKNAMED ZTEREOHYPE COULD EXECUTE but nobody knows shh...
 		if (message.author.username === 'ZtereoHYPE') {
       const embed = new Discord.MessageEmbed()
         .setColor('#0099ff')
@@ -28,6 +30,8 @@ module.exports = {
         .setAuthor('ZtereoBOT', 'https://cdn.discordapp.com/avatars/713718980325539910/01c36f6ac37309befb7b442299f62a19.png?size=128')
         .setFooter('by ZtereoHYPE')
       message.channel.send(embed);
+
+    //if the author is not ZtereoHYPE then report that you don't have permissions
     } else {message.channel.send('Sorry, you don\'t have permissions to use that command.')}
 	},
 };

@@ -4,6 +4,7 @@ module.exports = {
 	description: 'Ping!',
 	args: true,
 	execute(message, args) {
+		// Check if the argument is help
 		if (args[0] == 'help') {
 			const embed = new Discord.MessageEmbed()
 			.setColor('#00cc00')
@@ -14,6 +15,8 @@ module.exports = {
 			message.channel.send(embed);
 			return;
 		  }
+
+		//replies pong
 		message.channel.send('Pong.');
 	},
 };

@@ -8,6 +8,8 @@ module.exports = {
         if (!args.length) {
             return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
         }
+
+        // Check if the argument is help
         if (args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
@@ -19,13 +21,17 @@ module.exports = {
             return;
         }
 
+        //turns the number (+1) into an integer and saves it in "amount"
         const amount = parseInt(args[0]) + 1;
-    
+
+        //checks if "amount" is a valid number
         if (isNaN(amount)) {
             return message.reply('That\'s not a valid number you moron.');
         } else if (amount <= 1 || amount > 100) {
             return message.reply('Please give me a number between 1 and 99 to prune the chat.')
         }
+
+        //deletes the amount of messages
         message.channel.bulkDelete(amount, true).catch(err => {
             console.error(err);
             message.channel.send('There was an error trying to prune messages in this channel!');

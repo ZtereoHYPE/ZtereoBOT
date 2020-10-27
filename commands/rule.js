@@ -9,6 +9,7 @@ module.exports = {
             return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
         }
 
+        // Check if the argument is help
         if (args[0] == 'help') {
             var embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
@@ -20,10 +21,12 @@ module.exports = {
             return;
         }
 
+        //checks if the argument is invalid
 		if (args.length != 1 || args[0] > 5) {
             return message.channel.send('That is not a valid rule.');
         }
 
+        //switch statement that checks and sends the rule accordingly
         switch (args[0]) {
             case '1':
                 var embed = new Discord.MessageEmbed()
