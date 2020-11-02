@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
-	name: 'kick',
-    description: 'Kick a user.',
+	name: 'mute',
+    description: 'Mute a user.',
     args: true,
 	execute(message, args) {
 
@@ -9,9 +9,9 @@ module.exports = {
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
-            .setTitle('Kick Command Help:')
+            .setTitle('Mute Command Help:')
             .addFields(
-                { name: `${prefix}kick [someone] **(Admin only)**', value: 'Kicks the person out of the server.` },
+                { name: `${prefix}mite [someone] **(Admin only)**', value: 'Mutes the person in the server.` },
             )
             message.channel.send(embed);
             return;
