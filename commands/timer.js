@@ -4,12 +4,19 @@ module.exports = {
     description: 'Send a messsage after a certain timer ends',
     args: true,
 	execute(message, args) {
-        // Check if there are no arguements
-        if (!args.length) {
-            return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
+        // Help command
+        if (!args.length || args[0] == 'help') {
+            const embed = new Discord.MessageEmbed()
+            .setColor('#00cc00')
+            .setTitle('Timer Command:')
+            .addFields(
+                { name: '=timer [number] seconds/minutes/hours', value: 'Sets a timer for the chosen amount of time and pings you when the timer is over' },
+            )
+            message.channel.send(embed);
+            return;
         }
         
-        //else if chain (switch to switch please) to check if the sent message is a valid timer and set the timer accordingly
+        // Else if chain (switch to switch please) to check if the sent message is a valid timer and set the timer accordingly
         if (args.length < 1) {
             message.channe.send('Please provide a timer length.');
             return;
@@ -31,16 +38,6 @@ module.exports = {
         } else if (args[1] == "hours"|| args[1] == "hour") {
             message.react('👍');
             setTimeout(function() {message.channel.send(`${message.author}, your ${args[0]} ${args[1]} timer has expired.`);}, args[0]*3600000);
-
-        // Check if the argument is help
-        } else if (args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Timer Command:')
-            .addFields(
-                { name: '=timer [number] seconds/minutes/hours', value: 'Sets a timer for the chosen amount of time and pings you when the timer is over' },
-            )
-            message.channel.send(embed);
         }
 	},
 };

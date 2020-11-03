@@ -4,13 +4,8 @@ module.exports = {
     description: 'Prunes messages from the chat.',
     args: true,
 	execute(message, args) {
-        // Check if there are no arguements
-        if (!args.length) {
-            return message.channel.send(`You didn't provide any arguments, ${message.author}!`);
-        }
-
-        // Check if the argument is help
-        if (args[0] == 'help') {
+        // Help command
+        if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Prune Command:')

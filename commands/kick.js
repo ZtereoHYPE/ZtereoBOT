@@ -4,14 +4,13 @@ module.exports = {
     description: 'Kick a user.',
     args: true,
 	execute(message, args) {
-
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Kick Command Help:')
             .addFields(
-                { name: `${prefix}kick [someone] **(Admin only)**', value: 'Kicks the person out of the server.` },
+                { name: `${prefix}kick [someone] **(Admin only)**`, value: `Kicks the person out of the server.` },
             )
             message.channel.send(embed);
             return;
