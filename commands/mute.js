@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const database = require('../database.json');
 module.exports = {
 	name: 'mute',
     description: 'Mute a user.',
@@ -10,7 +11,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Mute Command Help:')
             .addFields(
-                { name: `${prefix}mite [someone] **(Admin only)**`, value: `Mutes the person in the server.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}mite [someone] **(Admin only)**`, value: `Mutes the person in the server.` },
             )
             message.channel.send(embed);
             return;

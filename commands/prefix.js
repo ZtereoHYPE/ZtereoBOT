@@ -12,7 +12,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Prefix Command Help:')
             .addFields(
-                { name: `${prefix}prefix [new prefix] **(Admin only)**`, value: `Changes the current server\'s prefix.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}prefix [new prefix] **(Admin only)**`, value: `Changes the current server\'s prefix.` },
             )
             message.channel.send(embed);
             return;

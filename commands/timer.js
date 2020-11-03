@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const database = require('../database.json');
 module.exports = {
 	name: 'timer',
     description: 'Send a messsage after a certain timer ends',
@@ -10,7 +11,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Timer Command:')
             .addFields(
-                { name: '=timer [number] seconds/minutes/hours', value: 'Sets a timer for the chosen amount of time and pings you when the timer is over' },
+                { name: `${database[`${message.guild.id}`]["prefix"]}timer [number] seconds/minutes/hours`, value: 'Sets a timer for the chosen amount of time and pings you when the timer is over' },
             )
             message.channel.send(embed);
             return;

@@ -10,7 +10,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Prune Command:')
             .addFields(
-                { name: '=prune [number]', value: 'Deletes the specifed number of messages from the chat.' },
+                { name: `${database[`${message.guild.id}`]["prefix"]}prune [number]`, value: 'Deletes the specifed number of messages from the chat.' },
             )
             message.channel.send(embed);
             return;

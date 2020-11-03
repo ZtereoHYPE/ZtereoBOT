@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const database = require('../database.json');
 module.exports = {
 	name: 'avatar',
     description: 'Shows a user\'s avatar.',
@@ -11,7 +12,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Avatar Command Help:')
             .addFields(
-                { name: '=avatar [someone]', value: 'Sends the selected person\'s profile picture.'},
+                { name: `${database[`${message.guild.id}`]["prefix"]}avatar [someone]`, value: 'Sends the selected person\'s profile picture.'},
             )
             message.channel.send(embed);
             return;
