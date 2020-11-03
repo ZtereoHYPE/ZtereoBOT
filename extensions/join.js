@@ -26,7 +26,7 @@ module.exports = {
             .setTitle('Hello everyone!')
             .addFields(
                 { name: `Thank you for inviting me in this server!`, value: `My default prefix is \`!\`, to change it use \`!prefix\`.`},
-                { name: `If you need any help, just type \`!help\`, or ask ZtereoHYPE :)`, value:""}
+                { name: `If you need any help, just type \`!help\``, value: 'Or simply ask ZtereoHYPE :)'}
             )
         guild.systemChannel.send(embed);
     }

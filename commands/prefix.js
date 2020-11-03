@@ -6,14 +6,13 @@ module.exports = {
     description: 'Change the prefix.',
     args: true,
 	execute(message, args) {
-
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Prefix Command Help:')
             .addFields(
-                { name: `${prefix}prefix [new prefix] **(Admin only)**', value: 'Changes the current server\'s prefix.` },
+                { name: `${prefix}prefix [new prefix] **(Admin only)**`, value: `Changes the current server\'s prefix.` },
             )
             message.channel.send(embed);
             return;
@@ -36,7 +35,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Prefix Successfully Changed!')
             .addFields(
-                { name: `The new prefix is now \`${database[`${message.guild.id}`]["prefix"]}\``, value = ""},
+                { name: `The new prefix is now \`${database[`${message.guild.id}`]["prefix"]}\``, value = "Good choice!"},
             )
         message.channel.send(embed);
 	},
