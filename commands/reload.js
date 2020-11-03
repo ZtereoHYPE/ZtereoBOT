@@ -1,3 +1,4 @@
+const fs = require('fs');
 const database = require('../database.json');
 const Discord = require('discord.js');
 module.exports = {
@@ -10,12 +11,28 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Reload Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}reload [command] **(Admin only)**`, value: `Reloads the chosed command.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}reload [command/"all"] **(Admin only)**`, value: `Reloads the chosed command.` },
             )
             message.channel.send(embed);
             return;
         }
 
+        // If the first argument is "all", reloads every command
+        if (args[0] === "all") {
+            const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+            for (const file of commandFiles) {
+                delete require.cache[require.resolve(`./${file}`)];
+	            try {
+                    const reloadedCommand = require(`./${file}`);
+                    message.client.commands.set(reloadedCommand.name, reloadedCommand);
+                    message.channel.send(`Successfully reloaded \`${file}\`!`);
+                } catch (error) {
+                    console.error(error);
+                    message.channel.send(`There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``);
+                }
+            }
+            return;
+        }
         // Saves the selected command to the command constant.
         const commandName = args[0].toLowerCase();
         const command = message.client.commands.get(commandName)
