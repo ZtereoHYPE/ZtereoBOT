@@ -3,8 +3,8 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
 const database = require('./database.json');
-const prefix = "!";
-var guildid;
+const join = require('./extensions/join.js');
+const leave = require('./extensions/leave.js');
 
 // Start discord.js stuff
 const client = new Discord.Client();
@@ -27,48 +27,23 @@ client.on("guildCreate", guild => {
     // Log when the bot enters a new guild
     console.log("Joined a new guild: " + guild.id);
 
-    // Create an entry in the database with as key the guild id containing everything needed.
-    database[`${guild.id}`] = {
-            "prefix" : "!",
-            "warnings" : 
-            [
-
-            ],
-            "rules" : 
-            [
-
-            ]
-        };
-    
-    // Save the JSON file
-    var saveJson = JSON.stringify(database, null, 4);
-    fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-        if(err){
-            console.log(err)
-        }
-    });
-
-    // Log the prefix (mainly to remember the syntax lol)
-    console.log(database[`${guild.id}`]["prefix"]);
+    // Execute the join.js file
+    join.execute(guild);
 });
 
 // Guild kicking/leaving detection
 client.on("guildDelete", guild => {
+    // Log when the bot leaves a guild
     console.log("Left a guild: " + guild.id);
 
-    delete database[`${guild.id}`];
-
-    // Save the JSON file
-    var saveJson = JSON.stringify(database, null, 4)
-    fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-        if(err){
-            console.log(err)
-        }
-    })
+    // Execute the leave.js file
+    leave.execute(guild);
 });
 
 // Execute commands
 client.on('message', message => {
+    // Grab the prefix from the database
+    let prefix = database[`${message.guild.id}`]["prefix"]
 
     // If doesn't start with prefix, or is made by bot, cancel.
     if (!message.content.startsWith(prefix) || message.author.bot) return;
