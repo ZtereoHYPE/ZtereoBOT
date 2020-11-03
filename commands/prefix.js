@@ -23,9 +23,9 @@ module.exports = {
         
         // Saves the modified JSON file
         var saveJson = JSON.stringify(database, null, 4)
-        fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-            if(err){
-                console.log(err)
+        fs.writeFile('database.json', saveJson, 'utf8', (error)=>{
+            if(error){
+                console.error(error)
                 message.channel.send('There was an error saving the JSON file. The new prefix should work but will reset itself when the bot is restarted.')
             }
         });

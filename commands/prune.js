@@ -27,8 +27,8 @@ module.exports = {
         }
 
         //deletes the amount of messages
-        message.channel.bulkDelete(amount, true).catch(err => {
-            console.error(err);
+        message.channel.bulkDelete(amount, true).catch(error => {
+            console.error(error);
             message.channel.send('There was an error trying to prune messages in this channel!');
         });
 	},
