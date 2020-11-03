@@ -66,7 +66,7 @@ client.on('message', message => {
         command.execute(message, args);
     } catch (error) {
         console.log(error);
-        message.reply('An error happened. @ZtereoHYPE fix me please!')
+        message.reply('An error happened. Ask ZtereoHYPE to fix me please!')
     }
 });
 

@@ -1,3 +1,5 @@
+const database = require('../database.json');
+const Discord = require('discord.js');
 module.exports = {
 	name: 'reload',
 	description: 'Reloads a command',
@@ -8,7 +10,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Reload Command Help:')
             .addFields(
-                { name: `${prefix}reload [command] **(Admin only)**`, value: `Reloads the chosed command.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}reload [command] **(Admin only)**`, value: `Reloads the chosed command.` },
             )
             message.channel.send(embed);
             return;
@@ -27,7 +29,7 @@ module.exports = {
 
         // Try to reload the command from file. If an error happens, log it and send it to chat.
         try {
-            const reloadedCommand = require(`./commands/${command.name}.js`);
+            const reloadedCommand = require(`../commands/${command.name}.js`);
             message.client.commands.set(reloadedCommand.name, reloadedCommand);
             message.channel.send(`Successfully reloaded \`${command.name}\`!`);
         } catch (error) {

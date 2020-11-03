@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const database = require('../database.json');
 module.exports = {
 	name: 'kick',
     description: 'Kick a user.',
@@ -10,7 +11,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Kick Command Help:')
             .addFields(
-                { name: `${prefix}kick [someone] **(Admin only)**`, value: `Kicks the person out of the server.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}kick [someone] **(Admin only)**`, value: `Kicks the person out of the server.` },
             )
             message.channel.send(embed);
             return;
