@@ -48,6 +48,9 @@ client.on('message', message => {
     // If doesn't start with prefix, or is made by bot, cancel.
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
+    // If message comes from DM, say that bot doesn't work in dms yet
+    if (message.channel.type === 'dm') message.reply('I don\'t work in DMs *yet*.')
+
     // Split the message in command and arguments
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
