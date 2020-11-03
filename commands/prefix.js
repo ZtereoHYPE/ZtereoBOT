@@ -35,7 +35,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Prefix Successfully Changed!')
             .addFields(
-                { name: `The new prefix is now \`${database[`${message.guild.id}`]["prefix"]}\``, value = "Good choice!"},
+                { name: `The new prefix is now \`${database[`${message.guild.id}`]["prefix"]}\``, value : ""},
             )
         message.channel.send(embed);
 	},
