@@ -1,4 +1,5 @@
 // Load required files and save them in constants
+const owoify = require('owoify-js').default
 const fs = require('fs');
 const Discord = require('discord.js');
 const { token } = require('./config.json');
