@@ -11,14 +11,24 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Kick Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}kick [someone] **(Admin only)**`, value: `Kicks the person out of the server.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}kick [someone] [reason]`, value: `Kicks the person out of the server. **(Kick Members perms required)**` },
             )
             message.channel.send(embed);
             return;
         }
         
-        // gathers the fist tagged user and sends a message that you wanted to kick him (doesn't actually kick yet)
-        const taggedUser = message.mentions.users.first();
-        message.channel.send(`You wanted to kick ${taggedUser.username}`);
+        // Gathers the first tagged user, kicks it, shift the arguments to exclude it, and sends confirmation message. If no perms are detected then reject command.
+        if (message.guild.member(message.author).hasPermission('KICK_MEMBERS')) {
+            let User = message.guild.member(message.mentions.users.first())
+            if (User.hasPermission('KICK_MEMBERS') || User.id === message.guild.ownerID) {
+                message.reply(`you can\'t kick a user with Ban Members perms.`);
+            };
+            args.shift();
+            if (!args) args = 'Not specified'
+            User.kick(args.join(' '));
+            message.reply(`you kicked ${User.nickname} for reason: ${args.join(' ')}`);
+        } else {
+            message.reply("you don\'t have the permission to do that (Kick Members perms).");
+        };
 	},
 };
