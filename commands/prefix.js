@@ -8,7 +8,7 @@ module.exports = {
 	execute(message, args) {
         // Help command
         if (!args.length || args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
+            var embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Prefix Command Help:')
             .addFields(
@@ -31,11 +31,11 @@ module.exports = {
         });
 
         // Sends success embed
-        const embed = new Discord.MessageEmbed()
+        var embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Prefix Successfully Changed!')
             .addFields(
-                { name: `The new prefix is now \`${database[`${message.guild.id}`]["prefix"]}\``, value : ""},
+                { name: `The new prefix is now \`${database[`${message.guild.id}`]["prefix"]}\``, value : "Good choice!" },
             )
         message.channel.send(embed);
 	},

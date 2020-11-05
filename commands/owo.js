@@ -17,8 +17,20 @@ module.exports = {
             )
             message.channel.send(embed);
             return;
-          } else {
-			  message.channel.send(owoify(args, 'owo'));
-		  }
+          }
+
+        // Owoify the arguments of the message, made into a string
+        let owo
+        switch (Math.ceil(Math.random()*3)) {
+            case 1:
+                owo = 'owo'
+                break;
+            case 2:
+                owo = 'uwu'
+                break;
+            case 3:
+                owo = 'uvu'
+        }
+		message.channel.send(owoify(args.join(' '), owo));
 	},
 };
