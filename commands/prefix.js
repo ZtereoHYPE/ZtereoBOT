@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const database = require('../database.json');
 module.exports = {
 	name: 'prefix',
-    description: 'Change the prefix.',
+    description: 'Changes the prefix.',
     args: true,
 	execute(message, args) {
         // Help command
