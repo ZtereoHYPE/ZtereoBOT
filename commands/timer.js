@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const database = require('../database.json');
 module.exports = {
 	name: 'timer',
-    description: 'Send a messsage after a certain timer ends',
+    description: 'Sets a timer after which you get pinged.',
     args: true,
 	execute(message, args) {
         // Help command

@@ -11,14 +11,22 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Mute Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}mite [someone] **(Admin only)**`, value: `Mutes the person in the server.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}mute [someone] [time] [reason]`, value: `Mutes the person in the server. **(Ban Members perms required)**` },
             )
             message.channel.send(embed);
             return;
         }
         
         // gathers the fist tagged user and sends a message that you wanted to mute him (doesn't actually mute yet)
-        const taggedUser = message.mentions.users.first();
-        message.channel.send(`You wanted to mute ${taggedUser.username}`);
+        if (message.guild.member(message.author).hasPermission('BAN_MEMBERS')) {
+            const taggedUser = message.mentions.users.first();
+            args.shift();
+            taggedUser.mute(args)
+            setTimeout()
+            message.channel.send(`You muted ${taggedUser.username} for reason: ${args}`);
+        } else {
+            message.reply("you don\'t have the permission to do that (Ban Members perms).")
+        }
+
 	},
 };

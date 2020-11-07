@@ -3,10 +3,10 @@ const database = require('../database.json');
 const Discord = require('discord.js');
 module.exports = {
 	name: 'reload',
-	description: 'Reloads a command',
+	description: 'Reloads a command.',
 	execute(message, args) {
         // Help command
-		if (!args.length || args[0] == 'help') {
+		if (!args.length) {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Reload Command Help:')

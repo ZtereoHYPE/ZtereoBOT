@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const database = require('../database.json');
 module.exports = {
 	name: 'owo',
-    description: 'owoifies a message',
+    description: 'Owoifies a message.',
     args: true,
 	execute(message, args) {
 

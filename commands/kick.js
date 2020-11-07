@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const database = require('../database.json');
 module.exports = {
 	name: 'kick',
-    description: 'Kick a user.',
+    description: 'Kicks a user.',
     args: true,
 	execute(message, args) {
         // Help command
