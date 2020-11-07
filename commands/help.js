@@ -7,18 +7,13 @@ module.exports = {
 	cooldown: 5,
 	execute(message, args) {
         const { commands } = message.client;
-		
 		const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
 			.setTitle('Commmand List:')
 		let i;
 		for (i = 0; i < commands.map(command => command.name).length; i++) {
-			let commandEmbedData = {};
-			commandEmbedData.name = `${database[`${message.guild.id}`]["prefix"]}${commands.map(command => command.name)[i]}`;
-			commandEmbedData.value = commands.map(command => command.description)[i];
-			embed.addFields(commandEmbedData);
+			embed.addField(`${database[`${message.guild.id}`]["prefix"]}${commands.map(command => command.name)[i]}`, commands.map(command => command.description)[i]);
 		};
-		console.log(embed);
 		message.channel.send(embed);
 	},
 };
