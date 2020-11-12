@@ -17,7 +17,7 @@ module.exports = {
             return;
         }
         
-        // gathers the fist tagged user and sends a message that you wanted to mute him (doesn't actually mute yet)
+        // TODO: make this work with a timeout argument and all, currently crashes.
         if (message.guild.member(message.author).hasPermission('BAN_MEMBERS')) {
             const taggedUser = message.mentions.users.first();
             args.shift();
