@@ -8,7 +8,7 @@ module.exports = {
         // Create an entry in the database with as key the guild id containing everything needed.
         database[`${guild.id}`] = {
             "prefix" : "-",
-            "warnings" : [],
+            "warnings" : {},
             "rules" : [],
             "bans" : {}
         };
@@ -26,9 +26,9 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Hello everyone!')
             .addFields(
-                { name: `Thank you for inviting me in this server!`, value: `My default prefix is \`-\`, to change it use \`!prefix\`.`},
-                { name: `If you need any help, just type \`!help\``, value: 'Or simply ask ZtereoHYPE :)'},
-                { name: `Make sure that I have a role on top (or close) of the hierarchy`, value: 'Otherwise I won\'t be able to use moderation commands such as kick or mute.'}
+                { name: `Thank you for inviting me in this server!`, value: `My default prefix is \`-\`, to change it use \`-prefix\`.`},
+                { name: `**Make sure that I have a role on top (or close) of the hierarchy**`, value: 'Otherwise I won\'t be able to use moderation commands such as kick or mute.'},
+                { name: `If you need any help, just type \`-help\``, value: 'Or simply ask ZtereoHYPE :)'}
             )
         guild.systemChannel.send(embed);
     }

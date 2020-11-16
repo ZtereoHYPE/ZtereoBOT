@@ -25,7 +25,7 @@ module.exports = {
 	            try {
                     const reloadedCommand = require(`./${file}`);
                     message.client.commands.set(reloadedCommand.name, reloadedCommand);
-                    message.channel.send(`Successfully reloaded \`${file}\`!`);
+                    // message.channel.send(`Successfully reloaded \`${file}\`!`);
                 } catch (error) {
                     console.error(error);
                     message.channel.send(`There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``);

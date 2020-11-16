@@ -11,7 +11,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Kick Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}kick [someone] [reason]`, value: `Kicks the person out of the server. **(Kick Members perms required)**` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}kick [@member] [reason]`, value: `Kicks the person out of the server. **(Kick Members perms required)**` },
             )
             message.channel.send(embed);
             return;
@@ -24,9 +24,9 @@ module.exports = {
                 message.reply(`you can\'t kick a user with Kick Members perms.`);
             };
             args.shift();
-            if (!args) args = 'Not specified'
+            if (args.length == 0) args = ['Not', 'specified'];
             User.kick(args.join(' '));
-            message.reply(`you kicked ${User.nickname} for reason: ${args.join(' ')}`);
+            message.reply(`you kicked ${User.user.username} for reason: ${args.join(' ')}`);
         } else {
             message.reply("you don\'t have the permission to do that (Kick Members perms).");
         };
