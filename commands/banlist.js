@@ -11,7 +11,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Banlist Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}banlist`, value: `Shows the list of banned players in the guild.` },
+                { name: `${database[message.guild.id]["prefix"]}banlist`, value: `Shows the list of banned players in the guild.` },
             )
             message.channel.send(embed);
             return;

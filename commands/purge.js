@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const database = require('../database.json');
 module.exports = {
 	name: 'purge',
     description: 'Purges messages from the chat.',
@@ -21,14 +22,14 @@ module.exports = {
             //turns the number (+1) into an integer and saves it in "amount"
             const amount = parseInt(args[0]) + 1;
 
-            //checks if "amount" is a valid number
+            // Checks if "amount" is a valid number
             if (isNaN(amount)) {
                 return message.reply('That\'s not a valid number you moron.');
             } else if (amount <= 1 || amount > 100) {
                 return message.reply('Please give me a number between 1 and 99 to prune the chat.')
             }
 
-            //deletes the amount of messages
+            // Deletes the amount of messages
             message.channel.bulkDelete(amount, true).catch(error => {
                 console.error(error);
                 message.channel.send('There was an error trying to prune messages in this channel');

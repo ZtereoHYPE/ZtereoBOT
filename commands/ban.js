@@ -11,7 +11,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Ban Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}ban [member] [reason]`, value: `Bans a player. **(Ban Member perms required)**` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}ban [@member] [reason]`, value: `Bans a player. **(Ban Member perms required)**` },
             )
             message.channel.send(embed);
             return;
@@ -25,7 +25,7 @@ module.exports = {
             };
             
             if (User.hasPermission('BAN_MEMBERS') || User.id === message.guild.ownerID) {
-                message.reply(`you can\'t kick a user with Ban Members perms.`);
+                message.reply(`you can\'t ban a user with Ban Members perms.`);
                 return;
             };
 
@@ -38,6 +38,7 @@ module.exports = {
                 "username": "",
                 "reason": ""
             };
+            
             database[`${message.guild.id}`]['bans'][`${User.id}`]['username'] = `${User.user.username}`;
             database[`${message.guild.id}`]['bans'][`${User.id}`]['reason'] = `${args.join(' ')}`;
 

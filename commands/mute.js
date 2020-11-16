@@ -21,11 +21,12 @@ module.exports = {
         if (message.guild.member(message.author).hasPermission('BAN_MEMBERS')) {
             const taggedUser = message.mentions.users.first();
             args.shift();
-            taggedUser.mute(args)
             setTimeout()
-            message.channel.send(`You muted ${taggedUser.username} for reason: ${args}`);
+            // message.channel.send(`You muted ${taggedUser.username} for reason: ${args}`);
+            message.channel.send('the mute command is still WIP and doesnt work')
         } else {
-            message.reply("you don\'t have the permission to do that (Ban Members perms).")
+            // message.reply("you don\'t have the permission to do that (Ban Members perms).")
+            message.channel.send('the mute command is still WIP and doesnt work, plus you dont have permissions to do that lol')
         }
 
 	},
