@@ -34,3 +34,4 @@ If you want to contribute to the project you will need to add exactly 2 files to
 Current contributors to the project are:
 - ZtereoHYPE (me)
 - MrGlockenspiel (owo command)
+- Eastah (horny command)
