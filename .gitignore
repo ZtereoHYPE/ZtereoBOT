@@ -1,7 +1,8 @@
 
-.DS_Store
+**/.DS_Store
 config.json
 database.json
 commands/modelcommand.js
-node_modules
+node_modules/
 package-lock.json
+.vscode/
