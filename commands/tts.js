@@ -17,9 +17,22 @@ module.exports = {
             return;
         }
 
-        message.channel.send(`${args.join(' ')}`,{
-            tts: true
-        });
+        // TODO: guild owner can disable tts in that server
 
+        // if (args[0] == disable && message.guild.member(message.author) === message.guild.ownerID) {
+            
+        // } else if (args[0] == enable && message.guild.member(message.author) === message.guild.ownerID) {
+
+        // }
+
+
+
+        message.reply('tts is currently disabled, until I find a better solution to moderate it.')
+
+
+        // message.channel.send(`${args.join(' ')}`,{
+        //     tts: true
+        // });
+        // setTimeout()
 	},
 };

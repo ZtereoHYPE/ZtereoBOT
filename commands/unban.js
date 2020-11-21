@@ -17,36 +17,36 @@ module.exports = {
             return;
         };
 
-        if (message.guild.member(message.author).hasPermission('BAN_MEMBERS') || message.guild.member(message.author) === message.guild.ownerID) {
-            if (!args[0]) {
-                message.reply('please specify a user to unban.')
-                return;
-            };
-
-            if (/[a-z]/.test(args[0])) {
-                message.reply(`please give select a user by its ID. To find the ID, use \`${database[`${message.guild.id}`]["prefix"]}banlist\``)
-                return;
-            }
-
-            if (!Object.keys(database[`${message.guild.id}`]['bans']).includes(args[0])) {
-                message.reply('that user is not currently banned in this guild.')
-                return;
-            }
-
-            message.guild.members.unban(args[0])
-            .then(user => message.reply(`you unbanned ${user.username} from ${message.guild.name}.`))
-
-            delete database[`${message.guild.id}`]['bans'][`${args[0]}`];
-
-            // Save the JSON file
-            var saveJson = JSON.stringify(database, null, 4);
-            fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-                if(err){
-                    console.log(err)
-                }
-            });
-        } else {
+        if (!(message.guild.member(message.author).hasPermission('BAN_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
             message.reply("you don\'t have the permission to do that (Ban Members perms).");
+            return;
+        }
+
+        if (!args[0]) {
+            message.reply('please specify a user to unban.')
+            return;
         };
+
+        if (/[a-z]/.test(args[0])) {
+            message.reply(`please give select a user by its ID. To find the ID, use \`${database[`${message.guild.id}`]["prefix"]}banlist\``)
+            return;
+        };
+
+        if (!Object.keys(database[`${message.guild.id}`]['bans']).includes(args[0])) {
+            message.reply('that user is not currently banned in this guild.')
+            return;
+        };
+        
+        message.guild.members.unban(args[0])
+        .then(user => message.reply(`you unbanned ${user.username} from ${message.guild.name}.`))
+        delete database[`${message.guild.id}`]['bans'][`${args[0]}`];
+        
+        // Save the JSON file
+        var saveJson = JSON.stringify(database, null, 4);
+        fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
+            if(err){
+                console.log(err)
+            }
+        });
 	},
 };
