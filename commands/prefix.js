@@ -12,9 +12,14 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Prefix Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}prefix [new prefix] **(Admin only)**`, value: `Changes the current server\'s prefix.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}prefix [new prefix] **(Server Owner only)**`, value: `Changes the current server\'s prefix.` },
             )
             message.channel.send(embed);
+            return;
+        }
+
+        if (!(message.guild.member(message.author).id == message.guild.ownerID)) {
+            message.reply("you don\'t have the permission to do that (Server Owner).");
             return;
         }
         

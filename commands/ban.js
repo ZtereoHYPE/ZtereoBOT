@@ -18,45 +18,41 @@ module.exports = {
         }
 
         let User = message.guild.member(message.mentions.users.first())
-        if (message.guild.member(message.author).hasPermission('BAN_MEMBERS')|| message.guild.member(message.author) === message.guild.ownerID) {
-            if (!message.mentions.users.first()) {
-                message.reply('please specify a user to ban.')
-                return;
-            };
-            
-            if (User.hasPermission('BAN_MEMBERS') || User.id === message.guild.ownerID) {
-                message.reply(`you can\'t ban a user with Ban Members perms.`);
-                return;
-            };
+        if (!(message.guild.member(message.author).hasPermission('BAN_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
+            message.reply("you don\'t have the permission to do that (Ban Members perms).");
+            return;
+        }
 
-            User.ban(0, args.join(' '));
+        if (!message.mentions.users.first()) {
+            message.reply('please specify a user to ban.')
+            return;
+        };
+        
+        if (User.hasPermission('BAN_MEMBERS') || User.id === message.guild.ownerID) {
+            message.reply(`you can\'t ban a user with Ban Members perms.`);
+            return;
+        };
 
-            args.shift();
-            if (args.length == 0) args = ['Not', 'specified'];
-            
-            database[`${message.guild.id}`]['bans'][`${User.id}`] = {
-                "username": "",
-                "reason": ""
-            };
-            
-            database[`${message.guild.id}`]['bans'][`${User.id}`]['username'] = `${User.user.username}`;
-            database[`${message.guild.id}`]['bans'][`${User.id}`]['reason'] = `${args.join(' ')}`;
+        User.ban(0, args.join(' '));
 
-            // Save the JSON file
-            var saveJson = JSON.stringify(database, null, 4);
-            fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
+        args.shift();
+        if (args.length == 0) args = ['Not', 'specified'];
+            
+        database[`${message.guild.id}`]['bans'][`${User.id}`] = {
+            "username": "",
+            "reason": ""
+        };
+        
+        database[`${message.guild.id}`]['bans'][`${User.id}`]['username'] = `${User.user.username}`;
+        database[`${message.guild.id}`]['bans'][`${User.id}`]['reason'] = `${args.join(' ')}`;
+
+        // Save the JSON file
+        var saveJson = JSON.stringify(database, null, 4);
+        fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
             if(err){
                 console.log(err)
             }
         });
-            message.reply(`you banned ${User.user.username} for reason: ${args.join(' ')}`);
-        } else {
-            message.reply("you don\'t have the permission to do that (Ban Members perms).");
-        };
-
-        
-        
-        
-
+        message.reply(`you banned ${User.user.username} for reason: ${args.join(' ')}`);
 	},
 };

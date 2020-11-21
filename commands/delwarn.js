@@ -18,41 +18,39 @@ module.exports = {
         }
 
         let User = message.guild.member(message.mentions.users.first())
-        if (message.guild.member(message.author).hasPermission('KICK_MEMBERS')|| message.guild.member === message.guild.ownerID) {
-
-            let warningNumber = args[1]
-
-            if (!message.mentions.users.first()) {
-                message.reply('please specify a user who\'s warning to remove.')
-                return;
-            };
-
-            if (!warningNumber || !database[message.guild.id]['warnings'][User.id]['warns'].hasOwnProperty(warningNumber)) {
-                message.reply(`please provide a valid warning number. To see warning numbers, use \`${database[`${message.guild.id}`]["prefix"]}warnhistory [@member]\``)
-            }
-
-            if (!database[message.guild.id]['warnings'].hasOwnProperty(User.id)) {
-                message.channel.send("That user has no warnings in this server.");
-                return;
-            }
-
-            // TODO the actual logic that removes it from the database
-            delete database[message.guild.id]['warnings'][User.id]['warns'][warningNumber]
-
-            if (Object.keys(database[message.guild.id]['warnings'][User.id]['warns']).length == '0') {
-                delete database[message.guild.id]['warnings'][User.id]
-            }
-        
-            var saveJson = JSON.stringify(database, null, 4);
-            fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-                if(err){
-                    console.log(err)
-                }
-            });
-
-            message.channel.send(`Successfully deleted ${User.user.username}'s warning.`)
-        } else {
+        if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
             message.reply("you don\'t have the permission to do that (Kick Members perms).");
+            return;
+        }
+
+        let warningNumber = args[1]
+        if (!message.mentions.users.first()) {
+            message.reply('please specify a user who\'s warning to remove.')
+            return;
         };
+
+        if (!warningNumber || !database[message.guild.id]['warnings'][User.id]['warns'].hasOwnProperty(warningNumber)) {
+            message.reply(`please provide a valid warning number. To see warning numbers, use \`${database[`${message.guild.id}`]["prefix"]}warnhistory [@member]\``)
+            return;
+        };
+
+        if (!database[message.guild.id]['warnings'].hasOwnProperty(User.id)) {
+            message.channel.send("That user has no warnings in this server.");
+            return;
+        };
+
+        delete database[message.guild.id]['warnings'][User.id]['warns'][warningNumber]
+        if (Object.keys(database[message.guild.id]['warnings'][User.id]['warns']).length == '0') {
+            delete database[message.guild.id]['warnings'][User.id]
+        };
+    
+        var saveJson = JSON.stringify(database, null, 4);
+        fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
+            if(err){
+                console.log(err)
+            }
+        });
+        
+        message.channel.send(`Successfully deleted ${User.user.username}'s warning.`)
 	},
 };
