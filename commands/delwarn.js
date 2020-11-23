@@ -23,6 +23,12 @@ module.exports = {
             return;
         }
 
+        if (message.guild.member(message.author).id == User.id) {
+            if (message.guild.member(message.author).id == message.guild.ownerID) return;
+            message.reply("Sorry, but you cannot remove your own warnings for obvious reasons. Please ask another moderator to do so.");
+            return;
+        }
+
         let warningNumber = args[1]
         if (!message.mentions.users.first()) {
             message.reply('please specify a user who\'s warning to remove.')
