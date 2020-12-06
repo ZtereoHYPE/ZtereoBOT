@@ -18,15 +18,21 @@ module.exports = {
         }
         
         // Gathers the first tagged user, kicks it, shift the arguments to exclude it, and sends confirmation message. If no perms are detected then reject command.
+        let User = message.guild.member(message.mentions.users.first());
+
         if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
             message.reply("you don\'t have the permission to do that (Kick Members perms).");
             return;
         }
 
-        let User = message.guild.member(message.mentions.users.first())
+        if (!message.mentions.users.first()) {
+            message.reply('please specify a user to kick.')
+            return;
+        };
 
         if (User.hasPermission('KICK_MEMBERS') || User.id === message.guild.ownerID) {
             message.reply(`you can\'t kick a user with Kick Members perms.`);
+            return;
         };
 
         args.shift();
