@@ -5,6 +5,7 @@ const { token } = require('./config.json');
 const database = require('./database.json');
 const join = require('./extensions/join.js');
 const leave = require('./extensions/leave.js');
+const help = require('./commands/help');
 
 // Start discord.js stuff
 const client = new Discord.Client();
@@ -17,9 +18,17 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 
-// Once bot is ready, log it in console
+// Once bot is ready, log it in console and set status
 client.once('ready', () => {
     console.log('Your bot should be working now I hope please work please-');
+    client.user.setActivity('-help', { type: 'LISTENING' });
+    // client.user.setPresence({
+    //     status: "online",
+    //     game: {
+    //         name: "-help",  //The message shown
+    //         type: "LISTENING" //PLAYING: WATCHING: LISTENING: STREAMING:
+    //     }
+    // });
 });
 
 // Guild joining detection
@@ -52,7 +61,17 @@ client.on('message', message => {
     }
 
     // Grab the prefix from the database
-    let prefix = database[`${message.guild.id}`]["prefix"]
+    let prefix = database[`${message.guild.id}`]["prefix"];
+
+    if (message.content == "-help") {
+        try {
+            help.execute(message);
+        } catch (error) {
+            console.error(error);
+            message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
+        }
+        return;
+    }
 
     // If doesn't start with prefix, cancel.
     if (!message.content.startsWith(prefix)) return;
