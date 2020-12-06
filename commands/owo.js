@@ -31,6 +31,7 @@ module.exports = {
             case 3:
                 owo = 'uvu'
         }
-		message.channel.send(owoify(args.join(' '), owo));
+        message.delete();
+        message.channel.send(owoify(args.join(' '), owo));
 	},
 };
