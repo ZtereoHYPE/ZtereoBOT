@@ -21,14 +21,7 @@ for (const file of commandFiles) {
 // Once bot is ready, log it in console and set status
 client.once('ready', () => {
     console.log('Your bot should be working now I hope please work please-');
-    client.user.setActivity('-help', { type: 'LISTENING' });
-    // client.user.setPresence({
-    //     status: "online",
-    //     game: {
-    //         name: "-help",  //The message shown
-    //         type: "LISTENING" //PLAYING: WATCHING: LISTENING: STREAMING:
-    //     }
-    // });
+    client.user.setActivity('Cyberpunk 2077', { type: 'PLAYING' });
 });
 
 // Guild joining detection
