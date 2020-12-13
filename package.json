@@ -8,7 +8,7 @@
   },
   "keywords": ["discord", "bot", "ZtereoHYPE", "ztereobot"],
   "author": "ZtereoHYPE",
-  "license": "MIT",
+  "license": "WTFPL",
   "dependencies": {
     "discord.js": "^12.2.0",
     "hypixel": "^1.0.3",
