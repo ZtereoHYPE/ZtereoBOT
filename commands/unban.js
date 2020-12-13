@@ -22,11 +22,6 @@ module.exports = {
             return;
         }
 
-        if (!args[0]) {
-            message.reply('please specify a user to unban.')
-            return;
-        };
-
         if (/[a-z]/.test(args[0])) {
             message.reply(`please give select a user by its ID. To find the ID, use \`${database[`${message.guild.id}`]["prefix"]}banlist\``)
             return;
