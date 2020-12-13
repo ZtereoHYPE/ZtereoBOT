@@ -1,6 +1,9 @@
 # ZtereoBOT's Repository!
 
 ## Instructions to contribute:
+
+// TODO: update these outdated and broken instructions please
+
 This repository does not contain all of necessary files to work.
 If you want to contribute to the project you will need to add exactly 2 files to the root directory (aka folder) of this project:
 
