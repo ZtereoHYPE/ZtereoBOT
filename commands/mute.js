@@ -5,23 +5,12 @@ module.exports = {
     description: 'Mute a user.',
     args: true,
 	execute(message, args) {
-        // Help command
-        if (!args.length || args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Mute Command Help:')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}mute [someone] [time] [reason]`, value: `Mutes the person in the server. **(Ban Members perms required)**` },
-            )
-            .setFooter(`Can the muted person still type? Try ${database[`${message.guild.id}`]["prefix"]}mute fixPerms `)
-            message.channel.send(embed);
-            return;
-        }
-        
-        // TODO: make this work with a timeout argument and all, currently crashes.
-        const User = message.mentions.users.first();
-        
-        if (!message.guild.roles.cache.find((role) => role.name === 'Server Muted')) {
+
+        //TODO: ADDD FAILPROOFNESS IF THERE ARE MORE ROLES CALLED THE SAME AND THELL THEM TO DELETE ONE OF THE ROLES. OR SWITCH TO A ROLE ID BUT IT WOULD HAVE TO BE PER-SERVER
+
+        const muteRole = message.guild.roles.cache.find((role) => role.name === 'Server Muted');
+
+        if (!muteRole) {
             message.guild.roles.create({
                 data:{
                     name:"Server Muted",
@@ -33,27 +22,106 @@ module.exports = {
             return;
         };
 
-        const muteRole = message.guild.roles.cache.find((role) => role.name === 'Server Muted');  
-        message.guild.channels.cache.forEach(channel => channel.updateOverwrite(muteRole, { SEND_MESSAGES: false }));
+        // Help command
+        if (!args.length || args[0] == 'help') {
+            const embed = new Discord.MessageEmbed()
+            .setColor('#00cc00')
+            .setTitle('Mute Command Help:')
+            .addFields(
+                { name: `${database[`${message.guild.id}`]["prefix"]}mute [someone] [time s/m/h/d] [reason]`, value: `Mutes the person in the server. **(Ban Members perms required)**` },
+            )
+            .setFooter(`Can the muted person still type? Try ${database[`${message.guild.id}`]["prefix"]}mute fixPerms `)
+            message.channel.send(embed);
+            return;
+        }
+        
+        // TODO: make this work with a timeout argument and all, currently crashes.
+        const User = message.mentions.users.first();
 
+        if (!(message.guild.member(message.author).hasPermission('MANAGE_ROLES') || message.guild.member(message.author).id == message.guild.ownerID)) {
+            message.reply("You dont have permissions to do that (Manage Roles perms).");
+            return;
+        }
+
+        message.guild.channels.cache.forEach(channel => channel.updateOverwrite(muteRole, { SEND_MESSAGES: false }));
+        
         if (args[0]=='fixPerms') {
             message.channel.send("I've tried fixing the permissions.")
             return;
         }
+        
+        if (!User) {
+            message.reply('please specify a user to mute.')
+            return;
+        };
 
-        // if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
-        //     message.reply("the mute command is still WIP and doesnt work, plus you dont have permissions to do that lol (Kick Members perms).");
-        //     return;
-        // }
+        if (User.id === message.guild.ownerID) {
+            message.reply(`you can\'t mute the server owner lol.`);
+            return;
+        };
 
-        // if (!message.mentions.users.first()) {
-        //     message.reply('please specify a user to warn.')
-        //     return;
-        // };
+        args.shift();
 
-        // args.shift();
-        // setTimeout()
-        // // message.channel.send(`You muted ${taggedUser.username} for reason: ${args}`);
-        // message.channel.send('the mute command is still WIP and doesnt work')
+        let rawTime = args.shift()
+        let timeType
+        let computerTime
+
+        //TODO: add dumb-proof: currelty only checks last character and:
+        //
+        //      if (lastcharacter == letter) {timetype == lastcharacter && rawTime = rawTime - lastcharacter}
+        //      if (lastcharacter == number) {timetype == next word && rawTime stays the same}
+        //
+        //Should check if rawtime after all of this is an acceptable number and if timetype is one of the recognised time types.
+
+        //TODO: add check if rawTime is a word (multiple letters), in which case add it back to the beginning of args and mute the person indefenetly!
+
+        if (rawTime.slice(-1).match(/[a-z]/i)) {
+            timeType = rawTime.slice(-1)
+            rawTime = rawTime.slice(0, -1)
+
+        } else if (rawTime.slice(-1).match(/[0-9]/i)) {
+            timeType = args[0]
+            args.shift()
+        } else {
+            message.reply(`What the heck does ${rawTime} even mean lol. Make sure to not use any special characters, as these are NOT a time`)
+        }
+
+        if (/^[a-zA-Z]+$/.test(rawTime)) {
+            message.reply(`\`${rawTime}\` is not an acceptable time!`);
+            return;
+        }
+
+        switch (timeType) {
+            case 's':
+                computerTime = rawTime*1000;
+                break;
+
+            case 'm':
+                computerTime = rawTime*60000;
+                break;
+
+            case 'h':
+                computerTime = rawTime*3600000;
+                break;
+
+            case 'd':
+                computerTime = rawTime*86400000;
+                break;
+
+            default:
+                message.reply(`\`${timeType}\` is not an acceptable time type, try with \`s\`, \`m\`, \`h\`, or \`d\`.`)
+                return;
+        }
+
+        //message.channel.send(`mutesd someone for ${computerTime}ms`)
+        if (User.roles.cache.find(muteRole)) {
+            message.reply('That person is already muted.')
+            return;
+        }
+
+        User.roles.add(muteRole, "Mute command")
+        
+        setTimeout(function(){User.roles.remove(muteRole, "Expired mute time set with command.")}, computerTime)
+        message.channel.send(`You muted ${User.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`);
 	},
 };
