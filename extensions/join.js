@@ -10,7 +10,8 @@ module.exports = {
             "prefix" : "-",
             "warnings" : {},
             "rules" : [],
-            "bans" : {}
+            "bans" : {},
+            "enable": []
         };
         
         // Save the JSON file
