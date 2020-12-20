@@ -28,7 +28,7 @@ module.exports = {
             .setColor('#00cc00')
             .setTitle('Mute Command Help:')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}mute [someone] [time s/m/h/d] [reason]`, value: `Mutes the person in the server. **(Ban Members perms required)**` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}mute [someone] [time s/m/h/d] [reason]`, value: `Mutes the person in the server. **(Manage Members perms required)**` },
             )
             .setFooter(`Can the muted person still type? Try ${database[`${message.guild.id}`]["prefix"]}mute fixPerms `)
             message.channel.send(embed);
@@ -36,7 +36,7 @@ module.exports = {
         }
         
         // TODO: make this work with a timeout argument and all, currently crashes.
-        const User = message.mentions.users.first();
+        const User = message.guild.member(message.mentions.users.first())
 
         if (!(message.guild.member(message.author).hasPermission('MANAGE_ROLES') || message.guild.member(message.author).id == message.guild.ownerID)) {
             message.reply("You dont have permissions to do that (Manage Roles perms).");
@@ -60,9 +60,25 @@ module.exports = {
             return;
         };
 
-        args.shift();
-
+        args.shift()
         let rawTime = args.shift()
+        if (args.length == 0) args = ['Not', 'specified'];
+
+        //WHY DOES THIS EXECUTE EVERYTIME EVEN IF IT HAS NUMBERS
+        if (/^[a-zA-Z]+$/.test(rawTime)) {
+            if (User.roles.cache.some((role)=> role === muteRole)) {
+                message.reply('That person is already muted.')
+                return;
+            }
+
+            args.unshift(rawTime)
+
+            User.roles.add(muteRole)
+
+            message.channel.send(`You muted ${User.user.username} for reason: ${args.join(' ')} (for unlimited time)`)
+            return
+        }
+
         let timeType
         let computerTime
 
@@ -82,15 +98,18 @@ module.exports = {
         } else if (rawTime.slice(-1).match(/[0-9]/i)) {
             timeType = args[0]
             args.shift()
+
         } else {
-            message.reply(`What the heck does ${rawTime} even mean lol. Make sure to not use any special characters, as these are NOT a time`)
+            message.reply(`What the heck does ${rawTime} even mean lol. Make sure to not use any special characters, as these are NOT a time.`)
+            return;
         }
 
-        if (/^[a-zA-Z]+$/.test(rawTime)) {
+        if (/[^0-9]+$/.test(rawTime)) {
             message.reply(`\`${rawTime}\` is not an acceptable time!`);
             return;
         }
 
+        //bitch you better work
         switch (timeType) {
             case 's':
                 computerTime = rawTime*1000;
@@ -114,14 +133,19 @@ module.exports = {
         }
 
         //message.channel.send(`mutesd someone for ${computerTime}ms`)
-        if (User.roles.cache.find(muteRole)) {
+        if (User.roles.cache.some((role)=> role === muteRole)) {
             message.reply('That person is already muted.')
             return;
         }
 
-        User.roles.add(muteRole, "Mute command")
+        User.roles.add(muteRole, "Mute command used.")
         
-        setTimeout(function(){User.roles.remove(muteRole, "Expired mute time set with command.")}, computerTime)
-        message.channel.send(`You muted ${User.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`);
+        setTimeout(function(){
+            if (User.roles.cache.some((role)=> role === muteRole)) {
+                User.roles.remove(muteRole, "Expired mute time set with command.")
+            }
+        }, computerTime)
+
+        message.channel.send(`You muted ${User.user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`)
 	},
 };
