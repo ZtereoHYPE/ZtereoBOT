@@ -6,7 +6,12 @@
   "scripts": {
     "start": "node ./index.js"
   },
-  "keywords": ["discord", "bot", "ZtereoHYPE", "ztereobot"],
+  "keywords": [
+    "discord",
+    "bot",
+    "ZtereoHYPE",
+    "ztereobot"
+  ],
   "author": "ZtereoHYPE",
   "license": "WTFPL",
   "dependencies": {
