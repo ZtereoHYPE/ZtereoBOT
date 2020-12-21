@@ -27,7 +27,7 @@ module.exports = {
         }
 
         if (args[0] == 'enable') {
-            if (!message.author.id === message.guild.ownerID) {
+            if (!(message.author.id === message.guild.ownerID)) {
                 message.reply(`Only the server owner can change the tts command status.`);
                 return;
             }
@@ -47,7 +47,7 @@ module.exports = {
             message.channel.send('TTS command has been enabled.')
             return
         } else if (args[0] == 'disable') {
-            if (!message.author.id === message.guild.ownerID) {
+            if (!(message.author.id === message.guild.ownerID)) {
                 message.reply(`Only the server owner can change the tts command status.`);
                 return;
             }
