@@ -1,7 +1,7 @@
 // Load required files and save them in constants
 const fs = require('fs');
 const Discord = require('discord.js');
-const { token } = require('./config.json');
+const { token, statusType, statusContent } = require('./config.json');
 const database = require('./database.json');
 const join = require('./extensions/join.js');
 const leave = require('./extensions/leave.js');
@@ -21,7 +21,7 @@ for (const file of commandFiles) {
 // Once bot is ready, log it in console and set status
 client.once('ready', () => {
     console.log('Your bot should be working now I hope please work please-');
-    client.user.setActivity('Cyberpunk 2077', { type: 'PLAYING' });
+    client.user.setActivity(statusContent, { type: statusType });
 });
 
 // Guild joining detection
@@ -81,7 +81,7 @@ client.on('message', message => {
 
     // Try to execute the command and in case of failure send error message.
     try {
-        command.execute(message, args);
+        command.execute(message, args, client);
     } catch (error) {
         console.error(error);
         message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
