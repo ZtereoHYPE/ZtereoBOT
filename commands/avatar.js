@@ -5,9 +5,8 @@ module.exports = {
     description: 'Shows a user\'s avatar.',
     args: true,
 	execute(message, args) {
-
         // Help command
-        if (!args.length || args[0] == 'help') {
+        if (args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Avatar Command Help:')
@@ -16,15 +15,19 @@ module.exports = {
             )
             message.channel.send(embed);
             return;
-          }
+        }
 
-        //maps the mentioned users in an array and sends an embed for each element of the array
-        const avatarList = message.mentions.users.map(user => {
-            const embed = new Discord.MessageEmbed()
-                .setTitle(`${user.username}\'s avatar:`)
-                .setImage(user.avatarURL({dynamic: true, format: 'png', size: 2048}));
-            return embed;
-        });
-        message.channel.send(avatarList);
+        let User;
+        if (!args.lenght) {
+            User = message.guild.member(message.author)
+        } else {
+            console.log(message.author)
+            User = message.guild.member(message.mentions.users.first())
+        }
+
+        const embed = new Discord.MessageEmbed()
+            .setTitle(`${User.user.username}\'s avatar:`)
+            .setImage(User.user.avatarURL({dynamic: true, format: 'png', size: 2048}));
+        message.channel.send(embed);
 	},
 };
