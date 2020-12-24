@@ -19,16 +19,16 @@ For the second option, you need to do some things as this repository does not co
 - From inside the bot directory (more specifically, the `package.json` directory) run `npm install` to install all of the reqired dependencies for the bot to work.
 
 - Add a `config.json` file, containing the following:
- ```json
-{
-    "token": "xxxxXXXXXXXXXXXXXxxxxxXXXXxxXXXXXxxXXXXXXXXxxxXXXXXxxx",
-    "statusType": "LISTENING",
-    "statusContent": "-help"
-}
-```
+  ```json
+  {
+      "token": "xxxxXXXXXXXXXXXXXxxxxxXXXXxxXXXXXxxXXXXXXXXxxxXXXXXxxx",
+      "statusType": "LISTENING",
+      "statusContent": "-help"
+  }
+  ```
  
- The Xs will obviously have to be replaced by your own bot token (DO NOT PUBLISH THIS TO THE INTERNETS)
- statusType can be LISTENING, WATCHING, STREAMING, or PLAYING and statusContent can be whatever you want.
+  The Xs will obviously have to be replaced by your own bot token (DO NOT PUBLISH THIS TO THE INTERNETS). statusType can be LISTENING, WATCHING, STREAMING, or PLAYING and statusContent can be whatever you want.
+  
   
   
 - database.json
