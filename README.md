@@ -38,7 +38,7 @@ For the second option, you need to do some things as this repository does not co
   {
     "server-id": {
         "prefix": "!",
-        "warnings": [player1, player2],
+        "warnings": ["playerId1", "playerId2"],
         "rules": ["do not eat", "please"],
         "bans": [],
         "allowed": []
@@ -57,3 +57,6 @@ For the second option, you need to do some things as this repository does not co
   
 ## Thank you!
 Thank you for reading this readme and I thank very much all of the past, present, and future contributors of this project :D
+
+### Credits:
+Some icons used in the embeds are from fontawesome and have been re-colored.
