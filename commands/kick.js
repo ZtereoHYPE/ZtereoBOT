@@ -8,11 +8,12 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Kick Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Kick Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}kick [@member] [reason]`, value: `Kicks the person out of the server. **(Kick Members perms required)**` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}kick [@member] [reason]`, value: `Kicks the person out of the server.` },
             )
+            .addFooter('Kick Members perms required', 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

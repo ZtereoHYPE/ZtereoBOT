@@ -8,10 +8,10 @@ module.exports = {
         // Help command
 		if (!args.length) {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Reload Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Reload Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}reload [command/"all"] **(Admin only)**`, value: `Reloads the chosed command.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}reload [command/"all"]`, value: `Reloads the chosen command.` },
             )
             message.channel.send(embed);
             return;

@@ -8,8 +8,8 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Warnhistory Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
                 { name: `${database[`${message.guild.id}`]["prefix"]}warnhistory [@member]`, value: `Shows a user\'s history of warnings.` },
             )

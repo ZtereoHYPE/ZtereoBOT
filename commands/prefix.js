@@ -9,11 +9,12 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             var embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Prefix Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Prefix Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}prefix [new prefix] **(Server Owner only)**`, value: `Changes the current server\'s prefix.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}prefix [new prefix]`, value: `Changes the current server\'s prefix.`},
             )
+            .setFooter(`Server Owner only`, 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

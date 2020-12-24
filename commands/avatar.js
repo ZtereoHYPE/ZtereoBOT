@@ -8,10 +8,10 @@ module.exports = {
         // Help command
         if (args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Avatar Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Avatar Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}avatar [someone]`, value: 'Sends the selected person\'s profile picture.'},
+                { name: `${database[`${message.guild.id}`]["prefix"]}avatar [@member]`, value: 'Sends the selected person\'s profile picture.\nIf empty, sends the sender\'s avatar'},
             )
             message.channel.send(embed);
             return;

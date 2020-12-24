@@ -8,11 +8,12 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Delwarn Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}delwarn [@user] [warn number]`, value: `Deletes a user\'s warm.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}delwarn [@member] [warn number]`, value: `Deletes a user\'s warm.` },
             )
+            .setFooter('Kick Members perms required', 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

@@ -8,11 +8,12 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Prune Command:')
+            .setColor('#8EB9FE')
+            .setAuthor('Purge Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
                 { name: `${database[`${message.guild.id}`]["prefix"]}purge [number 1-99]`, value: 'Deletes the specifed number of messages from the chat.' },
             )
+            .setFooter(`Manage Messages perms required`, 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

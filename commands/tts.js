@@ -16,12 +16,13 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('TTS Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
                 { name: `${database[`${message.guild.id}`]["prefix"]}tts [text]`, value: `Sends a Text To Speech message. [currently ${commandStatus}]` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}tts enable/disable`, value: `Enables and disables the command` },
             )
-            .setFooter(`PS. You can enable and disable this command with \`${database[`${message.guild.id}`]["prefix"]}tts enable/disable\``)
+            .setFooter('Enabling/disabling TTS requires Admin perms', 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

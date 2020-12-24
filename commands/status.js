@@ -10,11 +10,12 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Status Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}status [PLAYING/STREAMING/LISTENING/WATCHING] [what]`, value: `Sets the bot\'s status (ZtereoHYPE only lol)` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}status [PLAYING/STREAMING/LISTENING/WATCHING] [what]`, value: `Sets the bot\'s status.` },
             )
+            .setFooter('ZtereoHYPE Only lol', 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

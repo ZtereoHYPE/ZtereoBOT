@@ -25,12 +25,13 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Mute Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Mute Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}mute [someone] [time s/m/h/d] [reason]`, value: `Mutes the person in the server. **(Manage Members perms required)**` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}mute [@member] [time s/m/h/d] [reason]`, value: `Mutes the person in the server.` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}mute fixPerms`, value: 'Fixes the permissions of the `Server Muted` role' },
             )
-            .setFooter(`Can the muted person still type? Try ${database[`${message.guild.id}`]["prefix"]}mute fixPerms `)
+            .setFooter(`Manage Members perms required`, 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }
