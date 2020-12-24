@@ -92,3 +92,4 @@ client.on('message', message => {
 client.login(token);
 
 // Use this link to add ZtereoBOT to your server https://discord.com/oauth2/authorize?client_id=713718980325539910&scope=bot&permissions=8
+// Use this command to update the git on the pi lol  git pull https://github.com/ZtereoHYPE/ZtereoBOT.git (~/ directory)
