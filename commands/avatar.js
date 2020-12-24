@@ -18,13 +18,16 @@ module.exports = {
         }
 
         let User;
-        if (!args.lenght) {
+        if (!args.length) {
             User = message.guild.member(message.author)
         } else {
-            console.log(message.author)
             User = message.guild.member(message.mentions.users.first())
+            if (!User) {
+                message.reply(`${args.join(' ')} isn't a user.`)
+                return;
+            }
         }
-
+        
         const embed = new Discord.MessageEmbed()
             .setTitle(`${User.user.username}\'s avatar:`)
             .setImage(User.user.avatarURL({dynamic: true, format: 'png', size: 2048}));
