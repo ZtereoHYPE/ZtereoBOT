@@ -8,8 +8,8 @@ module.exports = {
         // Help command
         if (args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Banlist Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Banlist Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
                 { name: `${database[message.guild.id]["prefix"]}banlist`, value: `Shows the list of banned players in the guild.` },
             )

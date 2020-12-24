@@ -8,11 +8,12 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Warn Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}warn [@member] [reason]`, value: `Warns a user for rule-breaking and adds the warning along with its reasons to a user-specific record. **(Kick Members perms required)**` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}warn [@member] [reason]`, value: `Warns a user for rule-breaking and adds the warning along with its reasons to a record.` },
             )
+            .setFooter('Kick Members perms required', 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

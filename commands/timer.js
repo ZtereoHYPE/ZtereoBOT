@@ -8,10 +8,10 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Timer Command:')
+            .setColor('#8EB9FE')
+            .setAuthor('Timer Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}timer [number] seconds/minutes/hours`, value: 'Sets a timer for the chosen amount of time and pings you when the timer is over' },
+                { name: `${database[`${message.guild.id}`]["prefix"]}timer [number] seconds/minutes/hours`, value: 'Sets a timer for the chosen amount of time and pings you when timer is over' },
             )
             message.channel.send(embed);
             return;

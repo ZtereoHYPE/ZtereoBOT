@@ -8,11 +8,12 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('Ban Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('Ban Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}ban [@member] [reason]`, value: `Bans a player. **(Ban Member perms required)**` },
+                { name: `${database[`${message.guild.id}`]["prefix"]}ban [@member] [reason]`, value: `Bans a player from the server` },
             )
+            .setFooter('Ban Member perms required', 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }

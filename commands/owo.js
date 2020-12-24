@@ -10,8 +10,8 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#00cc00')
-            .setTitle('OwO Command Help:')
+            .setColor('#8EB9FE')
+            .setAuthor('OwO Command Help:', 'https://i.imgur.com/dSTYnIF.png')
             .addFields(
                 { name: `${database[`${message.guild.id}`]["prefix"]}owo [message to owoify]`, value: 'OwOifies a message.'},
             )
@@ -32,6 +32,10 @@ module.exports = {
                 owo = 'uvu'
         }
         message.delete();
-        message.channel.send(owoify(args.join(' '), owo));
+        const embed = new Discord.MessageEmbed()
+            .setColor('#616E84')
+            .setDescription(owoify(args.join(' '), owo))
+            .setFooter(message.guild.member(message.author).user.username, message.guild.member(message.author).user.avatarURL({dynamic: true, format: 'png', size: 128}))
+        message.channel.send(embed);
 	},
 };
