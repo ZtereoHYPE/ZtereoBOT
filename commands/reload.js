@@ -19,20 +19,47 @@ module.exports = {
 
         // If the first argument is "all", reloads every command
         if (args[0] === "all") {
+
+            let errors = []
             const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
             for (const file of commandFiles) {
                 delete require.cache[require.resolve(`./${file}`)];
+
 	            try {
                     const reloadedCommand = require(`./${file}`);
                     message.client.commands.set(reloadedCommand.name, reloadedCommand);
                     // message.channel.send(`Successfully reloaded \`${file}\`!`);
+
                 } catch (error) {
                     console.error(error);
-                    message.channel.send(`There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``);
+                    errors.push({
+                        "name": file,
+                        "error": error.message
+                    })
+
+                    //message.channel.send(`There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``);
                 }
             }
-            return;
+            console.log(errors)
+            const embed = new Discord.MessageEmbed()
+            if (errors.length) {
+                embed.setColor('#8E1A01')
+                embed.setAuthor('Commands Reloaded but...', 'https://i.imgur.com/rs1souv.png')
+                embed.setDescription('All commands were reloaded but some had errors:')
+                for (const error in errors) {
+                    embed.addFields({name: errors[error]['name'], value: errors[error]['error']})
+                }
+            } else {
+                embed.setColor('#15AABF')
+                embed.setAuthor('Commands Reloaded Successfully!', 'https://i.imgur.com/yvHrC4Q.png')
+                embed.setDescription('All commands were reloaded with success!')
+            }
+            message.channel.send(embed)
+
+            return
         }
+        
         // Saves the selected command to the command constant.
         const commandName = args[0].toLowerCase();
         const command = message.client.commands.get(commandName)
