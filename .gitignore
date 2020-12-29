@@ -2,9 +2,8 @@
 **/.DS_Store
 config.json
 database.json
-commands/modelcommand.js
 node_modules/
 package-lock.json
 .vscode/
-commands/github.js
-assets
+commands/WIP
+test.js
