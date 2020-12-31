@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'mute',
+    name: 'mute',
+    category: 'moderation',
     description: 'Mute a user.',
-    args: true,
-	execute(message, args) {
+	execute(message, args, client, database) {
 
         //TODO: ADDD FAILPROOFNESS IF THERE ARE MORE ROLES CALLED THE SAME AND THELL THEM TO DELETE ONE OF THE ROLES. OR SWITCH TO A ROLE ID BUT IT WOULD HAVE TO BE PER-SERVER
 

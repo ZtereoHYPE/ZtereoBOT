@@ -1,10 +1,10 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'warn',
+    name: 'warn',
+    category: 'moderation',
 	description: 'Warns a user for rule-breaking and adds the warning to a user-specific record.',
-	execute(message, args) {
+	execute(message, args, client, database) {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
@@ -18,7 +18,6 @@ module.exports = {
             return;
         }
 
-        let User = message.guild.member(message.mentions.users.first())
         if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
             message.reply("you don\'t have the permission to do that (Kick Members perms).");
             return;
@@ -29,6 +28,7 @@ module.exports = {
             return;
         };
 
+        let User = message.guild.member(message.mentions.users.first())
         if (User.id === message.guild.ownerID) {
             message.reply(`you can\'t warn the server owner lol.`);
             return;

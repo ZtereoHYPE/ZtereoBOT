@@ -5,13 +5,16 @@ const database = require('../database.json');
 module.exports = {
     name: "join",
     execute(guild) {
+        // Log when the bot enters a new guild
+        console.log("Joined a new guild: " + guild.id);
+
         // Create an entry in the database with as key the guild id containing everything needed.
         database[`${guild.id}`] = {
             "prefix" : "-",
             "warnings" : {},
             "rules" : [],
             "bans" : {},
-            "enable": []
+            "disabled": ["tts"]
         };
         
         // Save the JSON file
@@ -23,6 +26,10 @@ module.exports = {
         });
 
         // Send welcome message :)
+        if (!guild.systemChannel) {
+            return;
+        }
+        
         const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Hello everyone!')

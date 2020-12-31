@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'timer',
+    name: 'timer',
+    category: 'moderation',
     description: 'Sets a timer after which you get pinged.',
-    args: true,
-	execute(message, args) {
+	execute(message, args, client, database) {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()

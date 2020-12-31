@@ -1,11 +1,10 @@
 const owoify = require('owoify-js').default
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'owo',
+    name: 'owo',
+    category: 'fun',
     description: 'Owoifies a message.',
-    args: true,
-	execute(message, args) {
+	execute(message, args, client, database) {
 
         // Help command
         if (!args.length || args[0] == 'help') {
@@ -31,6 +30,8 @@ module.exports = {
             case 3:
                 owo = 'uvu'
         }
+
+        //if lol
         message.delete();
         const embed = new Discord.MessageEmbed()
             .setColor('#616E84')
