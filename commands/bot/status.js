@@ -1,11 +1,11 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const database = require('../database.json');
-const config = require('../config.json')
+const config = require('../../config.json')
 module.exports = {
-	name: 'status',
+    name: 'status',
+    category: 'bot',
 	description: 'Sets the bot\'s status',
-	execute(message, args, client) {
+	execute(message, args, client, database) {
 
         // Help command
         if (!args.length || args[0] == 'help') {

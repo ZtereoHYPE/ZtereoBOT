@@ -1,12 +1,11 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const database = require('../database.json');
-const { isBuffer } = require('util');
 module.exports = {
-	name: 'tts',
-	description: 'Sends a Test To Speech Message',
-	execute(message, args) {
-        
+    name: 'tts',
+    category: 'moderation',
+    description: 'Sends a Test To Speech Message',
+    execute(message, args, client, database) {
+
         if (database[`${message.guild.id}`]["enable"].includes('tts')) {
             commandStatus = 'enabled'
         } else {
@@ -16,13 +15,13 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#8EB9FE')
-            .setAuthor('TTS Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}tts [text]`, value: `Sends a Text To Speech message. [currently ${commandStatus}]` },
-                { name: `${database[`${message.guild.id}`]["prefix"]}tts enable/disable`, value: `Enables and disables the command` },
-            )
-            .setFooter('Enabling/disabling TTS requires Admin perms', 'https://i.imgur.com/Z9gjIx1.png')
+                .setColor('#8EB9FE')
+                .setAuthor('TTS Command Help:', 'https://i.imgur.com/dSTYnIF.png')
+                .addFields(
+                    { name: `${database[`${message.guild.id}`]["prefix"]}tts [text]`, value: `Sends a Text To Speech message. [currently ${commandStatus}]` },
+                    { name: `${database[`${message.guild.id}`]["prefix"]}tts enable/disable`, value: `Enables and disables the command` },
+                )
+                .setFooter('Enabling/disabling TTS requires Admin perms', 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }
@@ -33,15 +32,16 @@ module.exports = {
                 return;
             }
 
-            if (database[`${message.guild.id}`]["enable"].includes('tts')) {
+            if (!database[`${message.guild.id}`]["disabled"].includes('tts')) {
                 message.reply('TTS command is already enabled.')
                 return;
             }
-            database[`${message.guild.id}`]["enable"].push('tts')
+
+            database[`${message.guild.id}`]["disabled"] = database[`${message.guild.id}`]["disabled"].filter(object => object.indexOf('tts'), 1)
             // Save the JSON file
             var saveJson = JSON.stringify(database, null, 4);
-            fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-                if(err){
+            fs.writeFile('database.json', saveJson, 'utf8', (err) => {
+                if (err) {
                     console.log(err)
                 }
             });
@@ -53,15 +53,16 @@ module.exports = {
                 return;
             }
 
-            if (!database[`${message.guild.id}`]["enable"].includes('tts')) {
+            if (database[`${message.guild.id}`]["disabled"].includes('tts')) {
                 message.reply('TTS command is already disabled.')
                 return;
             }
-            database[`${message.guild.id}`]["enable"] = database[`${message.guild.id}`]["enable"].filter(object => object.indexOf('tts'), 1)
+            database[`${message.guild.id}`]["disabled"].push('tts')
+
             // Save the JSON file
             var saveJson = JSON.stringify(database, null, 4);
-            fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-                if(err){
+            fs.writeFile('database.json', saveJson, 'utf8', (err) => {
+                if (err) {
                     console.log(err)
                 }
             });
@@ -74,8 +75,8 @@ module.exports = {
             return
         }
 
-        message.channel.send(`${args.join(' ')}`,{
+        message.channel.send(`${args.join(' ')}`, {
             tts: true
         });
-	},
+    },
 };

@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'kick',
+    name: 'kick',
+    category: 'moderation',
     description: 'Kicks a user.',
-    args: true,
-	execute(message, args) {
+	execute(message, args, client, database) {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()

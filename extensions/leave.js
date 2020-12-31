@@ -5,6 +5,9 @@ const database = require('../database.json');
 module.exports = {
     name: "leave",
     execute(guild) {
+        // Log when the bot leaves a guild
+        console.log("Left a guild: " + guild.id);
+
         // Delete the guild's entry in the database
         delete database[`${guild.id}`];
 

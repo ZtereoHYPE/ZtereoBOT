@@ -1,10 +1,9 @@
-const fs = require('fs');
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'warnhistory',
+    name: 'warnhistory',
+    category: 'moderation',
 	description: 'Shows a user\'s history of warnings.',
-	execute(message, args) {
+	execute(message, args, client, database) {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()

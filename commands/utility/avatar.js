@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'avatar',
+    name: 'avatar',
+    category: 'utility',
     description: 'Shows a user\'s avatar.',
-    args: true,
-	execute(message, args) {
+	execute(message, args, client, database) {
         // Help command
         if (args[0] == 'help') {
             const embed = new Discord.MessageEmbed()

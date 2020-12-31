@@ -1,10 +1,10 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'delwarn',
+    name: 'delwarn',
+    category: 'moderation',
 	description: 'Deletes a user\'s warm.',
-	execute(message, args) {
+	execute(message, args, client, database) {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
@@ -17,13 +17,18 @@ module.exports = {
             message.channel.send(embed);
             return;
         }
-
-        let User = message.guild.member(message.mentions.users.first())
+        
         if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
             message.reply("you don\'t have the permission to do that (Kick Members perms).");
             return;
         }
 
+        if (!message.mentions.users.first()) {
+            message.reply('please specify a user whose warning to remove.')
+            return;
+        };
+
+        let User = message.guild.member(message.mentions.users.first())
         if (message.guild.member(message.author).id == User.id) {
             if (message.guild.member(message.author).id == message.guild.ownerID) return;
             message.reply("Sorry, but you cannot remove your own warnings for obvious reasons. Please ask another moderator to do so.");
@@ -31,11 +36,6 @@ module.exports = {
         }
 
         let warningNumber = args[1]
-        if (!message.mentions.users.first()) {
-            message.reply('please specify a user who\'s warning to remove.')
-            return;
-        };
-
         if (!warningNumber || !database[message.guild.id]['warnings'][User.id]['warns'].hasOwnProperty(warningNumber)) {
             message.reply(`please provide a valid warning number. To see warning numbers, use \`${database[`${message.guild.id}`]["prefix"]}warnhistory [@member]\``)
             return;

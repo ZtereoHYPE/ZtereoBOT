@@ -1,10 +1,10 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
 	name: 'help',
+	category: 'moderation',
 	description: 'List all of my commands or info about a specific command.',
-	execute(message) {
+	execute(message, args, client, database) {
         const { commands } = message.client;
 		const embed = new Discord.MessageEmbed()
 			.setColor('#8EB9FE')

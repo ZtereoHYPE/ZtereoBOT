@@ -1,10 +1,9 @@
 const Discord = require('discord.js');
-const database = require('../database.json');
 module.exports = {
-	name: 'purge',
+    name: 'purge',
+    category: 'moderation',
     description: 'Purges messages from the chat.',
-    args: true,
-	execute(message, args) {
+	execute(message, args, client, database) {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()

@@ -1,21 +1,40 @@
 // Load required files and save them in constants
+//TODO have a recursisve system like for commands (dont load each and every single extension manually bruh)
 const fs = require('fs');
 const Discord = require('discord.js');
+const path = require('path');
 const { token, statusType, statusContent } = require('./config.json');
 const database = require('./database.json');
-const join = require('./extensions/join.js');
-const leave = require('./extensions/leave.js');
-const help = require('./commands/help');
 
 // Start discord.js stuff
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+client.extensions = new Discord.Collection();
 
-// Load the command files 
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+//TODO this works but make it recursive/ checks if each item is folder and applies function to it and uh idk how to make it reuse the same array... Maybe store good files in an array okay yeah makes sense
+const commandFolders = fs
+    .readdirSync('./commands')
+    .filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
+
+for (const dir of commandFolders) {
+    const commandFiles = fs
+        .readdirSync(`./commands/${dir}`)
+        .filter(file => file.endsWith(".js"));
+
+    for (const file of commandFiles) {
+        const command = require(`./commands/${dir}/${file}`);
+        client.commands.set(command.name, command);
+    }
+}
+
+// Extension loader
+const extensionFiles = fs
+    .readdirSync('./extensions')
+    .filter(file => file.endsWith(".js"));
+
+for (const file of extensionFiles) {
+    const extension = require(`./extensions/${file}`);
+    client.extensions.set(extension.name, extension);
 }
 
 // Once bot is ready, log it in console and set status
@@ -26,20 +45,14 @@ client.once('ready', () => {
 
 // Guild joining detection
 client.on("guildCreate", guild => {
-    // Log when the bot enters a new guild
-    console.log("Joined a new guild: " + guild.id);
-
-    // Execute the join.js file
-    join.execute(guild);
+    // Execute the join.js extension
+    client.extensions.get('join').execute(guild);
 });
 
 // Guild kicking/leaving detection
 client.on("guildDelete", guild => {
-    // Log when the bot leaves a guild
-    console.log("Left a guild: " + guild.id);
-
     // Execute the leave.js file
-    leave.execute(guild);
+    client.extensions.get('leave').execute(guild);
 });
 
 // Execute commands
@@ -58,7 +71,7 @@ client.on('message', message => {
 
     if (message.content == "-help") {
         try {
-            help.execute(message);
+            client.commands.get('help').execute(message, 0, 0, database);
         } catch (error) {
             console.error(error);
             message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
@@ -81,7 +94,7 @@ client.on('message', message => {
 
     // Try to execute the command and in case of failure send error message.
     try {
-        command.execute(message, args, client);
+        command.execute(message, args, client, database);
     } catch (error) {
         console.error(error);
         message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
@@ -93,4 +106,4 @@ client.login(token);
 
 // Use this link to add ZtereoBOT to your server https://discord.com/oauth2/authorize?client_id=713718980325539910&scope=bot&permissions=8
 // Use this link to add ZtereoBOT Beta to your server https://discord.com/oauth2/authorize?client_id=791744080127197204&scope=bot&permissions=8
-// Use this command to update the git on the pi lol  git pull https://github.com/ZtereoHYPE/ZtereoBOT.git (~/ directory)
+// Use this command to update the git on the pi lol  git pull https://github.com/ZtereoHYPE/ZtereoBOT.git (~/ZtereoBOT directory)
