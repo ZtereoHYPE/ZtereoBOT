@@ -29,7 +29,6 @@ module.exports = {
         if (!guild.systemChannel) {
             return;
         }
-        
         const embed = new Discord.MessageEmbed()
             .setColor('#00cc00')
             .setTitle('Hello everyone!')
@@ -39,5 +38,18 @@ module.exports = {
                 { name: `If you need any help, just type \`-help\``, value: 'Or simply ask ZtereoHYPE :)'}
             )
         guild.systemChannel.send(embed);
+
+        // Create Server Muted role so that the mute command works first try.
+        const muteRole = guild.roles.cache.find((role) => role.name === 'Server Muted');
+        if (!muteRole) {
+            guild.roles.create({
+                data: {
+                    name: "Server Muted",
+                    color: "black",
+                },
+                reason: 'Missing Server Muted role, necessary for mute command.'
+            });
+        };
+
     }
 }
