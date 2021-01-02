@@ -23,7 +23,7 @@ module.exports = {
             return;
         }
 
-        if (/[a-z]/.test(args[0])) {
+        if (!(/[0-9]+$/.test(args[0]))) {
             message.reply(`please give select a user by its ID. To find the ID, use \`${database[`${message.guild.id}`]["prefix"]}banlist\``)
             return;
         };
@@ -34,7 +34,9 @@ module.exports = {
         };
         
         message.guild.members.unban(args[0])
-        .then(user => message.reply(`you unbanned ${user.username} from ${message.guild.name}.`))
+            .then(user => message.reply(`you unbanned ${user.username} from ${message.guild.name}.`))
+
+
         delete database[`${message.guild.id}`]['bans'][`${args[0]}`];
         
         // Save the JSON file
