@@ -38,7 +38,7 @@ For the second option, you need to do some things as this repository does not co
   {
     "server-id": {
         "prefix": "!",
-        "warnings": [player1, player2],
+        "warnings": [playerId1, playerId2],
         "rules": ["do not eat", "please"],
         "bans": [],
         "allowed": []
