@@ -101,6 +101,10 @@ client.on('message', message => {
     }
 });
 
+process.on('unhandledRejection', error => {
+	console.error('Unhandled promise rejection:', error);
+});
+
 // Login with token (very secret)
 client.login(token);
 
