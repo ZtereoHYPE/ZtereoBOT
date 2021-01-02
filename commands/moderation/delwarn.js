@@ -23,6 +23,11 @@ module.exports = {
             return;
         }
 
+        if (message.guild.member(message.author).roles.highest.position >= message.guild.member(client.user).roles.highest.position) {
+            message.channel.send('I am not high enough in the roles hierarchy to do this! Please contact a moderator or the server owner and inform them of this')
+            return
+        }
+
         if (!message.mentions.users.first()) {
             message.reply('please specify a user whose warning to remove.')
             return;

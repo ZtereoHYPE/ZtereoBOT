@@ -4,6 +4,7 @@ module.exports = {
     category: 'moderation',
     description: 'Kicks a user.',
 	execute(message, args, client, database) {
+
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
@@ -25,6 +26,11 @@ module.exports = {
             return;
         }
 
+        if (message.guild.member(message.author).roles.highest.position >= message.guild.member(client.user).roles.highest.position) {
+            message.channel.send('I am not high enough in the roles hierarchy to do this! Please contact a moderator or the server owner and inform them of this')
+            return
+        }
+
         if (!message.mentions.users.first()) {
             message.reply('please specify a user to kick.')
             return;
@@ -38,8 +44,11 @@ module.exports = {
         args.shift();
         if (args.length == 0) args = ['Not', 'specified'];
 
-        User.kick(args.join(' '));
-        
+        try {
+            User.kick(args.join(' '));
+        } catch (error) {
+            message.reply(error)
+        }
         message.reply(`you kicked ${User.user.username} for reason: ${args.join(' ')}`);
 	},
 };

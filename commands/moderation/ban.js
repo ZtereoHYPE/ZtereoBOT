@@ -24,6 +24,11 @@ module.exports = {
             return;
         }
 
+        if (message.guild.member(message.author).roles.highest.position >= message.guild.member(client.user).roles.highest.position) {
+            message.channel.send('I am not high enough in the roles hierarchy to do this! Please contact a moderator or the server owner and inform them of this')
+            return
+        }
+
         if (!message.mentions.users.first()) {
             message.reply('please specify a user to ban.')
             return;
@@ -34,7 +39,10 @@ module.exports = {
             return;
         };
 
-        User.ban(0, args.join(' '));
+        User.ban({
+            days: 0,
+            reaon: args.join(' ')
+        });
 
         args.shift();
         if (args.length == 0) args = ['Not', 'specified'];
