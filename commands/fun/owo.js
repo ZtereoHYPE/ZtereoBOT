@@ -33,10 +33,6 @@ module.exports = {
 
         //if lol
         message.delete();
-        const embed = new Discord.MessageEmbed()
-            .setColor('#616E84')
-            .setDescription(owoify(args.join(' '), owo))
-            .setFooter(message.guild.member(message.author).user.username, message.guild.member(message.author).user.avatarURL({dynamic: true, format: 'png', size: 128}))
-        message.channel.send(embed);
+        message.channel.send(owoify(args.join(' '), owo))
 	},
 };
