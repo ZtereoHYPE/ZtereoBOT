@@ -2,6 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'eval',
+    category: 'bot',
     description: 'Eval command, to exectue whatever ZtereoHYPE wants. DO NOT USE UNLESS BOT OWNER',
     execute(message, args, client, database) {
 

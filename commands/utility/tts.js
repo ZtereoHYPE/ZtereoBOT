@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'tts',
-    category: 'moderation',
+    category: 'utility',
     description: 'Sends a Test To Speech Message',
     execute(message, args, client, database) {
 
