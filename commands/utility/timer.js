@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'timer',
-    category: 'moderation',
+    category: 'utility',
     description: 'Sets a timer after which you get pinged.',
 	execute(message, args, client, database) {
         // Help command
