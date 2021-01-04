@@ -39,8 +39,7 @@ for (const file of extensionFiles) {
 
 // Once bot is ready, log it in console and set status
 client.once('ready', () => {
-    console.log('Your bot should be working now I hope please work please-');
-    client.user.setActivity(statusContent, { type: statusType });
+    client.extensions.get('backOnline').execute(client, database)
 });
 
 // Guild joining detection
