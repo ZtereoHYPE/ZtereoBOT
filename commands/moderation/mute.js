@@ -3,7 +3,7 @@ module.exports = {
     name: 'mute',
     category: 'moderation',
     description: 'Mute a user.',
-	execute(message, args, client, database) {
+    execute(message, args, client, database) {
 
         //TODO: ADDD FAILPROOFNESS IF THERE ARE MORE ROLES CALLED THE SAME AND THELL THEM TO DELETE ONE OF THE ROLES. OR SWITCH TO A ROLE ID BUT IT WOULD HAVE TO BE PER-SERVER
 
@@ -11,9 +11,9 @@ module.exports = {
 
         if (!muteRole) {
             message.guild.roles.create({
-                data:{
-                    name:"Server Muted",
-                    color:"black",
+                data: {
+                    name: "Server Muted",
+                    color: "black",
                 },
                 reason: 'Missing Server Muted role, necessary for mute command.'
             });
@@ -24,17 +24,17 @@ module.exports = {
         // Help command
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
-            .setColor('#8EB9FE')
-            .setAuthor('Mute Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}mute [@member] [time s/m/h/d] [reason]`, value: `Mutes the person in the server.` },
-                { name: `${database[`${message.guild.id}`]["prefix"]}mute fixPerms`, value: 'Fixes the permissions of the `Server Muted` role' },
-            )
-            .setFooter(`Manage Members perms required`, 'https://i.imgur.com/Z9gjIx1.png')
+                .setColor('#8EB9FE')
+                .setAuthor('Mute Command Help:', 'https://i.imgur.com/dSTYnIF.png')
+                .addFields(
+                    { name: `${database[`${message.guild.id}`]["prefix"]}mute [@member] [time s/m/h/d] [reason]`, value: `Mutes the person in the server.` },
+                    { name: `${database[`${message.guild.id}`]["prefix"]}mute fixPerms`, value: 'Fixes the permissions of the `Server Muted` role' },
+                )
+                .setFooter(`Manage Members perms required`, 'https://i.imgur.com/Z9gjIx1.png')
             message.channel.send(embed);
             return;
         }
-        
+
         // TODO: make this work with a timeout argument and all, currently crashes.
         const User = message.guild.member(message.mentions.users.first())
 
@@ -44,12 +44,12 @@ module.exports = {
         }
 
         message.guild.channels.cache.forEach(channel => channel.updateOverwrite(muteRole, { SEND_MESSAGES: false }));
-        
-        if (args[0]=='fixPerms') {
+
+        if (args[0] == 'fixPerms') {
             message.channel.send("I've tried fixing the permissions.")
             return;
         }
-        
+
         if (!User) {
             message.reply('please specify a user to mute.')
             return;
@@ -66,7 +66,7 @@ module.exports = {
 
         //WHY DOES THIS EXECUTE EVERYTIME EVEN IF IT HAS NUMBERS
         if (/^[a-zA-Z]+$/.test(rawTime)) {
-            if (User.roles.cache.some((role)=> role === muteRole)) {
+            if (User.roles.cache.some((role) => role === muteRole)) {
                 message.reply('That person is already muted.')
                 return;
             }
@@ -112,19 +112,19 @@ module.exports = {
         //bitch you better work
         switch (timeType) {
             case 's':
-                computerTime = rawTime*1000;
+                computerTime = rawTime * 1000;
                 break;
 
             case 'm':
-                computerTime = rawTime*60000;
+                computerTime = rawTime * 60000;
                 break;
 
             case 'h':
-                computerTime = rawTime*3600000;
+                computerTime = rawTime * 3600000;
                 break;
 
             case 'd':
-                computerTime = rawTime*86400000;
+                computerTime = rawTime * 86400000;
                 break;
 
             default:
@@ -133,19 +133,19 @@ module.exports = {
         }
 
         //message.channel.send(`mutesd someone for ${computerTime}ms`)
-        if (User.roles.cache.some((role)=> role === muteRole)) {
+        if (User.roles.cache.some((role) => role === muteRole)) {
             message.reply('That person is already muted.')
             return;
         }
 
         User.roles.add(muteRole, "Mute command used.")
-        
-        setTimeout(function(){
-            if (User.roles.cache.some((role)=> role === muteRole)) {
+
+        setTimeout(function () {
+            if (User.roles.cache.some((role) => role === muteRole)) {
                 User.roles.remove(muteRole, "Expired mute time set with command.")
             }
         }, computerTime)
 
         message.channel.send(`You muted ${User.user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`)
-	},
+    },
 };

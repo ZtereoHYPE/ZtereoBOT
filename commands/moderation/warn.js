@@ -29,10 +29,6 @@ module.exports = {
         };
 
         let User = message.guild.member(message.mentions.users.first())
-        if (User.id === message.guild.ownerID) {
-            message.reply(`you can\'t warn the server owner lol.`);
-            return;
-        };
         
         args.shift();
         if (args.length == 0) args = ['Not', 'specified'];
@@ -66,6 +62,6 @@ module.exports = {
             }
         });
 
-        message.reply(`you warned ${User.user.username} for reason: ${args.join(' ')}`);
+        message.reply(`you warned ${User.user.username} for reason: ${args.join(' ')}\n (warning number ${Object.keys(database[message.guild.id]['warnings'][`${User.id}`]['warns']).length})`);
 	}
 };

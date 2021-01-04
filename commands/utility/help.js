@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
 	name: 'help',
-	category: 'moderation',
+	category: 'utility',
 	description: 'List all of my commands or info about a specific command.',
 	execute(message, args, client, database) {
         const { commands } = message.client;
