@@ -59,4 +59,4 @@ For the second option, you need to do some things as this repository does not co
 Thank you for reading this readme and I thank very much all of the past, present, and future contributors of this project :D
 
 ### Credits:
-Some icons used in the embeds are from fontawesome and have been re-colored.
+Some icons used in the embeds are from fontawesome and have been re-colored. (I had to put this here)
