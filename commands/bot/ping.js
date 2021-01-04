@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'ping',
-    category: 'moderation',
+    category: 'bot',
     description: 'Checks the ping (latency) of the bot',
     execute(message, args, client, database) {
         // Help command
