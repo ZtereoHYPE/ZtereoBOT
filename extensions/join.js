@@ -9,7 +9,7 @@ module.exports = {
         console.log("Joined a new guild: " + guild.id);
 
         // Create an entry in the database with as key the guild id containing everything needed.
-        database[`${guild.id}`] = {
+        database[guild.id] = {
             "prefix" : "-",
             "warnings" : {},
             "rules" : [],
