@@ -41,8 +41,7 @@ module.exports = {
         }
 
         if (User.id === message.guild.ownerID) {
-            message.reply(`you can\'t unmute the server owner (wait, how did this happen).`);
-            return;
+            message.channel.send(`wtf happened here.`);
         };
 
         args.shift()

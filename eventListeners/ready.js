@@ -1,7 +1,7 @@
 const { statusType, statusContent } = require('../config.json');
 const fs = require('fs');
 module.exports = {
-    name: "backOnline",
+    name: "ready",
     execute(client, database) {
         console.log('Welcome aboard Captain, all systems Online!')
         client.user.setActivity(statusContent, { type: statusType });
