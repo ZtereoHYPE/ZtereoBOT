@@ -6,10 +6,10 @@ module.exports = {
     description: 'Sends a Test To Speech Message',
     execute(message, args, client, database) {
 
-        if (database[`${message.guild.id}`]["enable"].includes('tts')) {
-            commandStatus = 'enabled'
-        } else {
+        if (database[`${message.guild.id}`]["disabled"].includes('tts')) {
             commandStatus = 'disabled'
+        } else {
+            commandStatus = 'enabled'
         }
 
         // Help command
@@ -38,13 +38,10 @@ module.exports = {
             }
 
             database[`${message.guild.id}`]["disabled"] = database[`${message.guild.id}`]["disabled"].filter(object => object.indexOf('tts'), 1)
+
             // Save the JSON file
-            var saveJson = JSON.stringify(database, null, 4);
-            fs.writeFile('database.json', saveJson, 'utf8', (err) => {
-                if (err) {
-                    console.log(err)
-                }
-            });
+            client.quickActions.get('saveDatabase').execute(database)
+
             message.channel.send('TTS command has been enabled.')
             return
         } else if (args[0] == 'disable') {
@@ -60,12 +57,8 @@ module.exports = {
             database[`${message.guild.id}`]["disabled"].push('tts')
 
             // Save the JSON file
-            var saveJson = JSON.stringify(database, null, 4);
-            fs.writeFile('database.json', saveJson, 'utf8', (err) => {
-                if (err) {
-                    console.log(err)
-                }
-            });
+            client.quickActions.get('saveDatabase').execute(database)
+
             message.channel.send('TTS command has been disabled.')
             return;
         }

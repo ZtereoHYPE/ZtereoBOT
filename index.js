@@ -3,13 +3,14 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const path = require('path');
-const { token, statusType, statusContent } = require('./config.json');
+const { token } = require('./config.json');
 const database = require('./database.json');
 
 // Start discord.js stuff
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-client.extensions = new Discord.Collection();
+client.eventListeners = new Discord.Collection();
+// client.quickActions = new Discord.Collection();
 
 //TODO this works but make it recursive/ checks if each item is folder and applies function to it and uh idk how to make it reuse the same array... Maybe store good files in an array okay yeah makes sense
 const commandFolders = fs
@@ -27,81 +28,53 @@ for (const dir of commandFolders) {
     }
 }
 
-// Extension loader
-const extensionFiles = fs
-    .readdirSync('./extensions')
+// EventListener loader
+const eventListenerFiles = fs
+    .readdirSync('./eventListeners')
     .filter(file => file.endsWith(".js"));
 
-for (const file of extensionFiles) {
-    const extension = require(`./extensions/${file}`);
-    client.extensions.set(extension.name, extension);
+for (const file of eventListenerFiles) {
+    const eventListener = require(`./eventListeners/${file}`);
+    client.eventListeners.set(eventListener.name, eventListener);
 }
+
+// cursed shit, use https://evdokimovm.github.io/javascript/nodejs/2016/06/13/NodeJS-How-to-Use-Functions-from-Another-File-using-module-exports.html instead
+
+
+// // quickActions loader
+// const quickActionsFiles = fs
+//     .readdirSync('./quickActions')
+//     .filter(file => file.endsWith(".js"));
+
+// for (const file of quickActionsFiles) {
+//     const quickAction = require(`./quickActions/${file}`);
+//     client.eventListeners.set(quickAction.name, quickAction);
+// }
 
 // Once bot is ready, log it in console and set status
 client.once('ready', () => {
-    client.extensions.get('backOnline').execute(client, database)
+    client.eventListeners.get('ready').execute(client, database)
 });
 
 // Guild joining detection
 client.on("guildCreate", guild => {
     // Execute the join.js extension
-    client.extensions.get('join').execute(guild);
+    client.eventListeners.get('guildCreate').execute(guild);
 });
 
 // Guild kicking/leaving detection
 client.on("guildDelete", guild => {
     // Execute the leave.js file
-    client.extensions.get('leave').execute(guild);
+    client.eventListeners.get('guildDelete').execute(guild);
 });
 
 // Execute commands
 client.on('message', message => {
-    // If made by bot, cancel.
-    if (message.author.bot) return;
-
-    // If message comes from DM, say that bot doesn't work in dms *yet*
-    if (message.channel.type == 'dm') {
-        message.reply('I don\'t work in DMs *yet*.');
-        return;
-    }
-
-    // Grab the prefix from the database
-    let prefix = database[`${message.guild.id}`]["prefix"];
-
-    if (message.content == "-help") {
-        try {
-            client.commands.get('help').execute(message, 0, 0, database);
-        } catch (error) {
-            console.error(error);
-            message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
-        }
-        return;
-    }
-
-    // If doesn't start with prefix, cancel.
-    if (!message.content.startsWith(prefix)) return;
-
-    // Split the message in command and arguments
-    const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
-
-    // If the command isn't part of the loaded commands, cancel.
-    if (!client.commands.has(commandName)) return;
-
-    // Put the command name into a command const.
-    const command = client.commands.get(commandName);
-
-    // Try to execute the command and in case of failure send error message.
-    try {
-        command.execute(message, args, client, database);
-    } catch (error) {
-        console.error(error);
-        message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
-    }
+    client.eventListeners.get('message').execute(message, client, database)
 });
 
 process.on('unhandledRejection', error => {
-	console.error('Unhandled promise rejection:', error);
+    console.error('Unhandled promise rejection:', error);
 });
 
 // Login with token (very secret)

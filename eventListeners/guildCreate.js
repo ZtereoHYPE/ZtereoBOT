@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const database = require('../database.json');
 
 module.exports = {
-    name: "join",
+    name: "guildCreate",
     execute(guild) {
         // Log when the bot enters a new guild
         console.log("Joined a new guild: " + guild.id);

@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const database = require('../database.json');
 
 module.exports = {
-    name: "leave",
+    name: "guildDelete",
     execute(guild) {
         // Log when the bot leaves a guild
         console.log("Left a guild: " + guild.id);

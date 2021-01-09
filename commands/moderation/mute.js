@@ -55,11 +55,6 @@ module.exports = {
             return;
         };
 
-        if (User.id === message.guild.ownerID) {
-            message.reply(`you can\'t mute the server owner lol.`);
-            return;
-        };
-
         args.shift()
         let rawTime = args.shift()
         if (args.length == 0) args = ['Not', 'specified'];
