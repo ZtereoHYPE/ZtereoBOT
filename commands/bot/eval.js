@@ -1,5 +1,3 @@
-const fs = require('fs');
-const Discord = require('discord.js');
 module.exports = {
     name: 'eval',
     category: 'bot',
@@ -7,7 +5,7 @@ module.exports = {
     execute(message, args, client, database) {
 
         if (message.guild.member(message.author).id != 434842825805266944) {
-            message.reply("OI! THIS IS A HIGLY DANGEROUS COMMAND RIGHT HERE AND YOU AINT ZTEREOHYPE SO GO AWAY BEFORE I CALL THE COPS")
+            message.reply("OI! THIS IS A HIGLY DANGEROUS COMMAND RIGHT HERE AND YOU AINT ZTEREOHYPE SO GO AWAY BEFORE I CALL THE COPS.")
             return;
         }
 
@@ -30,4 +28,3 @@ module.exports = {
         }
     },
 };
-

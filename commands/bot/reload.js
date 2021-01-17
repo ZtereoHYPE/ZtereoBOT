@@ -19,8 +19,9 @@ module.exports = {
         }
 
         // If the first argument is "all", reloads every command
-        if (args[0] === "all") {
+        let startTime = Date.now()
 
+        if (args[0] === "all") {
             let errors = []
             const commandFolders = fs
                 .readdirSync('./commands')
@@ -59,6 +60,7 @@ module.exports = {
                 embed.setAuthor('Commands Reloaded Successfully!', 'https://i.imgur.com/yvHrC4Q.png')
                 embed.setDescription('All commands were reloaded with success!')
             }
+            embed.setFooter(`This action took ${Date.now() - startTime}ms`)
             message.channel.send(embed)
             return
         }
@@ -78,7 +80,7 @@ module.exports = {
         try {
             const reloadedCommand = require(`../${command.category}/${command.name}.js`);
             message.client.commands.set(reloadedCommand.name, reloadedCommand);
-            message.channel.send(`Successfully reloaded \`${command.name}\`!`);
+            message.channel.send(`Successfully reloaded \`${command.name}\`! It took ${Date.now() - startTime}ms.`);
         } catch (error) {
             console.error(error);
             message.channel.send(`There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``);
