@@ -6,7 +6,20 @@ module.exports = {
     description: 'Entirely factual information.',
     execute(message, args, client, database) {
         
-        https.get('https://api.chucknorris.io/jokes/random', (resp) => {
+        let APIList = [
+            {
+                link:'https://api.chucknorris.io/jokes/random',
+                plug:'value'
+            }, 
+            {
+                link:'https://catfact.ninja/fact',
+                plug:'fact'
+            }
+        ]
+
+        var chosenAPI = APIList[Math.floor(Math.random() * APIList.length)];
+
+        https.get(chosenAPI.link, (resp) => {
             let data = '';
 
             resp.on('data', (chunk) => {
@@ -15,9 +28,9 @@ module.exports = {
 
             resp.on('end', () => {
                 const embed = new Discord.MessageEmbed()
-                    .setColor('#00cc00')
+                    .setColor('#'+(Math.random()*0xFFFFFF<<0).toString(16))
                     .setTitle('Fun Fact:')
-                    .setDescription(JSON.parse(data).value)
+                    .setDescription(JSON.parse(data)[chosenAPI.plug])
                     .setFooter('It\'s true!')
                     .setTimestamp()
                 message.channel.send(embed);
@@ -25,10 +38,10 @@ module.exports = {
 
         }).on("error", (err) => {
             const embed = new Discord.MessageEmbed()
-                .setColor('#00cc00')
+                .setColor('red')
                 .setTitle('Fun Fact:')
                 .setDescription('There an an error retrieving the data!')
-                .setFooter('It\'s true!')
+                .setFooter('It\'s actually true!')
                 .setTimestamp()
             message.channel.send(embed);
         });
