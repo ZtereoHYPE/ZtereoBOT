@@ -13,7 +13,6 @@ module.exports = {
             "prefix" : "-",
             "warnings" : {},
             "rules" : [],
-            "bans" : {},
             "disabled": ["tts"]
         };
         
