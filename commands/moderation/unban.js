@@ -1,4 +1,3 @@
-const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'unban',
@@ -27,24 +26,8 @@ module.exports = {
             message.reply(`please give select a user by its ID. To find the ID, use \`${database[`${message.guild.id}`]["prefix"]}banlist\``)
             return;
         };
-
-        if (!Object.keys(database[`${message.guild.id}`]['bans']).includes(args[0])) {
-            message.reply('that user is not currently banned in this guild.')
-            return;
-        };
         
         message.guild.members.unban(args[0])
             .then(user => message.reply(`you unbanned ${user.username} from ${message.guild.name}.`))
-
-
-        delete database[`${message.guild.id}`]['bans'][`${args[0]}`];
-        
-        // Save the JSON file
-        var saveJson = JSON.stringify(database, null, 4);
-        fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
-            if(err){
-                console.log(err)
-            }
-        });
 	},
 };
