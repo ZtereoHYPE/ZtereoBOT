@@ -17,7 +17,6 @@ module.exports = {
             message.channel.send(embed);
             return;
         }
-
         let User = message.guild.member(message.mentions.users.first())
 
         if (!(message.guild.member(message.author).hasPermission('BAN_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
@@ -35,34 +34,14 @@ module.exports = {
             return;
         }
 
-        if (User.hasPermission('BAN_MEMBERS') || User.id === message.guild.ownerID) {
-            message.reply(`you can\'t ban a user with Ban Members perms.`);
-            return;
-        };
-
         args.shift();
         if (args.length == 0) args = ['Not', 'specified'];
 
         User.ban({
             days: 0,
-            reaon: args.join(' ')
+            reason: args.join(' ')
         });
 
-        database[`${message.guild.id}`]['bans'][`${User.id}`] = {
-            "username": "",
-            "reason": ""
-        };
-
-        database[`${message.guild.id}`]['bans'][`${User.id}`]['username'] = `${User.user.username}`;
-        database[`${message.guild.id}`]['bans'][`${User.id}`]['reason'] = `${args.join(' ')}`;
-
-        // Save the JSON file
-        var saveJson = JSON.stringify(database, null, 4);
-        fs.writeFile('database.json', saveJson, 'utf8', (err) => {
-            if (err) {
-                console.log(err)
-            }
-        });
         message.reply(`you banned ${User.user.username} for reason: ${args.join(' ')}`);
     },
 };
