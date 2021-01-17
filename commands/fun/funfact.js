@@ -14,7 +14,6 @@ module.exports = {
             });
 
             resp.on('end', () => {
-
                 const embed = new Discord.MessageEmbed()
                     .setColor('#00cc00')
                     .setTitle('Fun Fact:')

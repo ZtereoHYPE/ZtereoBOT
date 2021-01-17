@@ -39,7 +39,7 @@ module.exports = {
 
         // Try to execute the command and in case of failure send error message.
         try {
-            command.execute(message, args, client, database);
+            command.execute(message, args, client, database, Date.now());
         } catch (error) {
             console.error(error);
             message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
