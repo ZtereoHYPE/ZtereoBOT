@@ -31,7 +31,6 @@ module.exports = {
                 owo = 'uvu'
         }
 
-        //if lol
         message.delete();
         message.channel.send(owoify(args.join(' '), owo))
 	},

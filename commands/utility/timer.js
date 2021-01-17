@@ -3,8 +3,9 @@ module.exports = {
     name: 'timer',
     category: 'utility',
     description: 'Sets a timer after which you get pinged.',
-	execute(message, args, client, database) {
-        // Help command
+	execute(message, args, client, database, commandDate) {
+        
+        
         if (!args.length || args[0] == 'help') {
             const embed = new Discord.MessageEmbed()
             .setColor('#8EB9FE')
@@ -15,7 +16,7 @@ module.exports = {
             message.channel.send(embed);
             return;
         }
-        
+        //console.log(Date.now() - commandDate)
         // Else if chain (switch to switch please) to check if the sent message is a valid timer and set the timer accordingly
         if (args.length < 1) {
             message.channe.send('Please provide a timer length.');
@@ -39,5 +40,6 @@ module.exports = {
             message.react('👍');
             setTimeout(function() {message.channel.send(`${message.author}, your ${args[0]} ${args[1]} timer has expired.`);}, args[0]*3600000);
         }
+        
 	},
 };
