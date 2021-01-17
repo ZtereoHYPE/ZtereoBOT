@@ -88,3 +88,8 @@ client.login(token);
 
 // OPTIMISATIONS TO DO:
 // https://scotch.io/tutorials/how-to-optimize-node-requests-with-simple-caching-strategies
+
+// Cool APIs:
+// https://wiki.vg/Mojang_API
+// https://medium.com/better-programming/a-curated-list-of-100-cool-and-fun-public-apis-to-inspire-your-next-project-7600ce3e9b3
+// https://catfact.ninja/fact
