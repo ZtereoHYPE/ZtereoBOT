@@ -1,5 +1,6 @@
 // Load required files and save them in constants
 //TODO have a recursisve system like for commands (dont load each and every single extension manually bruh)
+let startDate = Date.now()
 const fs = require('fs');
 const Discord = require('discord.js');
 const path = require('path');
@@ -53,7 +54,7 @@ for (const file of eventListenerFiles) {
 
 // Once bot is ready, log it in console and set status
 client.once('ready', () => {
-    client.eventListeners.get('ready').execute(client, database)
+    client.eventListeners.get('ready').execute(client, database, startDate)
 });
 
 // Guild joining detection
@@ -83,3 +84,7 @@ client.login(token);
 // Use this link to add ZtereoBOT to your server https://discord.com/oauth2/authorize?client_id=713718980325539910&scope=bot&permissions=8
 // Use this link to add ZtereoBOT Beta to your server https://discord.com/oauth2/authorize?client_id=791744080127197204&scope=bot&permissions=8
 // Use this command to update the git on the pi lol  git pull https://github.com/ZtereoHYPE/ZtereoBOT.git (~/ZtereoBOT directory)
+
+
+// OPTIMISATIONS TO DO:
+// https://scotch.io/tutorials/how-to-optimize-node-requests-with-simple-caching-strategies
