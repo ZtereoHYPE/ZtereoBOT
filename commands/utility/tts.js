@@ -1,10 +1,9 @@
-const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'tts',
     category: 'utility',
     description: 'Sends a Test To Speech Message',
-    execute(message, args, client, database) {
+    execute(message, args, client, database, shortcuts) {
 
         if (database[`${message.guild.id}`]["disabled"].includes('tts')) {
             commandStatus = 'disabled'
@@ -28,43 +27,43 @@ module.exports = {
 
         if (args[0] == 'enable') {
             if (!(message.author.id === message.guild.ownerID)) {
-                message.reply(`Only the server owner can change the tts command status.`);
+                shortcuts.functions.quickEmbed(message, 'Only the server owner can change the tts command status.', 'failure')
                 return;
             }
 
             if (!database[`${message.guild.id}`]["disabled"].includes('tts')) {
-                message.reply('TTS command is already enabled.')
+                shortcuts.functions.quickEmbed(message, 'TTS command is already enabled.', 'success')
                 return;
             }
 
             database[`${message.guild.id}`]["disabled"] = database[`${message.guild.id}`]["disabled"].filter(object => object.indexOf('tts'), 1)
 
             // Save the JSON file
-            client.quickActions.get('saveDatabase').execute(database)
+            shortcuts.functions.saveDatabase(database)
 
-            message.channel.send('TTS command has been enabled.')
+            shortcuts.functions.quickEmbed(message, 'TTS command has been enabled.', 'success')
             return
         } else if (args[0] == 'disable') {
             if (!(message.author.id === message.guild.ownerID)) {
-                message.reply(`Only the server owner can change the tts command status.`);
+                shortcuts.functions.quickEmbed(message, 'Only the server owner can change the tts command status.', 'failure')
                 return;
             }
 
             if (database[`${message.guild.id}`]["disabled"].includes('tts')) {
-                message.reply('TTS command is already disabled.')
+                shortcuts.functions.quickEmbed(message, 'TTS command is already disabled.', 'success')
                 return;
             }
             database[`${message.guild.id}`]["disabled"].push('tts')
 
             // Save the JSON file
-            client.quickActions.get('saveDatabase').execute(database)
+            shortcuts.functions.saveDatabase(database)
 
-            message.channel.send('TTS command has been disabled.')
+            shortcuts.functions.quickEmbed(message, 'TTS command has been disabled.', 'success')
             return;
         }
 
         if (commandStatus == 'disabled') {
-            message.reply('tts is currently disabled in this server. If you want to enable it, please ask the server owner')
+            shortcuts.functions.quickEmbed(message, 'TTS is currently disabled in this server.\nIf you want to enable it, please ask the server owner', 'failure', )
             return
         }
 
