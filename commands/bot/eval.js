@@ -2,7 +2,7 @@ module.exports = {
     name: 'eval',
     category: 'bot',
     description: 'Eval command, to exectue whatever ZtereoHYPE wants. DO NOT USE UNLESS BOT OWNER',
-    execute(message, args, client, database) {
+    execute(message, args) {
 
         if (message.guild.member(message.author).id != 434842825805266944) {
             message.reply("OI! THIS IS A HIGLY DANGEROUS COMMAND RIGHT HERE AND YOU AINT ZTEREOHYPE SO GO AWAY BEFORE I CALL THE COPS.")
