@@ -1,7 +1,8 @@
+const path = require('path');
 const Discord = require('discord.js');
 module.exports = {
     name: 'tts',
-    category: 'utility',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Sends a Test To Speech Message',
     execute(message, args, client, database, shortcuts) {
 

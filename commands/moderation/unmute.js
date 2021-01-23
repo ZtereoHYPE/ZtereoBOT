@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'unmute',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Unmute a user.',
 	execute(message, args, client, database) {
 

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'avatar',
-    category: 'utility',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Shows a user\'s avatar.',
 	execute(message, args, client, database) {
         // Help command

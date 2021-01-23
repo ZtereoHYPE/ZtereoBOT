@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'purge',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Purges messages from the chat.',
 	execute(message, args, client, database) {
         // Help command

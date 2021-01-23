@@ -1,6 +1,6 @@
 module.exports = {
     name: 'eval',
-    category: 'bot',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Eval command, to exectue whatever ZtereoHYPE wants. DO NOT USE UNLESS BOT OWNER',
     execute(message, args) {
 

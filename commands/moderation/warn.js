@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'warn',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'Warns a user for rule-breaking and adds the warning to a user-specific record.',
 	execute(message, args, client, database) {
         // Help command

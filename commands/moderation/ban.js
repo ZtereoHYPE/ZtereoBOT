@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'ban',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Bans a player from the guild.',
     execute(message, args, client, database) {
         // Help command

@@ -2,7 +2,7 @@ const owoify = require('owoify-js').default
 const Discord = require('discord.js');
 module.exports = {
     name: 'owo',
-    category: 'fun',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Owoifies a message.',
 	execute(message, args, client, database) {
 
