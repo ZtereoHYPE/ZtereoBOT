@@ -19,16 +19,9 @@ module.exports = {
         }
         
         // Gathers the first tagged user, kicks it, shift the arguments to exclude it, and sends confirmation message. If no perms are detected then reject command.
-        let User = message.guild.member(message.mentions.users.first());
-
         if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
             message.reply("you don\'t have the permission to do that (Kick Members perms).");
             return;
-        }
-
-        if (message.guild.member(message.author).roles.highest.position >= message.guild.member(client.user).roles.highest.position) {
-            message.channel.send('I am not high enough in the roles hierarchy to do this! Please contact a moderator or the server owner and inform them of this')
-            return
         }
 
         if (!message.mentions.users.first()) {
@@ -36,10 +29,12 @@ module.exports = {
             return;
         };
 
-        if (User.hasPermission('KICK_MEMBERS') || User.id === message.guild.ownerID) {
-            message.reply(`you can\'t kick a user with Kick Members perms.`);
-            return;
-        };
+        let User = message.guild.member(message.mentions.users.first());
+
+        if (!User.kickable) {
+            message.reply("I don't have enough permissions to kick that user! Please make sure my role is high enough, and that I have Ban Members permissions.")
+            return
+        }
 
         args.shift();
         if (args.length == 0) args = ['Not', 'specified'];
@@ -49,6 +44,7 @@ module.exports = {
         } catch (error) {
             message.reply(error)
         }
+        
         message.reply(`you kicked ${User.user.username} for reason: ${args.join(' ')}`);
 	},
 };
