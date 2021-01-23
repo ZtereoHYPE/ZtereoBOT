@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const path = require('path')
 module.exports = {
     name: 'avatar',
     category: path.dirname(__filename).split(path.sep).pop(),

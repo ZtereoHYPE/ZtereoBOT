@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const path = require('path')
 module.exports = {
     name: 'mute',
     category: path.dirname(__filename).split(path.sep).pop(),

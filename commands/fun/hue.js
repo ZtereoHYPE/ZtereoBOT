@@ -1,5 +1,5 @@
 const { Hue } = require('hue');
-const https = require('https');
+const path = require('path')
 module.exports = {
     name: 'hue',
     category: path.dirname(__filename).split(path.sep).pop(),

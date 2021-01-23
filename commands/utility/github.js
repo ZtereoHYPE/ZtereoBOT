@@ -1,10 +1,11 @@
 const Discord = require('discord.js');
 const https = require('https');
+const path = require('path')
 module.exports = {
     name: 'github',
     category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'A test command to play with APIs',
-	execute(message, args) {
+	execute(message, args, client, database, shortcuts) {
         let username = args[0]
         const options = {
             hostname: 'api.github.com',

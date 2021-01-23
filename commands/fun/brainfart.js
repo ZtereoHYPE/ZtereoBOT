@@ -1,3 +1,4 @@
+const path = require('path')
 module.exports = {
 	name: 'brainfart',
 	category: path.dirname(__filename).split(path.sep).pop(),

@@ -1,5 +1,6 @@
 const owoify = require('owoify-js').default
 const Discord = require('discord.js');
+const path = require('path')
 module.exports = {
     name: 'owo',
     category: path.dirname(__filename).split(path.sep).pop(),
