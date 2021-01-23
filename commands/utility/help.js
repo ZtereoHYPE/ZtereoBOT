@@ -14,6 +14,10 @@ module.exports = {
 		for (i = 0; i < commands.map(command => command.name).length; i++) {
 			embed.addField(`${database[`${message.guild.id}`]["prefix"]}${commands.map(command => command.name)[i]}`, commands.map(command => command.description)[i]);
 		};
-		message.channel.send(embed).then(newMessage => newMessage.delete({timeout: 20000}))
+		message.channel.send(embed).then(newMessage => {
+			newMessage.delete({timeout: 20000})
+			embed.setFooter(`This message will self-destruct in 5s`)
+			setTimeout(function() {newMessage.edit(embed)}, 15000)
+		})
 	},
 };
