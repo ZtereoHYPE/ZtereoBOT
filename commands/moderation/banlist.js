@@ -1,6 +1,5 @@
-const fs = require('fs');
 const Discord = require('discord.js');
-const { captureRejectionSymbol } = require('events');
+const path = require('path')
 module.exports = {
     name: 'banlist',
     category: path.dirname(__filename).split(path.sep).pop(),

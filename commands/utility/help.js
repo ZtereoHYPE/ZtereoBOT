@@ -1,9 +1,10 @@
+const path = require('path')
 const Discord = require('discord.js');
 module.exports = {
 	name: 'help',
 	category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'List all of my commands or info about a specific command.',
-	execute(message, args, client, database) {
+	execute(message, args, client, database, shortcuts) {
         const { commands } = message.client;
 		const embed = new Discord.MessageEmbed()
 			.setColor('#8EB9FE')

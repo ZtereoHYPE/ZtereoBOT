@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const config = require('../../config.json')
+const path = require('path')
 module.exports = {
     name: 'status',
     category: path.dirname(__filename).split(path.sep).pop(),

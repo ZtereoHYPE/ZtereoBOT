@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const https = require('https');
+const path = require('path')
 module.exports = {
     name: 'funfact',
     category: path.dirname(__filename).split(path.sep).pop(),

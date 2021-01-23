@@ -1,4 +1,4 @@
-const { Hue } = require('hue');
+const path = require('path')
 const https = require('https');
 var rootCas = require('ssl-root-cas').create();
 require('https').globalAgent.options.ca = rootCas;

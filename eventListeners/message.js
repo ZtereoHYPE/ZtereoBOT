@@ -1,6 +1,6 @@
 module.exports = {
     name: "message",
-    execute(message, client, database) {
+    execute(message, client, database, shortcuts) {
 
         // If made by bot, cancel.
         if (message.author.bot) return;
@@ -39,7 +39,7 @@ module.exports = {
 
         // Try to execute the command and in case of failure send error message.
         try {
-            command.execute(message, args, client, database, Date.now());
+            command.execute(message, args, client, database, shortcuts);
         } catch (error) {
             console.error(error);
             message.reply('an error happened. Ask ZtereoHYPE to fix me please!')

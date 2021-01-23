@@ -1,9 +1,10 @@
+const path = require('path')
 const Discord = require('discord.js');
 module.exports = {
     name: 'timer',
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Sets a timer after which you get pinged.',
-	execute(message, args, client, database, commandDate) {
+	execute(message, args, client, database, shortcuts) {
         
         
         if (!args.length || args[0] == 'help') {

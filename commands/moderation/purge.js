@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const path = require('path')
 module.exports = {
     name: 'purge',
     category: path.dirname(__filename).split(path.sep).pop(),
