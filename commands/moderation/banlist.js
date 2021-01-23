@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const { captureRejectionSymbol } = require('events');
 module.exports = {
     name: 'banlist',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Lists all the banned players of the server',
     execute(message, args, client, database) {
         // Help command

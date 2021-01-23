@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'delwarn',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'Deletes a user\'s warm.',
 	execute(message, args, client, database) {
         // Help command

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
 	name: 'help',
-	category: 'utility',
+	category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'List all of my commands or info about a specific command.',
 	execute(message, args, client, database) {
         const { commands } = message.client;

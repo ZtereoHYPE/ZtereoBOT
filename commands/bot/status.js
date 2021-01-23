@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const config = require('../../config.json')
 module.exports = {
     name: 'status',
-    category: 'bot',
+    category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'Sets the bot\'s status',
 	execute(message, args, client, database) {
 

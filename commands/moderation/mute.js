@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'mute',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Mute a user.',
     execute(message, args, client, database) {
 

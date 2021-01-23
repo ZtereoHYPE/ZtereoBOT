@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'unban',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'Unbans a player from the guild.',
 	execute(message, args, client, database) {
         // Help command

@@ -2,7 +2,7 @@ const fs = require('fs');
 const Discord = require('discord.js');
 module.exports = {
     name: 'prefix',
-    category: 'bot',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Changes the prefix.',
 	execute(message, args, client, database) {
         // Help command

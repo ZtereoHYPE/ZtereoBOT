@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'warnhistory',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'Shows a user\'s history of warnings.',
 	execute(message, args, client, database) {
         // Help command

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'timer',
-    category: 'utility',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Sets a timer after which you get pinged.',
 	execute(message, args, client, database, commandDate) {
         

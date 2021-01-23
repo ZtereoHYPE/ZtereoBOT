@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const https = require('https');
 module.exports = {
     name: 'funfact',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Entirely factual information.',
     execute(message, args, client, database) {
         

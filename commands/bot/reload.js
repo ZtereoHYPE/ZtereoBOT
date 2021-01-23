@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const path = require('path');
 module.exports = {
     name: 'reload',
-    category: 'bot',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Reloads a command.',
     execute(message, args, client, database) {
         // Help command

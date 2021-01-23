@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 module.exports = {
     name: 'kick',
-    category: 'moderation',
+    category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Kicks a user.',
 	execute(message, args, client, database) {
 
