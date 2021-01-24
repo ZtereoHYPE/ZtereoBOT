@@ -8,6 +8,11 @@ module.exports = {
 	description: 'a commnand used to control ZtereoHYPE\'s hue light bulbs that uses the raw api',
 	execute(message, args, client, database) {
 
+        if (message.guild.member(message.author).id != 434842825805266944) {
+            message.reply("Bruh only ztereohype can control his hue lights.")
+            return;
+        }
+
         const options = {
             hostname: '192.168.10.41',
             port: 443,
