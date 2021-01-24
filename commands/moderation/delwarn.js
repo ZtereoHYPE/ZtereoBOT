@@ -19,14 +19,14 @@ module.exports = {
             return;
         }
         
-        if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
-            message.reply("you don\'t have the permission to do that (Kick Members perms).");
+        if (!(message.guild.member(message.author).hasPermission('MANAGE_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
+            message.reply("you don\'t have the permission to do that (Manage Members perms).");
             return;
         }
 
-        if (message.guild.member(message.author).roles.highest.position >= message.guild.member(client.user).roles.highest.position) {
-            message.channel.send('I am not high enough in the roles hierarchy to do this! Please contact a moderator or the server owner and inform them of this')
-            return
+        if (Object.entries(database[message.guild.id]['warnings']).length === 0) {
+            message.reply('This server has no warnings for any user.')
+            return;
         }
 
         if (!message.mentions.users.first()) {
@@ -35,13 +35,13 @@ module.exports = {
         };
 
         let User = message.guild.member(message.mentions.users.first())
-        if (message.guild.member(message.author).id == User.id) {
-            if (message.guild.member(message.author).id == message.guild.ownerID) return;
-            message.reply("Sorry, but you cannot remove your own warnings for obvious reasons. Please ask another moderator to do so.");
+        let warningNumber = args[1]
+
+        if (!database[message.guild.id]['warnings'][User.id]) {
+            message.reply('That user has no warnings in this server.')
             return;
         }
 
-        let warningNumber = args[1]
         if (!warningNumber || !database[message.guild.id]['warnings'][User.id]['warns'].hasOwnProperty(warningNumber)) {
             message.reply(`please provide a valid warning number. To see warning numbers, use \`${database[`${message.guild.id}`]["prefix"]}warnhistory [@member]\``)
             return;
@@ -56,7 +56,7 @@ module.exports = {
         if (Object.keys(database[message.guild.id]['warnings'][User.id]['warns']).length == '0') {
             delete database[message.guild.id]['warnings'][User.id]
         };
-    
+
         var saveJson = JSON.stringify(database, null, 4);
         fs.writeFile('database.json', saveJson, 'utf8', (err)=>{
             if(err){
