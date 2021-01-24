@@ -12,7 +12,7 @@ module.exports = {
                 .setColor('#8EB9FE')
                 .setAuthor('Reload Command Help:', 'https://i.imgur.com/dSTYnIF.png')
                 .addFields(
-                    { name: `${database[`${message.guild.id}`]["prefix"]}reload [command/"all"]`, value: `Reloads the chosen command.` },
+                    { name: `${database[`${message.guild.id}`]["prefix"]}reload [command/"all"/command category]`, value: `Reloads the chosen command/command category.` },
                 )
             message.channel.send(embed);
             return;
@@ -68,10 +68,52 @@ module.exports = {
         // Saves the selected command to the command constant.
         const commandName = args[0].toLowerCase();
         const command = message.client.commands.get(commandName)
-            || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+        //    || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 
         // If the selected command doesn't exist, say it.
-        if (!command) return message.channel.send(`There is no command with the name or alias \`${commandName}\`.`);
+        if (!command) {
+            let errors = []
+            const commandFolders = fs
+                .readdirSync('./commands')
+                .filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
+
+            if (commandFolders.includes(args[0].toLowerCase())) {
+                let dir = args[0].toLowerCase()
+                const commandFiles = fs
+                    .readdirSync(`./commands/${dir}`)
+                    .filter(file => file.endsWith(".js"));
+
+                for (const file of commandFiles) {
+                    try {
+                        delete require.cache[require.resolve(`../${dir}/${file}`)]
+                        const reloadedCommand = require(`../${dir}/${file}`)
+                        message.client.commands.set(reloadedCommand.name, reloadedCommand);
+                    } catch (error) {
+                        console.error(error);
+                        errors.push({
+                            "name": file,
+                            "error": error.message
+                        })
+                    }
+                }
+                const embed = new Discord.MessageEmbed()
+                if (errors.length) {
+                    embed.setColor('#8E1A01')
+                    embed.setAuthor(`Commands Reloaded but...`, 'https://i.imgur.com/rs1souv.png')
+                    embed.setDescription(`All \`${dir}\` commands were reloaded but some had errors:`)
+                    for (const error in errors) {
+                        embed.addFields({ name: errors[error]['name'], value: `\`${errors[error]['error']}\`` })
+                    }
+                } else {
+                    embed.setColor('#15AABF')
+                    embed.setAuthor(`Commands Reloaded Successfully!`, 'https://i.imgur.com/yvHrC4Q.png')
+                    embed.setDescription(`All \`${dir}\` commands were reloaded with success!`)
+                }
+                embed.setFooter(`This action took ${Date.now() - startTime}ms`)
+                message.channel.send(embed)
+                return;
+            }
+        }
 
         // Delete the cache that require() made
         delete require.cache[require.resolve(`../${command.category}/${command.name}.js`)];
