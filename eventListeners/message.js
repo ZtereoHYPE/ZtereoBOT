@@ -27,15 +27,16 @@ module.exports = {
         // If doesn't start with prefix, cancel.
         if (!message.content.startsWith(prefix)) return;
 
-        // Split the message in command and arguments
+        // Split the message in command and arguments.
         const args = message.content.slice(prefix.length).trim().split(/ +/);
         const commandName = args.shift().toLowerCase();
 
-        // If the command isn't part of the loaded commands, cancel.
-        if (!client.commands.has(commandName)) return;
-
         // Put the command name into a command const.
-        const command = client.commands.get(commandName);
+        const command = client.commands.get(commandName)
+            || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+        // If the command doesn't exist, cancel.
+        if (!command) return;
 
         // Try to execute the command and in case of failure send error message.
         try {
