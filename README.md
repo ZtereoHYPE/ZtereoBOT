@@ -1,7 +1,7 @@
 # ZtereoBOT's Repository!
 Welcome to this discord bot repository!
 First and foremost, this bot is a sideproject of mine that I am using to learn to use the discord.js library and JavaScript in general.
-Next, I work on it whenever I want to and/or have time, so it might not be active for a while and then have a lot of avtivity, that's normal.
+Next, I work on it whenever I want to and/or have time, so it might not be active for a while and then have a lot of activity, that's normal.
 Finally, if you want to invite this bot to your server, please contact me here or on discord as I am currently hosting it on a Raspberry Pi zero so yeah, not much power/headroom.
 
 
