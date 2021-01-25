@@ -62,6 +62,7 @@ client.on('message', message => {
     client.eventListeners.get('message').execute(message, client, database, shortcuts)
 });
 
+// Error handleing
 process.on('unhandledRejection', error => {
     console.error('Unhandled promise rejection:', error);
 });
