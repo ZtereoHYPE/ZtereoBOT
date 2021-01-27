@@ -18,15 +18,15 @@ module.exports = {
 
 		// This looks much neater BUT it requires different pages as it hits the maximum amounts of fields that a bot can have. Sad, I know.
 
-		/*	let commandsArray = commands.map(command => command)
-			let categoryArray = commands.map(command => command.category).filter((value, index, array) => array.indexOf(value) === index);
-			for (categoryKind of categoryArray) {
-				embed.addField(`\u200B`, `**${categoryKind.toUpperCase()}:**`);
-				console.log(commandsArray.filter(value => value.category == 'utility'))
-				for (correctCommand of commandsArray.filter(value => value.category == categoryKind)) {
-					embed.addField(`${database[`${message.guild.id}`]["prefix"]}${correctCommand.name}`, correctCommand.description)
-				  }
-			 } */
+		//  let commandsArray = commands.map(command => command)
+		// 	let categoryArray = commands.map(command => command.category).filter((value, index, array) => array.indexOf(value) === index);
+		// 	for (categoryKind of categoryArray) {
+		// 		embed.addField(`\u200B`, `**${categoryKind.toUpperCase()}:**`);
+		// 		console.log(commandsArray.filter(value => value.category == 'utility'))
+		// 		for (correctCommand of commandsArray.filter(value => value.category == categoryKind)) {
+		// 			embed.addField(`${database[`${message.guild.id}`]["prefix"]}${correctCommand.name}`, correctCommand.description)
+		// 		  }
+		// 	 } 
 
 		message.channel.send(embed)
 			.then(newMessage => {
