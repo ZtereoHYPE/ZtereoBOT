@@ -1,25 +1,27 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const https = require('https');
 const path = require('path')
 module.exports = {
     name: 'funfact',
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Entirely factual information.',
-    execute(message, args, client, database) {
-        
+    execute(message) {
+        // let the list of used APIs be this
         let APIList = [
             {
-                link:'https://api.chucknorris.io/jokes/random',
-                plug:'value'
-            }, 
+                link: 'https://api.chucknorris.io/jokes/random',
+                plug: 'value'
+            },
             {
-                link:'https://catfact.ninja/fact',
-                plug:'fact'
+                link: 'https://catfact.ninja/fact',
+                plug: 'fact'
             }
         ]
 
+        // Choose an API at random
         var chosenAPI = APIList[Math.floor(Math.random() * APIList.length)];
 
+        // Send a get request to the chosen API and fill embeds according to the response
         https.get(chosenAPI.link, (resp) => {
             let data = '';
 
@@ -28,8 +30,8 @@ module.exports = {
             });
 
             resp.on('end', () => {
-                const embed = new Discord.MessageEmbed()
-                    .setColor('#'+(Math.random()*0xFFFFFF<<0).toString(16))
+                const embed = new MessageEmbed()
+                    .setColor('#' + (Math.random() * 0xFFFFFF << 0).toString(16))
                     .setTitle('Fun Fact:')
                     .setDescription(JSON.parse(data)[chosenAPI.plug])
                     .setFooter('It\'s true!')
@@ -38,10 +40,10 @@ module.exports = {
             });
 
         }).on("error", (err) => {
-            const embed = new Discord.MessageEmbed()
+            const embed = new MessageEmbed()
                 .setColor('red')
                 .setTitle('Fun Fact:')
-                .setDescription('There an an error retrieving the data!')
+                .setDescription(`There an an error retrieving the data! \n \`${err}\``)
                 .setFooter('It\'s actually true!')
                 .setTimestamp()
             message.channel.send(embed);

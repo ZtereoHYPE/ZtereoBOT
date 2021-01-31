@@ -1,16 +1,25 @@
 const path = require('path')
-const Discord = require('discord.js');
+const {MessageEmbed} = require('discord.js');
 module.exports = {
 	name: 'help',
 	category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'List all of my commands or info about a specific command.',
-	execute(message, args, client, database, shortcuts) {
+	execute(message, args, database, shortcuts) {
+
+
+		// make it react and then send in dms. too lazy rn to do it lol
+
+		// let commands be the client's commnads
 		const { commands } = message.client;
-		const embed = new Discord.MessageEmbed()
+
+		// create an embed with command list
+		const embed = new MessageEmbed()
 			.setColor('#8EB9FE')
 			.setAuthor('Command List:', 'https://i.imgur.com/dSTYnIF.png')
-			.setDescription(`My prefix here is \`${database[`${message.guild.id}`]["prefix"]}\` \n **This message will self-destruct in 20 seconds!**`)
+			.setDescription(`My prefix here is \`${database[message.guild.id]["prefix"]}\` \n **This message will self-destruct in 20 seconds!**`)
 			.setFooter(`This message will self-destruct in 20s`)
+		
+		// iterate over each command of commands and add field to embed for it
 		let i;
 		for (i = 0; i < commands.map(command => command.name).length; i++) {
 			embed.addField(`${database[`${message.guild.id}`]["prefix"]}${commands.map(command => command.name)[i]}`, `${commands.map(command => command.description)[i]}`);
@@ -28,6 +37,7 @@ module.exports = {
 		// 		  }
 		// 	 } 
 
+		// send the embed then set a timeout to change it and finally delete it
 		message.channel.send(embed)
 			.then(newMessage => {
 				newMessage.delete({ timeout: 20000 })
