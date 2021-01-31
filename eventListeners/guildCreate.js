@@ -11,7 +11,7 @@ module.exports = {
         // Create an entry in the database with as key the guild id containing everything needed.
         database[guild.id] = {
             "prefix" : "-",
-            "warnings" : {},
+            "warnings" : [],
             "rules" : [],
             "disabled": ["tts"]
         };
