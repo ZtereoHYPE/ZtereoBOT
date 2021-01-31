@@ -3,44 +3,45 @@ const path = require('path')
 module.exports = {
     name: 'warnhistory',
     category: path.dirname(__filename).split(path.sep).pop(),
-	description: 'Shows a user\'s history of warnings.',
-	execute(message, args, client, database) {
+    description: 'Shows a user\'s history of warnings.',
+    execute(message, args, database, shortcuts) {
         // Help command
         if (!args.length || args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-            .setColor('#8EB9FE')
-            .setAuthor('Warnhistory Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}warnhistory [@member]`, value: `Shows a user\'s history of warnings.` },
-            )
-            message.channel.send(embed);
+            shortcuts.functions.helpCommand(message, 'warnhistory', '[@member]', 'Shows a user\'s history of warnings.', database[`${message.guild.id}`]["prefix"]);
             return;
         }
 
-        let User = message.guild.member(message.mentions.users.first())
+        // if author has no perms say it and cancel
         if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
-            message.reply("you don\'t have the permission to do that (Kick Members perms).");
+            shortcuts.functions.quickEmbed(message, "you don\'t have the permission to do that (Kick Members perms).", 'failure')
             return;
         }
 
+        // if no users are mentioned say it and cancel
         if (!message.mentions.users.first()) {
-            message.reply('please specify a user to warn.')
+            shortcuts.functions.quickEmbed(message, 'please specify a user to warn.', 'failure')
             return;
         };
 
-        if (!database[`${message.guild.id}`]['warnings'].hasOwnProperty(`${User.id}`)) {
-            message.channel.send("That user has no warnings in this server.");
+        // let user be the first mention
+        let User = message.guild.member(message.mentions.users.first())
+
+        // if the user has not warnings say id and cancel
+        if (!database[message.guild.id]['warnings'].hasOwnProperty(User.id)) {
+            shortcuts.functions.quickEmbed(message, "That user has no warnings in this server.", 'success')
             return;
         };
 
+        // make an embed with all of the warnings
         const embed = new Discord.MessageEmbed()
-        .setColor('#00cc00')
-		.setTitle(`${database[message.guild.id]['warnings'][`${User.id}`]['username']}'s warnings:`)
-		let i;
-		for (i = 0; i < Object.keys(database[message.guild.id]['warnings'][`${User.id}`]['warns']).length; i++) {
-		    embed.addField(`${Object.keys(database[message.guild.id]['warnings'][`${User.id}`]['warns'])[i]}.`, `**Reason:** ${database[message.guild.id]['warnings'][`${User.id}`]['warns'][Object.keys(database[message.guild.id]['warnings'][`${User.id}`]['warns'])[i]]['reason']} \n **Date:** ${database[message.guild.id]['warnings'][`${User.id}`]['warns'][Object.keys(database[message.guild.id]['warnings'][`${User.id}`]['warns'])[i]]['date']}`);
+            .setColor('#800000')
+            .setTitle(`${database[message.guild.id]['warnings'][User.id]['username']}'s warnings:`)
+        let i;
+        for (i = 0; i < database[message.guild.id]['warnings'][User.id]['warns'].length; i++) {
+            embed.addField(`${i + 1}.`, `**Reason:** ${database[message.guild.id]['warnings'][User.id]['warns'][i]['reason']} \n **Date:** ${database[message.guild.id]['warnings'][`${User.id}`]['warns'][i]['date']}`);
         };
-        
-		message.channel.send(embed);
-	},
+
+        // send the embed
+        message.channel.send(embed);
+    },
 };
