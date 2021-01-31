@@ -1,24 +1,21 @@
-const Discord = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const path = require('path')
 module.exports = {
     name: 'ping',
+    aliases: ['latency'],
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Checks the ping (latency) of the bot',
-    execute(message, args, client, database) {
+    execute(message, args, database, shortcuts, client) {
         // Help command
         if (args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-                .setColor('#8EB9FE')
-                .setAuthor('Ping Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-                .addFields(
-                    { name: `${database[`${message.guild.id}`]["prefix"]}ping`, value: `Gives us the bot and discord API's latency` },
-                )
-            message.channel.send(embed);
+            shortcuts.functions.helpCommand(message, 'ping', '', 'Gives us the bot and discord API\'s latency.', database[`${message.guild.id}`]["prefix"]);
             return;
         }
 
+        // Send a message and then...
         message.channel.send("Pinging...").then(msg => {
-            const embed = new Discord.MessageEmbed()
+            // Make a new embed with the information taken from that message
+            const embed = new MessageEmbed()
                 .setColor('#660066')
                 .setAuthor('Latency', 'https://raw.githubusercontent.com/ZtereoHYPE/ZtereoBOT/v2/assets/images/ping.png')
                 .addFields(
@@ -26,7 +23,9 @@ module.exports = {
                     { name: '\u200B', value: `\u200B`, inline: true },
                     { name: 'Discord API latency:', value: `\`\`\`${Math.round(client.ws.ping)}ms\`\`\``, inline: true }
                 )
-            msg.delete()
+
+            // Delete that message and send the embed
+            msg.delete();
             message.channel.send(embed);
         })
     },

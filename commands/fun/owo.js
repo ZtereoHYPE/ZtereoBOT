@@ -1,27 +1,19 @@
 const owoify = require('owoify-js').default
-const Discord = require('discord.js');
 const path = require('path')
 module.exports = {
     name: 'owo',
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Owoifies a message.',
-	execute(message, args, client, database) {
-
+    execute(message, args, database, shortcuts) {
         // Help command
         if (!args.length || args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-            .setColor('#8EB9FE')
-            .setAuthor('OwO Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}owo [message to owoify]`, value: 'OwOifies a message.'},
-            )
-            message.channel.send(embed);
+            shortcuts.functions.helpCommand(message, 'owo', '[message to owoify]', 'OwOifies a message.', database[`${message.guild.id}`]["prefix"]);
             return;
-          }
+        }
 
-        // Owoify the arguments of the message, made into a string
+        // Randomly choose one of the 3 modes of OwOification
         let owo
-        switch (Math.ceil(Math.random()*3)) {
+        switch (Math.ceil(Math.random() * 3)) {
             case 1:
                 owo = 'owo'
                 break;
@@ -32,7 +24,10 @@ module.exports = {
                 owo = 'uvu'
         }
 
+        // Delete the original message
         message.delete();
+
+        // Send the OwOsified message
         message.channel.send(owoify(args.join(' '), owo))
-	},
+    },
 };
