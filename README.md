@@ -23,11 +23,14 @@ For the second option, you need to do some things as this repository does not co
   {
       "token": "xxxxXXXXXXXXXXXXXxxxxxXXXXxxXXXXXxxXXXXXXXXxxxXXXXXxxx",
       "statusType": "LISTENING",
-      "statusContent": "-help"
+      "statusContent": "-help",
+      "hueUser": "yyYYyYYYYYyyYy",
+      "hueToken": "zzZZZZZZZZZZZZZZzzZZZzzZZZzzZZzZZ"
   }
   ```
  
   The Xs will obviously have to be replaced by your own bot token (DO NOT PUBLISH THIS TO THE INTERNETS). statusType can be LISTENING, WATCHING, STREAMING, or PLAYING and statusContent can be whatever you want.
+  hueUser is the username of the Hue Hub you created (look at [Signify/Philip's documentation](https://developers.meethue.com/develop/get-started-2/) on how to get them), and hueToken is the token of that user. These are required by the hue command
   
   
   
@@ -54,7 +57,11 @@ For the second option, you need to do some things as this repository does not co
   ```
   
   Where server-id and server-id2 are the ids of the guilds/servers. Of course you will just need to create an empty json file ( `{}` ) as the bot will create the required entries automagically when it joins or leaves a server. This can for the moment cause issues if something happens while the bot is offline but I have plans to fix that issue.
-  
+
+## Contact Me:
+You can contact me on discord (ZtereoHYPE#3445) or you can join my discord server where you can chat about other projects too!
+https://discord.gg/6dG2Nj8NaV
+
 ## Thank you!
 Thank you for reading this readme and I thank very much all of the past, present, and future contributors of this project :D
 
