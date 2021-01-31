@@ -1,37 +1,41 @@
-const Discord = require('discord.js');
+const {MessageEmbed} = require('discord.js');
 const path = require('path')
 module.exports = {
     name: 'avatar',
     aliases: ['profile', 'pfp'],
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Shows a user\'s avatar.',
-	execute(message, args, client, database) {
+	execute(message, args, database, shortcuts) {
         // Help command
         if (args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-            .setColor('#8EB9FE')
-            .setAuthor('Avatar Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}avatar [@member]`, value: 'Sends the selected person\'s profile picture.\nIf empty, sends the sender\'s avatar'},
-            )
-            message.channel.send(embed);
+            shortcuts.functions.helpCommand(message, 'avatar', '<@member>', `Sends the selected person\'s profile picture.\nIf empty, sends the sender\'s avatar.`, database[`${message.guild.id}`]["prefix"]);
             return;
         }
 
+        // declare user
         let User;
+
+        // if there are no args let user be the author
         if (!args.length) {
             User = message.guild.member(message.author)
+
+        // else let user be the first mention
         } else {
             User = message.guild.member(message.mentions.users.first())
+
+            // if the first mention doesn't exist say it and cancel
             if (!User) {
-                message.reply(`${args.join(' ')} isn't a user.`)
+                shortcuts.functions.quickEmbed(message, `${args.join(' ')} isn't a user.`, 'failure')
                 return;
             }
         }
         
-        const embed = new Discord.MessageEmbed()
+        // make an embed with the user's url
+        const embed = new MessageEmbed()
             .setTitle(`${User.user.username}\'s avatar:`)
             .setImage(User.user.avatarURL({dynamic: true, format: 'png', size: 2048}));
+
+        // send the embed
         message.channel.send(embed);
 	},
 };

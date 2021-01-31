@@ -1,8 +1,7 @@
-const fs = require('fs');
-const Discord = require('discord.js');
 const path = require('path')
 module.exports = {
     name: 'delwarn',
+    aliases: ['unwarn'],
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Deletes a user\'s warm.',
     execute(message, args, database, shortcuts) {

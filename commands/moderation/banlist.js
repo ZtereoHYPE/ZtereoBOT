@@ -2,6 +2,7 @@ const path = require('path')
 const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: 'banlist',
+    aliases: ['bans', 'serverbans'],
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Lists all the banned players of the server',
     execute(message, args, database, shortcuts) {

@@ -6,7 +6,6 @@ module.exports = {
 	description: 'List all of my commands or info about a specific command.',
 	execute(message, args, database, shortcuts) {
 
-
 		// make it react and then send in dms. too lazy rn to do it lol
 
 		// let commands be the client's commnads

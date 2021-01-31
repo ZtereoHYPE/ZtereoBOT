@@ -1,24 +1,15 @@
 const path = require('path')
-const Discord = require('discord.js');
 module.exports = {
     name: 'timer',
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Sets a timer after which you get pinged.',
-	execute(message, args, client, database, shortcuts) {
-        
-        
+	execute(message, args, database, shortcuts) {
+        // help command
         if (!args.length || args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-            .setColor('#8EB9FE')
-            .setAuthor('Timer Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}timer [number] seconds/minutes/hours`, value: 'Sets a timer for the chosen amount of time and pings you when timer is over' },
-            )
-            message.channel.send(embed);
+            shortcuts.functions.helpCommand(message, 'timer', '[number] seconds/minutes/hours`', 'Sets a timer for the chosen amount of time and pings you when timer is over.', database[`${message.guild.id}`]["prefix"]);
             return;
         }
-        //console.log(Date.now() - commandDate)
-        // Else if chain (switch to switch please) to check if the sent message is a valid timer and set the timer accordingly
+        // Else if chain to check if the sent message is a valid timer and set the timer accordingly
         if (args.length < 1) {
             message.channe.send('Please provide a timer length.');
             return;
