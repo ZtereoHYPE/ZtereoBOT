@@ -14,16 +14,6 @@ module.exports = {
         // Grab the prefix from the database
         let prefix = database[`${message.guild.id}`]["prefix"];
 
-        if (message.content == "-help") {
-            try {
-                client.commands.get('help').execute(message, 0, 0, database);
-            } catch (error) {
-                console.error(error);
-                message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
-            }
-            return;
-        }
-
         // If doesn't start with prefix, cancel.
         if (!message.content.startsWith(prefix)) return;
 
@@ -40,7 +30,7 @@ module.exports = {
 
         // Try to execute the command and in case of failure send error message.
         try {
-            command.execute(message, args, client, database, shortcuts);
+            command.execute(message, args, database, shortcuts, client);
         } catch (error) {
             console.error(error);
             message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
