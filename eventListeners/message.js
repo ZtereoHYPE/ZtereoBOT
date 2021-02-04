@@ -1,3 +1,4 @@
+const {MessageEmbed} = require('discord.js')
 module.exports = {
     name: "message",
     execute(message, client, database, shortcuts) {
@@ -33,7 +34,13 @@ module.exports = {
             command.execute(message, args, database, shortcuts, client);
         } catch (error) {
             console.error(error);
-            message.reply('an error happened. Ask ZtereoHYPE to fix me please!')
+            const embed = new MessageEmbed()
+                .setColor('#FF1B1B')
+                .setTitle('Oopsie woopsie!')
+                .setDescription('UwU the bot did a fucky wucky! A little fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!')
+                .setFooter('kill me please')
+                .setTimestamp()
+            message.channel.send(embed);
         }
     }
 }
