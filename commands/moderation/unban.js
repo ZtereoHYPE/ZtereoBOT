@@ -1,34 +1,30 @@
-const Discord = require('discord.js');
 const path = require('path')
 module.exports = {
     name: 'unban',
+    aliases: ['pardon'],
     category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'Unbans a player from the guild.',
-	execute(message, args, client, database) {
+	execute(message, args, database, shortcuts) {
         // Help command
         if (!args.length || args[0] == 'help') {
-            const embed = new Discord.MessageEmbed()
-            .setColor('#8EB9FE')
-            .setAuthor('Unban Command Help:', 'https://i.imgur.com/dSTYnIF.png')
-            .addFields(
-                { name: `${database[`${message.guild.id}`]["prefix"]}unban [member id]`, value: `Unbans a player from the guild.` },
-            )
-            .setFooter('Ban Member perms required', 'https://i.imgur.com/Z9gjIx1.png')
-            message.channel.send(embed);
+            shortcuts.functions.helpCommand(message, 'unban', '[member id]', 'Unbans a player from the guild.', database[`${message.guild.id}`]["prefix"], 'Ban members perms required');
             return;
         };
 
+        // if the member doesn't have permissions, say it and cancel
         if (!(message.guild.member(message.author).hasPermission('BAN_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
-            message.reply("you don\'t have the permission to do that (Ban Members perms).");
+            shortcuts.functions.quickEmbed(message, `You don\'t have the permission to do that (Ban Members perms).`, 'failure');
             return;
         }
 
+        // check if the ID given is a number
         if (!(/[0-9]+$/.test(args[0]))) {
-            message.reply(`please give select a user by its ID. To find the ID, use \`${database[`${message.guild.id}`]["prefix"]}banlist\``)
+            shortcuts.functions.quickEmbed(message, `Please give select a user by its ID. To find the ID, use \`${database[`${message.guild.id}`]["prefix"]}banlist\``, 'failure');
             return;
         };
         
+        // ban the member and then send success message
         message.guild.members.unban(args[0])
-            .then(user => message.reply(`you unbanned ${user.username} from ${message.guild.name}.`))
+            .then(user => shortcuts.functions.quickEmbed(message, `You unbanned ${user.username} from ${message.guild.name}.`, 'success'))
 	},
 };
