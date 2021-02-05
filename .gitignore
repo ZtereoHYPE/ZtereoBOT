@@ -2,8 +2,10 @@
 **/.DS_Store
 config.json
 database.json
-commands/modelcommand.js
 node_modules/
 package-lock.json
 .vscode/
-commands/github.js
+commands/WIP
+test.js
+USEFULSHIT
+commands/modelcommand.js
