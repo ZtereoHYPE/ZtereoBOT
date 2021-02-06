@@ -1,5 +1,4 @@
 const fs = require('fs');
-const Discord = require('discord.js');
 const database = require('../database.json');
 
 module.exports = {
@@ -9,7 +8,7 @@ module.exports = {
         console.log("Left a guild: " + guild.id);
 
         // Delete the guild's entry in the database
-        delete database[`${guild.id}`];
+        delete database[guild.id];
 
         // Save the JSON file
         var saveJson = JSON.stringify(database, null, 4)
