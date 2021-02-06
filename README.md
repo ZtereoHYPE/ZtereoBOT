@@ -41,17 +41,31 @@ For the second option, you need to do some things as this repository does not co
   {
     "server-id": {
         "prefix": "!",
-        "warnings": ["playerId1", "playerId2"],
+        "warnings": {
+            "434842825805266944": {
+                "username": "ZtereoHYPE",
+                "warns": [
+                    {
+                        "date": "6/1/2021 at 16:33",
+                        "reason": "this is for the readme"
+                    },
+                    {
+                        "date": "6/1/2021 at 16:34",
+                        "reason": "this is for the readme 2 electric boogaloo"
+                    }
+                ]
+            }
+        },
         "rules": ["do not eat", "please"],
         "bans": [],
-        "allowed": []
+        "disabled": ["tts"]
     },
     "server-id2": {
         "prefix": "-",
         "warnings": {},
         "rules": [],
         "bans": {},
-        "enable": []
+        "disabled": []
     }
   } 
   ```

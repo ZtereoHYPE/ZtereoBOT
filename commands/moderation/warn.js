@@ -55,6 +55,6 @@ module.exports = {
         shortcuts.functions.saveDatabase(database);
 
         // send success message
-        shortcuts.functions.quickEmbed(message, `you warned ${User.user.username} for reason: ${args.join(' ')}\n (warning number ${Object.keys(database[message.guild.id]['warnings'][User.id]['warns']).length})`, 'success');
+        shortcuts.functions.quickEmbed(message, `You warned ${User.user.username} for reason: ${args.join(' ')}\n (warning number ${Object.keys(database[message.guild.id]['warnings'][User.id]['warns']).length})`, 'success');
     }
 };
