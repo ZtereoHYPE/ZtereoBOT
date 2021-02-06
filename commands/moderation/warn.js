@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 module.exports = {
     name: 'warn',
     category: path.dirname(__filename).split(path.sep).pop(),
@@ -34,7 +35,7 @@ module.exports = {
 
         // if the user has no warnings then make an entry and add the warning, else simply add the warning
         if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {
-            database[message.guild.id]['warnings'][User.id].push({
+            database[message.guild.id]['warnings'][User.id] = {
                 "username": User.user.username,
                 "warns": [
                     {
@@ -42,7 +43,7 @@ module.exports = {
                         "reason": args.join(' ')
                     }
                 ]
-            })
+            }
         } else {
             database[message.guild.id]['warnings'][User.id]['warns'].push({
                 "date": `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`,
