@@ -12,7 +12,7 @@ module.exports = {
 
         // If the message author isn't the guild owner return.
         if (!(message.guild.member(message.author).id == message.guild.ownerID)) {
-            message.reply("you don\'t have the permission to do that (Server Owner).");
+            shortcuts.functions.quickEmbed(message, "you don\'t have the permission to do that (Server Owner).", 'failure')
             return;
         }
 
