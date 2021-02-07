@@ -49,6 +49,6 @@ module.exports = {
 
         // remove the role from the person, then send the success message
         User.roles.remove(muteRole, "Unmute command used.")
-            .then(() => shortcuts.functions.quickEmbed(message, `You unmuted ${User.user.username}.`, 'failure'))
+            .then(() => shortcuts.functions.quickEmbed(message, `You unmuted ${User.user.username}.`, 'success'))
 	},
 };

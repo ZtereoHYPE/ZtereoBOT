@@ -38,6 +38,7 @@ module.exports = {
                 .setColor('#FF1B1B')
                 .setTitle('Oopsie woopsie!')
                 .setDescription('UwU the bot did a fucky wucky! A little fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!')
+                .addField("Error:", `\`\`\`${error}\`\`\``)
                 .setFooter('kill me please')
                 .setTimestamp()
             message.channel.send(embed);

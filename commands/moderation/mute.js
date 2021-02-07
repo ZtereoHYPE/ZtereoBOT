@@ -133,8 +133,9 @@ module.exports = {
             return;
         }
 
-        // add the mute role to the person
+        // add the mute role to the person then send success message
         User.roles.add(muteRole, "Mute command used.")
+            .then(user => shortcuts.functions.quickEmbed(message, `You muted ${user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`, 'success'))
 
         // set timeout for mute time
         setTimeout(function () {
@@ -142,8 +143,5 @@ module.exports = {
                 User.roles.remove(muteRole, "Expired mute time set with command.")
             }
         }, computerTime)
-
-        // send success message
-        shortcuts.functions.quickEmbed(message, `You muted ${User.user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`, 'success')
     },
 };

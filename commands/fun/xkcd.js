@@ -14,6 +14,7 @@ module.exports = {
                 data += chunk;
             });
 
+            // when the data is gathered, make a link with a random number of an xkcd comic, and request the data
             resp.on('end', () => {
                 https.get(`https://xkcd.com/${Math.floor(Math.random() * JSON.parse(data)["num"])}/info.0.json`, (resp) => {
                     let data = '';
@@ -22,6 +23,7 @@ module.exports = {
                         data += chunk;
                     });
         
+                    // when the data (comic) is gathered make an embed with it
                     resp.on('end', () => {
                         const embed = new MessageEmbed()
                             .setColor('#' + (Math.random() * 0xFFFFFF << 0).toString(16))
@@ -32,11 +34,13 @@ module.exports = {
                         message.channel.send(embed);
                     });
         
-                }).on("error", (err) => {
+                // when an error happens send an error message
+                }).on("error", (error) => {
                     const embed = new MessageEmbed()
                         .setColor('FF1B1B')
                         .setTitle('Oopsie woopsie!')
                         .setDescription('UwU the bot did a fucky wucky! A little fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!')
+                        .addField("Error:", `\`\`\`${error}\`\`\``)
                         .setFooter('kill me please')
                         .setTimestamp()
                     message.channel.send(embed);
