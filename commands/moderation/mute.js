@@ -99,7 +99,7 @@ module.exports = {
         }
 
         // check if rawtime isnt made of numbers
-        if (/[^0-9]+$/.test(rawTime)) {
+        if (isNaN(rawTime)) {
             shortcuts.functions.quickEmbed(message, `\`${rawTime}\` is not an acceptable time!`, 'failure');
             return;
         }
@@ -135,7 +135,7 @@ module.exports = {
 
         // add the mute role to the person then send success message
         User.roles.add(muteRole, "Mute command used.")
-            .then(user => shortcuts.functions.quickEmbed(message, `You muted ${user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`, 'success'))
+            .then(User => shortcuts.functions.quickEmbed(message, `You muted ${User.user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`, 'success'))
 
         // set timeout for mute time
         setTimeout(function () {
