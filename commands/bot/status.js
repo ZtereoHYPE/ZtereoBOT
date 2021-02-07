@@ -14,7 +14,7 @@ module.exports = {
 
         // If the message author isn't ZtereoHYPE, reject
         if (message.guild.member(message.author).id != 434842825805266944) {
-            message.reply('Sorry, but for obvious reasons only the bot owner can use this command. Please contact him if you have any form of request <@434842825805266944>')
+            shortcuts.functions.quickEmbed(message, "Sorry, but for obvious reasons only the bot owner can use this command. Please contact him if you have any form of request.", 'failure')
             return
         }
 
@@ -65,7 +65,7 @@ module.exports = {
 
         // Check if they are valid types
         if (activityType != "LISTENING" && activityType != "WATCHING" && activityType != "PLAYING" && activityType != "STREAMING") {
-            message.reply(`${activityType} is not a valid activity type.`)
+            shortcuts.functions.quickEmbed(message, `${activityType} is not a valid activity type.`, 'failure')
             return
         }
 
