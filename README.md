@@ -42,19 +42,18 @@ For the second option, you need to do some things as this repository does not co
     "server-id": {
         "prefix": "!",
         "warnings": {
-            "434842825805266944": {
-                "username": "ZtereoHYPE",
-                "warns": [
-                    {
-                        "date": "6/1/2021 at 16:33",
-                        "reason": "this is for the readme"
-                    },
-                    {
-                        "date": "6/1/2021 at 16:34",
-                        "reason": "this is for the readme 2 electric boogaloo"
-                    }
-                ]
-            }
+            "434842825805266944": [
+                {
+                    "type": "Warn",
+                    "date": "6/1/2021 at 16:33",
+                    "reason": "this is for the readme"
+                },
+                {
+                    "type": "Mute",
+                    "date": "6/1/2021 at 16:34",
+                    "reason": "this is for the readme 2 electric boogaloo (for 20s)"
+                }
+            ]
         },
         "rules": ["do not eat", "please"],
         "bans": [],

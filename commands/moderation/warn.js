@@ -1,5 +1,4 @@
 const path = require('path')
-const fs = require('fs')
 module.exports = {
     name: 'warn',
     category: path.dirname(__filename).split(path.sep).pop(),
@@ -33,23 +32,18 @@ module.exports = {
         if (args.length == 0) args = ['Not', 'specified'];
         var date = new Date();
 
-        // if the user has no warnings then make an entry and add the warning, else simply add the warning
+        
         if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {
-            database[message.guild.id]['warnings'][User.id] = {
-                "username": User.user.username,
-                "warns": [
-                    {
-                        "date": `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`,
-                        "reason": args.join(' ')
-                    }
-                ]
-            }
-        } else {
-            database[message.guild.id]['warnings'][User.id]['warns'].push({
+            database[message.guild.id]['warnings'][User.id] = []
+        }
+
+        database[message.guild.id]['warnings'][User.id].push(
+            {
+                "type": "Warning",
                 "date": `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`,
                 "reason": args.join(' ')
-            })
-        };
+            }
+        )
 
         // save the database
         shortcuts.functions.saveDatabase(database);
