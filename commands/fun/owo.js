@@ -2,6 +2,7 @@ const owoify = require('owoify-js').default
 const path = require('path')
 module.exports = {
     name: 'owo',
+    aliases: ['uwu'],
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Owoifies a message.',
     execute(message, args, database, shortcuts) {
