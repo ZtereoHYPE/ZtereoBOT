@@ -49,7 +49,7 @@ module.exports = {
 
         // shift args to remove name
         args.shift()
-        
+
         // let rawtime be the next args and say it
         let rawTime = args.shift()
 
@@ -133,9 +133,31 @@ module.exports = {
             return;
         }
 
-        // add the mute role to the person then send success message
+
+
+        // add the mute role to the person then...
+        var date = new Date();
         User.roles.add(muteRole, "Mute command used.")
-            .then(User => shortcuts.functions.quickEmbed(message, `You muted ${User.user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`, 'success'))
+            .then(User => {
+                
+                if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {
+                    database[message.guild.id]['warnings'][User.id] = []
+                }
+
+                database[message.guild.id]['warnings'][User.id].push(
+                    {
+                        "type": "Mute",
+                        "date": `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`,
+                        "reason": args.join(' ') + ` (for ${rawTime}${timeType})`
+                    }
+                )
+
+                // save the database
+                shortcuts.functions.saveDatabase(database);
+
+                // send success message
+                shortcuts.functions.quickEmbed(message, `You muted ${User.user.username} for ${rawTime}${timeType} and for reason: ${args.join(' ')}`, 'success');
+            })
 
         // set timeout for mute time
         setTimeout(function () {
