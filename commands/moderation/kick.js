@@ -32,32 +32,32 @@ module.exports = {
         }
 
         // shift the args skipping the mention
+        var date = new Date();
         args.shift();
 
         // if there are no args, make them not specified
         if (args.length == 0) args = ['Not', 'specified'];
 
-        try {
-            User.kick(args.join(' '))
-                .then(User => {
-                    
-                    if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {
-                        database[message.guild.id]['warnings'][User.id] = []
+        User.kick(args.join(' '))
+            .then(User => {
+
+                if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {
+                    database[message.guild.id]['warnings'][User.id] = []
+                }
+
+                database[message.guild.id]['warnings'][User.id].push(
+                    {
+                        "type": "Kick",
+                        "date": `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`,
+                        "reason": args.join(' ')
                     }
+                )
+                
+                // save the database
+                shortcuts.functions.saveDatabase(database);
 
-                    database[message.guild.id]['warnings'][User.id].push(
-                        {
-                            "type": "Kick",
-                            "date": `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`,
-                            "reason": args.join(' ')
-                        }
-                    )
-                })
-        } catch (error) {
-            message.reply(error)
-        }
-
-        // send the success message
-        shortcuts.functions.quickEmbed(message, `you kicked ${User.user.username} for reason: ${args.join(' ')}`, 'success');
+                // send the success message
+                shortcuts.functions.quickEmbed(message, `you kicked ${User.user.username} for reason: ${args.join(' ')}`, 'success');
+            })
     },
 };
