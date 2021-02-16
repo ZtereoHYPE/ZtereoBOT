@@ -1,4 +1,19 @@
 const path = require('path')
+
+
+
+
+
+
+
+// change to this https://www.npmjs.com/package/@vitalets/google-translate-api
+
+
+
+
+
+
+
 const translate = require('translate-google')
 module.exports = {
 	name: 'badtranslate',
@@ -19,13 +34,29 @@ module.exports = {
             }
 
             output = input;
+            let error;
             for (let language of chosenLanguageList) {
-                output = await translate(output, {to: language})
+                output = await translate(output, {to: language}).catch((err) => {
+                    message.reply(`Getting ratelimited by google rn, try again in a few minutes.`)
+                    error = err
+                })
+                if (error) {
+                    break
+                }
             }
 
-            await translate(output, {to: 'en'}).then((resp) => {
-                output = resp;
-            })
+            if (error) {
+                return
+            }
+
+            await translate(output, {to: 'en'})
+                .then((resp) => {
+                    output = resp;
+                })
+                .catch((err) => {
+                    message.reply(`Getting ratelimited by google rn, try again in a few minutes.`)
+                    return
+                })
 
             return output;
         }
