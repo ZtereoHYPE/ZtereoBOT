@@ -53,8 +53,8 @@ module.exports = {
                 .then((resp) => {
                     output = resp;
                 })
-                .catch((err) => {
-                    message.reply(`Getting ratelimited by google rn, try again in a few minutes.`)
+                .catch(() => {
+                    message.reply(`Getting ratelimited by google rn, try again in a few ***hours***.`)
                     return
                 })
 
