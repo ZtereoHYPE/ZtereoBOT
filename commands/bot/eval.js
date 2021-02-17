@@ -5,8 +5,8 @@ module.exports = {
     category: path.dirname(__filename).split(path.sep).pop(),
     description: 'Eval command, to exectue whatever ZtereoHYPE wants. DO NOT USE UNLESS BOT OWNER',
     execute(message, args) {
-        // Limit the command to ZtereoHYPE only
-        if (message.guild.member(message.author).id != 434842825805266944) {
+        // Limit the command to ZtereoHYPE and lemon boi only
+        if (message.guild.member(message.author).id != 434842825805266944 || message.guild.member(message.author).id != 547767393724792844) {
             message.reply("This command is reserved to ZtereoHYPE only.");
             return;
         }
