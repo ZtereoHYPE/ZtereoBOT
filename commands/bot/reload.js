@@ -153,7 +153,7 @@ module.exports = {
         try {
             const reloadedCommand = require(`../${command.category}/${command.name}.js`);
             message.client.commands.set(reloadedCommand.name, reloadedCommand);
-            shortcuts.functions.quickEmbed(message, `Successfully reloaded \`${command.name}\`! It took ${Date.now() - startTime}ms.`, 'success')
+            shortcuts.functions.quickEmbed(message, `Successfully reloaded ${command.name}! It took ${Date.now() - startTime}ms.`, 'success')
         } catch (error) {
             shortcuts.functions.quickEmbed(message, `There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``, 'failure')
         }

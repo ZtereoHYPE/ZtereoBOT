@@ -5,7 +5,4 @@ database.json
 node_modules/
 package-lock.json
 .vscode/
-commands/WIP
-test.js
 USEFULSHIT
-commands/modelcommand.js
