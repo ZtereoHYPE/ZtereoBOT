@@ -20,6 +20,7 @@ module.exports = {
 	category: path.dirname(__filename).split(path.sep).pop(),
 	description: 'Simulate excessive translation with google translate :)',
 	execute(message, args) {
+        message.react('👍');
         let languageList = Object.keys(translate.languages)
         languageList.splice(languageList.indexOf('auto'), 1)
         languageList.splice(languageList.indexOf('isSupported'), 1)
