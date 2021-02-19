@@ -43,7 +43,7 @@ module.exports = {
             const embed = new MessageEmbed()
                 .setColor('red')
                 .setTitle('Fun Fact:')
-                .setDescription(`There an an error retrieving the data! \n \`${err}\``)
+                .setDescription(`There was an error retrieving the data! \n \`${err}\``)
                 .setFooter('It\'s actually true!')
                 .setTimestamp()
             message.channel.send(embed);
