@@ -4,6 +4,8 @@ First and foremost, this bot is a sideproject of mine that I am using to learn t
 Next, I work on it whenever I want to and/or have time, so it might not be active for a while and then have a lot of activity, that's normal.
 Finally, if you want to invite this bot to your server, please contact me here or on discord as I am currently hosting it on a Raspberry Pi zero so yeah, not much power/headroom.
 
+## Note:
+I am in the process of learning and rewriting ZtereoBOT using discord-akairo and mongodb. please i need help ple-
 
 ## Licence:
 This bot is under the WTFPL licence *(Do What The Fuck You Want To Public License)* so you can literally do, as the name suggests, What The Fuck You Want with the code. It'd be nice if you gave me credit but it's by no means necessary.
