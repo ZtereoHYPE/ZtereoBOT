@@ -17,7 +17,7 @@ module.exports = {
             // Make a new embed with the information taken from that message
             const embed = new MessageEmbed()
                 .setColor('#660066')
-                .setAuthor('Latency', 'https://raw.githubusercontent.com/ZtereoHYPE/ZtereoBOT/v2/assets/images/ping.png')
+                .setAuthor('Latency', 'https://i.imgur.com/b04ffHd.png')
                 .addFields(
                     { name: 'Bot latency:', value: `\`\`\`${msg.createdTimestamp - message.createdTimestamp}ms\`\`\``, inline: true },
                     { name: '\u200B', value: `\u200B`, inline: true },
