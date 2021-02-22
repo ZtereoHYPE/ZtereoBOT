@@ -32,7 +32,7 @@ For the second option, you need to do some things as this repository does not co
   ```
  
   The Xs will obviously have to be replaced by your own bot token (DO NOT PUBLISH THIS TO THE INTERNETS). statusType can be LISTENING, WATCHING, STREAMING, or PLAYING and statusContent can be whatever you want.
-  hueUser is the username of the Hue Hub you created (look at [Signify/Philip's documentation](https://developers.meethue.com/develop/get-started-2/) on how to get them), and hueToken is the token of that user. These are required by the hue command
+  hueUser is the username of the Hue Hub you created (look at [Signify/Philip's documentation](https://developers.meethue.com/develop/get-started-2/) on how to get them), and hueToken is the token of that user. These are required for the hue command to work.
   
   
   
@@ -44,7 +44,7 @@ For the second option, you need to do some things as this repository does not co
     "server-id": {
         "prefix": "!",
         "warnings": {
-            "434842825805266944": [
+            "user-id": [
                 {
                     "type": "Warn",
                     "date": "6/1/2021 at 16:33",
@@ -58,14 +58,12 @@ For the second option, you need to do some things as this repository does not co
             ]
         },
         "rules": ["do not eat", "please"],
-        "bans": [],
         "disabled": ["tts"]
     },
     "server-id2": {
         "prefix": "-",
         "warnings": {},
         "rules": [],
-        "bans": {},
         "disabled": []
     }
   } 
