@@ -59,7 +59,7 @@ module.exports = {
         let prefix = database[message.guild.id]["prefix"];
 
         // Listen to ping and reply with the prefix
-        if (message.mentions.users.has(client.user.id)) {
+        if (message.mentions.users.has(client.user.id) && message.content.trim().split(/ +/).length == 1) {
             const embed = new MessageEmbed()
                 .setColor('#8EB9FE')
                 .setAuthor(`ZtereoBOT information`, 'https://i.imgur.com/dSTYnIF.png')
