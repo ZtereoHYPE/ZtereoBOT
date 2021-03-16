@@ -23,13 +23,13 @@ module.exports = {
 		message.react('👍');
 
 		console.log(categoryArray)
-		// function sendHelpCategories(int) {
-		// 	if (int >= embedArray.length) return;
-		// 	setTimeout(sendHelpCategories, 500, int + 1)
-		// 	message.author.send(embedArray[int]);
-		// 	int++;
-		// }
+		function sendHelpCategories(int) {
+			if (int >= embedArray.length) return;
+			setTimeout(sendHelpCategories, 500, int + 1)
+			message.author.send(embedArray[int]);
+			int++;
+		}
 
-		// sendHelpCategories(0)
+		sendHelpCategories(0)
 	},
 };
