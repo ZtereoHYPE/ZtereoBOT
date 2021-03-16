@@ -25,7 +25,7 @@ module.exports = {
 		console.log(categoryArray)
 		function sendHelpCategories(int) {
 			if (int >= embedArray.length) return;
-			setTimeout(sendHelpCategories, 500, int + 1)
+			setTimeout(sendHelpCategories, 600, int + 1)
 			message.author.send(embedArray[int]);
 			int++;
 		}
