@@ -6,6 +6,10 @@ module.exports = {
 	description: 'Calculates the maximum commune divisor between two numbers',
 	execute(message, args) {
         // TODO: add integer check
+        if (parseInt(args[0]) == 0 || parseInt(args[1]) == 0) {
+            message.reply('Please use valid numbers (these got parsed as 0)');
+            return;
+        }
 
         // haha italian terms go brr
         let divisore;
