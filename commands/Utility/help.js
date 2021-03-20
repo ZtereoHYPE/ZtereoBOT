@@ -22,7 +22,6 @@ module.exports = {
 
 		message.react('👍');
 
-		console.log(categoryArray)
 		function sendHelpCategories(int) {
 			if (int >= embedArray.length) return;
 			setTimeout(sendHelpCategories, 600, int + 1)
