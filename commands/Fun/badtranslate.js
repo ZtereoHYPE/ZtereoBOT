@@ -11,8 +11,8 @@ module.exports = {
             return;
         }
 
-        // React to the message to show progress is being made
-        message.react('👍');
+        // Start typing to show progress is being made
+        message.channel.startTyping()
 
         // Make a list of all available languages and remove from it some unrelated elements
         let languageList = Object.keys(translate.languages)
@@ -48,9 +48,10 @@ module.exports = {
             return output;
         }
         
-        // Call that function and then send the result in the message's channel
+        // Call that function, then send the result in the message's channel and stop the typing indicator
         translateCycle(args.join(' '), 5).then((resp) => {
             message.channel.send(resp)
+            message.channel.stopTyping()
         })
 	},
 };
