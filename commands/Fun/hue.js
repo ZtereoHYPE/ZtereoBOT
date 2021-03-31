@@ -7,7 +7,7 @@ module.exports = {
     description: 'a commnand used to control ZtereoHYPE\'s hue light bulbs',
     execute(message, args, database, shortcuts) {
         // If the message author isn't ZtereoHYPE, reject
-        if (message.guild.member(message.author).id != 434842825805266944) {
+        if (message.author.id != 434842825805266944) {
             message.reply("Only ztereohype can control his hue lights.")
             return;
         }

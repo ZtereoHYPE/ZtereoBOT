@@ -4,7 +4,7 @@ const path = require('path')
 module.exports = {
     name: 'xkcd',
     category: path.dirname(__filename).split(path.sep).pop(),
-    description: 'Only the best comics.',
+    description: 'Sends a random XKCD.',
     execute(message) {
         // gather what the last XKCD comic is
         https.get('https://xkcd.com/info.0.json', (resp) => {
