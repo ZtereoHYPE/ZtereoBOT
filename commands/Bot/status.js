@@ -8,12 +8,12 @@ module.exports = {
     execute(message, args, database, shortcuts, client) {
         // Help command
         if (!args.length || args[0] == 'help') {
-            shortcuts.functions.helpCommand(message, 'status', '<default> [PLAYING/STREAMING/LISTENING/WATCHING] [what]', 'Sets the bot\'s status.', database[`${message.guild.id}`]["prefix"], 'ZtereoHYPE Only');
+            shortcuts.functions.helpCommand(message, 'status', '<default> [playing/streaming/listening/watching/competing] [what]', 'Sets the bot\'s status.', database[`${message.guild.id}`]["prefix"], 'ZtereoHYPE Only');
             return;
         }
 
         // If the message author isn't ZtereoHYPE, reject
-        if (message.guild.member(message.author).id != 434842825805266944) {
+        if (message.author.id != 434842825805266944) {
             shortcuts.functions.quickEmbed(message, "Sorry, but for obvious reasons only the bot owner can use this command. Please contact him if you have any form of request.", 'failure')
             return
         }
@@ -58,13 +58,13 @@ module.exports = {
         }
 
         // let activityType be the first argument while rmoving it
-        let activityType = args.shift()
+        let activityType = args.shift().toUpperCase()
 
         // let the content be the rest of the arguments
         let activityContent = args.join(' ')
 
         // Check if they are valid types
-        if (activityType != "LISTENING" && activityType != "WATCHING" && activityType != "PLAYING" && activityType != "STREAMING") {
+        if (activityType != "LISTENING" && activityType != "WATCHING" && activityType != "PLAYING" && activityType != "STREAMING" && activityType != 'COMPETING') {
             shortcuts.functions.quickEmbed(message, `${activityType} is not a valid activity type.`, 'failure')
             return
         }
@@ -75,6 +75,6 @@ module.exports = {
         client.user.setActivity(activityContent, { type: activityType });
 
         // Send success message
-        shortcuts.functions.quickEmbed(message, `I've successfully changed my status to ${activityType} ${activityContent}`, 'success')
+        shortcuts.functions.quickEmbed(message, `I've successfully changed my status to ${activityType.toLowerCase()} ${activityContent}`, 'success')
     },
 };
