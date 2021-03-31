@@ -7,28 +7,15 @@ module.exports = {
     description: 'Owoifies a message.',
     execute(message, args, database, shortcuts) {
         // Help command
-        if (!args.length || args[0] == 'help') {
+        if (!args.length) {
             shortcuts.functions.helpCommand(message, 'owo', '[message to owoify]', 'OwOifies a message.', database[`${message.guild.id}`]["prefix"]);
             return;
         }
-
-        // Randomly choose one of the 3 modes of OwOification
-        let owo
-        switch (Math.ceil(Math.random() * 3)) {
-            case 1:
-                owo = 'owo'
-                break;
-            case 2:
-                owo = 'uwu'
-                break;
-            case 3:
-                owo = 'uvu'
-        }
-
+        
         // Delete the original message
         message.delete();
 
-        // Send the OwOsified message
-        message.channel.send(owoify(args.join(' '), owo))
+        // Send the OwOsified message with a mode randomly chosen between the 3 available
+        message.channel.send(owoify(args.join(' '), ['owo', 'uwu', 'uvu'][Math.round(Math.random()*3)]))
     },
 };
