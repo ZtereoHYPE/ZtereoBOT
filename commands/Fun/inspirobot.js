@@ -15,6 +15,7 @@ module.exports = {
 
             resp.on('end', () => {
                 const embed = new MessageEmbed()
+                    .setTitle('InspiroBot says...')
                     .setColor('#' + (Math.random() * 0xFFFFFF << 0).toString(16))
                     .setImage(data)
                     .setFooter('Truly inspirational')
