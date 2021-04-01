@@ -1,27 +1,30 @@
 // Load required files and save them in constants
 let startDate = Date.now()
-const fs = require('fs');
-const Discord = require('discord.js');
-const path = require('path');
 const { token } = require('./config.json');
 const database = require('./database.json');
+const Discord = require('discord.js');
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
 const shortcuts = require('./shortcuts.js');
+const socket = require('socket.io');
 
 // Start discord.js stuff
-const client = new Discord.Client();
+const myIntents = new Discord.Intents(Discord.Intents.ALL);
+const client = new Discord.Client({intents: myIntents });
 client.commands = new Discord.Collection();
 client.eventListeners = new Discord.Collection();
 
 // Command loader
 const commandFolders = fs
-    .readdirSync('./commands')
-    .filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
+.readdirSync('./commands')
+.filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
 
 for (const dir of commandFolders) {
     const commandFiles = fs
-        .readdirSync(`./commands/${dir}`)
-        .filter(file => file.endsWith(".js"));
-
+    .readdirSync(`./commands/${dir}`)
+    .filter(file => file.endsWith(".js"));
+    
     for (const file of commandFiles) {
         const command = require(`./commands/${dir}/${file}`);
         client.commands.set(command.name, command);
@@ -30,11 +33,11 @@ for (const dir of commandFolders) {
 
 // eventListeners loader
 const eventListenerFiles = fs
-    .readdirSync('./eventListeners')
-    .filter(file => file.endsWith(".js"));
+.readdirSync('./event_listeners')
+.filter(file => file.endsWith(".js"));
 
 for (const file of eventListenerFiles) {
-    const eventListener = require(`./eventListeners/${file}`);
+    const eventListener = require(`./event_listeners/${file}`);
     client.eventListeners.set(eventListener.name, eventListener);
 }
 
@@ -69,6 +72,8 @@ process.on('unhandledRejection', error => {
 
 // Login with token (very secret)
 client.login(token);
+
+
 
 // Use this link to add ZtereoBOT to your server https://discord.com/oauth2/authorize?client_id=713718980325539910&scope=bot&permissions=8
 // Use this link to add ZtereoBOT Beta to your server https://discord.com/oauth2/authorize?client_id=791744080127197204&scope=bot&permissions=8
