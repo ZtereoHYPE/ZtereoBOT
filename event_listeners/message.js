@@ -59,12 +59,12 @@ module.exports = {
         let prefix = database[message.guild.id]["prefix"];
 
         // Listen to ping and reply with the prefix
-        if (message.mentions.users.has(client.user.id) && message.content.trim().split(/ +/).length == 1) {
+        if (message.mentions.users.has(client.user.id) && message.content.trim().split(/ +/).length == 1 && message.type == 'DEFAULT') {
             const embed = new MessageEmbed()
                 .setColor('#8EB9FE')
                 .setAuthor(`ZtereoBOT information`, 'https://i.imgur.com/dSTYnIF.png')
                 .setDescription(`My prefix is \`${prefix}\`. Type \`${prefix}help\` for a list of my commands.`)
-            message.channel.send(embed);
+            message.reply(embed);
             return
         };
 
