@@ -25,7 +25,7 @@ module.exports = {
 
             // if the first mention doesn't exist say it and cancel
             if (!User) {
-                shortcuts.functions.quickEmbed(message, `${args.join(' ')} isn't a user.`, 'failure')
+                shortcuts.functions.quickEmbed(message, `${args.join(' ')} isn't a user.`, 'warning')
                 return;
             }
         }

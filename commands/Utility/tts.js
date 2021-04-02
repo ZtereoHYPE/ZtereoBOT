@@ -6,9 +6,9 @@ module.exports = {
     description: 'Sends a Test To Speech Message',
     execute(message, args, database, shortcuts) {
 
-        // check if the command is disabled
-        let commandStatus
-        if (database[`${message.guild.id}`]["disabled"].includes('tts')) {
+        // Check if the command is disabled
+        let commandStatus;
+        if (database[message.guild.id]["disabled"].includes('tts')) {
             commandStatus = 'disabled'
         } else {
             commandStatus = 'enabled'
@@ -19,8 +19,8 @@ module.exports = {
             shortcuts.functions.helpCommand(message, 'TTS', '[text]', 'Sends a Text To Speech message.', database[`${message.guild.id}`]["prefix"], 'Enabling/disabling TTS requires Admin perms')
             return;
         }
-
-        // if the first arg is enable, check if server owner and if already enabled, and else enable it
+asdsad
+        // If the first arg is enable, check if server owner and if already enabled, and else enable it
         if (args[0] == 'enable') {
             if (!(message.author.id === message.guild.ownerID)) {
                 shortcuts.functions.quickEmbed(message, 'Only the server owner can change the tts command status.', 'failure')

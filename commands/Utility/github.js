@@ -36,7 +36,7 @@ module.exports = {
                 
                 // if the user is invalid send a message
                 if (parsedData.message) {
-                    shortcuts.functions.quickEmbed(message, 'That\'s not a valid GitHub username.', 'failure');
+                    shortcuts.functions.quickEmbed(message, 'That\'s not a valid GitHub username.', 'warning');
                     return;
                 }
                 

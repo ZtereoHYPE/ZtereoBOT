@@ -7,7 +7,7 @@ module.exports = {
 	execute(message, args, database, shortcuts) {
         // If there are no arguments say it and abort.
         if (args.length == 0) {
-            shortcuts.functions.quickEmbed(message, 'Please type a sentence to badly translate.', 'failure');
+            shortcuts.functions.quickEmbed(message, 'Please type a sentence to badly translate.', 'warning');
             return;
         }
 

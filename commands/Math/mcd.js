@@ -7,7 +7,7 @@ module.exports = {
 	execute(message, args) {
         // TODO: add integer check
         if (parseInt(args[0]) == 0 || parseInt(args[1]) == 0) {
-            message.reply('Please use valid numbers (these got parsed as 0)');
+            shortcuts.functions.quickEmbed(message, 'Please use valid numbers (these got parsed as 0).', 'warning');
             return;
         }
 
@@ -28,14 +28,14 @@ module.exports = {
         let resto;
         const embed = new MessageEmbed()
 			.setColor('#009933')
-            .setAuthor('ZtereoMATH', 'https://imgur.com/fJVhyGo.png')
+            .setAuthor('ZtereoMATH', 'https://imgur.com/xV5o9Mw.png')
 			.setTitle(`MCD between ${dividendo} and ${divisore}`)
         do {
             resto = dividendo % divisore
-            embed.addField(`${dividendo} % ${divisore} = `, `${resto}`)
+            // embed.addField(`${dividendo} % ${divisore} = `, `${resto}`)
             if (resto == 0) {
-                embed.addField(`RESULT:`, `${divisore}`)
-                message.channel.send(embed)
+                embed.addField(`RESULT:`, `${divisore}`);
+                message.channel.send(embed);
                 return;
             }
             nuovoDivisore = dividendo % divisore;
