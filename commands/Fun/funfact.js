@@ -41,11 +41,12 @@ module.exports = {
 
         }).on("error", (err) => {
             const embed = new MessageEmbed()
-                .setColor('red')
-                .setTitle('Fun Fact:')
-                .setDescription(`There was an error retrieving the data! \n \`${err}\``)
-                .setFooter('It\'s actually true!')
-                .setTimestamp()
+            .setColor('#FF1B1B')
+            .setTitle('Oopsie woopsie!')
+            .setDescription('UwU the bot did a fucky wucky! A little fucko boingo! The code monkeys at our headquarters are working VEWY HAWD to fix this!')
+            .addField("Error:", `\`\`\`${err}\`\`\``)
+            .setFooter('kill me please')
+            .setTimestamp()
             message.channel.send(embed);
         });
     }
