@@ -7,25 +7,112 @@ module.exports = {
     description: 'Reloads a command.',
     execute(message, args, database, shortcuts) {
         // Help command
-        if (!args.length) {
-            shortcuts.functions.helpCommand(message, 'reload', '[command],,all,,[command category]', 'Reloads the chosen command.,,Reloads all commands.,,Reloads the chosed command category.', database[`${message.guild.id}`]["prefix"]);
+        if (!args.length || args[0] == 'help') {
+            shortcuts.functions.helpCommand(message, 'reload', 'command [command name],,category [command category],,all', 'Reloads the chosen command.,,Reloads the chosed command category.\nNote: category names are in Upper Case.,,Reloads all commands.', database[`${message.guild.id}`]["prefix"]);
             return;
         }
 
-        // If the first argument is "all", reloads every command
+        // Start counting the time
         let startTime = Date.now();
 
-        // If the argument is all then reload all commands
-        if (args[0] === "all") {
-            // Make empty errors array
-            let errors = [];
+        function finalEmbed(errors) {
+            const embed = new MessageEmbed()
+            // If there are errors make it an error embed
+            if (errors.length) {
+                embed.setColor('#8E1A01')
+                embed.setAuthor(`Commands Reloaded but...`, 'https://imgur.com/IdwURBx.png')
+                embed.setDescription(`The commands were reloaded but some had errors:`)
 
-            // Make commandFolders containing the command folders
+                // Iterate over each error and add it to the embed
+                for (const error in errors) {
+                    embed.addFields({ name: 'Error:', value: `\`${error}\`` })
+                }
+
+            // Else make it a success embed
+            } else {
+                embed.setColor('#15AABF')
+                embed.setAuthor(`Commands Reloaded Successfully!`, 'https://imgur.com/yvHrC4Q.png')
+                embed.setDescription(`The commands were reloaded successfully!`)
+            }
+            embed.setFooter(`This action took ${Date.now() - startTime}ms`)
+            return embed;
+        }
+
+        // create a reloadCommand function that reloads the passed command
+        function reloadCommand(commandDirectory, commandName) {
+            try {
+                delete require.cache[require.resolve(`../${commandDirectory}/${commandName}`)];
+                const reloadedCommand = require(`../${commandDirectory}/${commandName}`);
+                message.client.commands.set(reloadedCommand.name, reloadedCommand);
+            } catch (error) {
+                console.error(error);
+                return error;
+            };
+            return;
+        };
+
+        if (args[0] == 'command') {
+            if (!args[1]) return shortcuts.functions.quickEmbed(message, `You didn't pass any command to reload.`, 'warning');
+
+            const commandName = args[1].toLowerCase();
+            const command = message.client.commands.get(commandName)
+                || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+
+            if (!command) return message.channel.send(`There is no command with that name or alias.`);
+
             const commandFolders = fs
                 .readdirSync('./commands')
                 .filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
 
-            // For each directory of commandFolders, save its internal js files to commandFiles
+            const folderName = commandFolders.find(folder => fs.readdirSync(`./commands/${folder}`).includes(`${command.name}.js`));
+
+            let error = reloadCommand(folderName, command.name + '.js');
+
+            if (!error) {
+                shortcuts.functions.quickEmbed(message, `Successfully reloaded ${command.name}! It took ${Date.now() - startTime}ms.`, 'success')
+            } else {
+                shortcuts.functions.quickEmbed(message, `There was an error while reloading the command.`, 'failure')
+            }
+            return;
+        }
+
+        if (args[0] == 'category') {
+            if (!args[1]) return shortcuts.functions.quickEmbed(message, `You didn't pass any category to reload.`, 'warning');
+
+            let errors = [];
+
+            const commandFolders = fs
+                .readdirSync('./commands')
+                .filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
+
+            // If there are no commandFiles return an error
+            if (!commandFolders.includes(args[1])) return shortcuts.functions.quickEmbed(message, `${args[1]} is not a valid command category`, 'warning');
+
+            let dir = args[1];
+            const commandFiles = fs
+                .readdirSync(`./commands/${dir}`)
+                .filter(file => file.endsWith(".js"));
+
+            // For each of these files, try to reload it and throw any errors in the errors array
+            for (const file of commandFiles) {
+                let error = reloadCommand(dir, file)
+                if (error) {
+                    errors.push(error)
+                }
+            }
+
+            // Send the embed
+            message.channel.send(finalEmbed(errors));
+            return;
+        }
+
+        if (args[0] == 'all') {
+            let errors = [];
+            
+            const commandFolders = fs
+                .readdirSync('./commands')
+                .filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
+
             for (const dir of commandFolders) {
                 const commandFiles = fs
                     .readdirSync(`./commands/${dir}`)
@@ -33,129 +120,18 @@ module.exports = {
 
                 // For each file of commandFiles try to delete the cache of that file, and set the client commands to that file
                 for (const file of commandFiles) {
-                    try {
-                        delete require.cache[require.resolve(`../${dir}/${file}`)];
-                        const reloadedCommand = require(`../${dir}/${file}`);
-                        message.client.commands.set(reloadedCommand.name, reloadedCommand);
-
-                        // In case of errors, push em to the errors array
-                    } catch (error) {
-                        console.error(error);
-                        errors.push({
-                            "name": file,
-                            "error": error.message
-                        })
+                    let error = reloadCommand(dir, file)
+                    if (error) {
+                        errors.push(error)
                     }
                 }
             }
 
-            // Make new embed
-            const embed = new MessageEmbed();
-
-            // If there are errors, make embed with errors title
-            if (errors.length) {
-                embed.setColor('#8E1A01');
-                embed.setAuthor('Commands Reloaded but...', 'https://i.imgur.com/rs1souv.png');
-                embed.setDescription('All commands were reloaded but some had errors:');
-
-                // For each error in errors add a field with the name and the error
-                for (const error in errors) {
-                    embed.addFields({ name: errors[error]['name'], value: `\`${errors[error]['error']}\`` });
-                }
-
-                // If there are no errors make embed with no errors title
-            } else {
-                embed.setColor('#15AABF');
-                embed.setAuthor('Commands Reloaded Successfully!', 'https://i.imgur.com/yvHrC4Q.png');
-                embed.setDescription('All commands were reloaded with success!');
-            }
-            embed.setFooter(`This action took ${Date.now() - startTime}ms`);
-            message.channel.send(embed);
+            // Send the embed
+            message.channel.send(finalEmbed(errors));
             return;
         }
 
-
-
-        // Saves the selected command to the command constant.
-        const commandName = args[0].toLowerCase();
-        const command = message.client.commands.get(commandName)
-            || message.client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
-
-        // If the selected command doesn't exist, try to see if it's a category
-        if (!command) {
-            // Make empty errors array
-            let errors = []
-
-            // Save all the commands folders in commandFolders
-            const commandFolders = fs
-                .readdirSync('./commands')
-                .filter(file => fs.statSync(path.join('./commands', file)).isDirectory())
-
-            // If the first argument is included in commandFolders, read all files in it
-            if (commandFolders.includes(args[0].toLowerCase())) {
-                let dir = args[0].toLowerCase()
-                const commandFiles = fs
-                    .readdirSync(`./commands/${dir}`)
-                    .filter(file => file.endsWith(".js"));
-
-                // For each of these files, try to reload it and throw any errors in the errors array
-                for (const file of commandFiles) {
-                    try {
-                        delete require.cache[require.resolve(`../${dir}/${file}`)]
-                        const reloadedCommand = require(`../${dir}/${file}`)
-                        message.client.commands.set(reloadedCommand.name, reloadedCommand);
-                    } catch (error) {
-                        console.error(error);
-                        errors.push({
-                            "name": file,
-                            "error": error.message
-                        })
-                    }
-                }
-                // Make an embed
-                const embed = new MessageEmbed()
-
-                // If there are errors make it an error embed
-                if (errors.length) {
-                    embed.setColor('#8E1A01')
-                    embed.setAuthor(`Commands Reloaded but...`, 'https://i.imgur.com/rs1souv.png')
-                    embed.setDescription(`All \`${dir}\` commands were reloaded but some had errors:`)
-
-                    // Iterate over each error and add it to the embed
-                    for (const error in errors) {
-                        embed.addFields({ name: errors[error]['name'], value: `\`${errors[error]['error']}\`` })
-                    }
-
-                    // Else make it a success embed
-                } else {
-                    embed.setColor('#15AABF')
-                    embed.setAuthor(`Commands Reloaded Successfully!`, 'https://i.imgur.com/yvHrC4Q.png')
-                    embed.setDescription(`All \`${dir}\` commands were reloaded with success!`)
-                }
-                embed.setFooter(`This action took ${Date.now() - startTime}ms`)
-
-                // Send the embed
-                message.channel.send(embed)
-                return;
-            }
-        }
-
-        // Try to delete the cache and if it fails, say the command doesn't exist (most probable reason lol)
-        try {
-            delete require.cache[require.resolve(`../${command.category}/${command.name}.js`)];
-        } catch (error) {
-            shortcuts.functions.quickEmbed(message, 'That command does not exist.', 'failure')
-            return;
-        }
-
-        // Try to reload the command from file. If an error happens, send it to chat.
-        try {
-            const reloadedCommand = require(`../${command.category}/${command.name}.js`);
-            message.client.commands.set(reloadedCommand.name, reloadedCommand);
-            shortcuts.functions.quickEmbed(message, `Successfully reloaded ${command.name}! It took ${Date.now() - startTime}ms.`, 'success')
-        } catch (error) {
-            shortcuts.functions.quickEmbed(message, `There was an error while reloading a command \`${command.name}\`:\n\`${error.message}\``, 'failure')
-        }
-    },
-};
+        shortcuts.functions.quickEmbed(message, `${args[0]} isn't a valid argument for the reload command (command, category, all).`, 'warning')
+    }
+}
