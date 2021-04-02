@@ -24,28 +24,28 @@ module.exports = {
             args.shift()
 
             // let activityType be the first argument while rmoving it
-            let activityType = args.shift()
+            let activityType = args.shift().toUpperCase()
 
             // let the content be the rest of the arguments
             let activityContent = args.join(' ')
 
             // Check if they are valid types
-            if (activityType != "LISTENING" && activityType != "WATCHING" && activityType != "PLAYING" && activityType != "STREAMING") {
-                message.reply(`${activityType} is not a valid activity type.`)
-                return
+            if (activityType != "LISTENING" && activityType != "WATCHING" && activityType != "PLAYING" && activityType != "STREAMING" && activityType != 'COMPETING') {
+                shortcuts.functions.quickEmbed(message, `${activityType} is not a valid activity type.`, 'warning')
+                return;
             }
 
             if (!activityContent) { activityContent = "something" }
 
             // Set the config to be them
-            config.statusType = activityType
-            config.statusContent = activityContent
+            config.statusType = activityType;
+            config.statusContent = activityContent;
 
             // Save the config file
             var saveJson = JSON.stringify(config, null, 4);
             fs.writeFile('config.json', saveJson, 'utf8', (err) => {
                 if (err) {
-                    console.log(err)
+                    console.log(err);
                 }
             });
 
@@ -65,11 +65,11 @@ module.exports = {
 
         // Check if they are valid types
         if (activityType != "LISTENING" && activityType != "WATCHING" && activityType != "PLAYING" && activityType != "STREAMING" && activityType != 'COMPETING') {
-            shortcuts.functions.quickEmbed(message, `${activityType} is not a valid activity type.`, 'failure')
+            shortcuts.functions.quickEmbed(message, `${activityType} is not a valid activity type.`, 'warning')
             return
         }
 
-        if (!activityContent) { activityContent = "something" }
+        if (!activityContent) activityContent = "something";
 
         // Set the status to thems
         client.user.setActivity(activityContent, { type: activityType });
