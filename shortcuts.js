@@ -22,10 +22,13 @@ var methods = {
         let authorLink
         if (type == 'success') {
             color = '#15AABF'
-            authorLink = 'https://i.imgur.com/yvHrC4Q.png'
+            authorLink = 'https://imgur.com/yvHrC4Q.png'
         } else if (type == 'failure') {
             color = '#8E1A01'
-            authorLink = 'https://i.imgur.com/rs1souv.png'
+            authorLink = 'https://imgur.com/IdwURBx.png'
+        } else if (type == 'warning') {
+            color = '#fcb400'
+            authorLink = 'https://imgur.com/Agmlu16.png'
         }
 		const embed = new MessageEmbed()
 			.setColor(color)
@@ -42,9 +45,9 @@ var methods = {
     helpCommand: function(message, commandName, commandSyntax, commandUsageDescription, prefix, footer) {
         const embed = new MessageEmbed()
             .setColor('#8EB9FE')
-            .setAuthor(`${commandName} Command Help:`, 'https://i.imgur.com/dSTYnIF.png')
+            .setAuthor(`${commandName} Command Help:`, 'https://imgur.com/dSTYnIF.png')
             if (footer) {
-                embed.setFooter(`${footer}`, 'https://i.imgur.com/Z9gjIx1.png')
+                embed.setFooter(`${footer}`, 'https://imgur.com/L6seIyJ.png')
             }
 
             if (commandSyntax.indexOf(',,') > -1) {
