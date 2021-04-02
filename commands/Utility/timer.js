@@ -11,7 +11,7 @@ module.exports = {
         }
         // Else if chain to check if the sent message is a valid timer and set the timer accordingly
         if (args.length < 1) {
-            message.channe.send('Please provide a timer length.');
+            shortcuts.functions.quickEmbed(message, 'Please provide a timer lenght.', 'warning');
             return;
         } else if (args[0].endsWith("s")) {
             message.react('👍');

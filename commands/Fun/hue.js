@@ -29,6 +29,7 @@ module.exports = {
 
         // On error try to reconnect after 5s
         hue.on('error', (msg) => {
+            console.log(msg);
             setTimeout(() => {
                 hue.connect();
             }, 5 * 1000);

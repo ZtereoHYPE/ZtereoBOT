@@ -11,8 +11,8 @@ module.exports = {
         }
 
         // If the message author isn't the guild owner return.
-        if (!(message.guild.member(message.author).id == message.guild.ownerID)) {
-            shortcuts.functions.quickEmbed(message, "you don\'t have the permission to do that (Server Owner).", 'failure')
+        if (!(message.author.id == message.guild.ownerID)) {
+            shortcuts.functions.quickEmbed(message, "You don\'t have the permission to do that (Server Owner).", 'warning')
             return;
         }
 
@@ -23,6 +23,6 @@ module.exports = {
         shortcuts.functions.saveDatabase(database);
 
         // Sends success embed
-        shortcuts.functions.quickEmbed(message, `The new prefix is now \`${database[message.guild.id]["prefix"]}\``, 'success');
+        shortcuts.functions.quickEmbed(message, `The new prefix is now '${database[message.guild.id]["prefix"]}'`, 'success');
     },
 };
