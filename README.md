@@ -72,11 +72,10 @@ For the second option, you need to do some things as this repository does not co
   Where server-id and server-id2 are the ids of the guilds/servers. Of course you will just need to create an empty json file ( `{}` ) as the bot will create the required entries automagically when it joins or leaves a server. This can for the moment cause issues if something happens while the bot is offline but I have plans to fix that issue.
 
 ## Contact Me:
-You can contact me on discord (ZtereoHYPE#3445) or you can join my discord server where you can chat about other projects too!
-https://discord.gg/6dG2Nj8NaV
+You can contact me on discord (ZtereoHYPE#3445) or you can join my [discord server](https://discord.gg/6dG2Nj8NaV) where you can chat about other projects too!
 
 ## Thank you!
 Thank you for reading this readme and I thank very much all of the past, present, and future contributors of this project :D
 
 ### Credits:
-Some icons used in the embeds are from fontawesome and have been re-colored. (I had to put this here)
+Some icons used in the embeds are from fontawesome and have been re-colored. Check out their [licence](https://fontawesome.com/license)
