@@ -11,7 +11,7 @@ module.exports = {
         }
 
         // if the message author doesn't have permissions, cancel.
-        if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
+        if (!message.guild.members.cache.get(message.author.id).permissions.has('KICK_MEMBERS')) {
             shortcuts.functions.quickEmbed(message, "You don\'t have the permission to do that (Kick Members perms).", 'failure');
             return;
         }
@@ -23,7 +23,7 @@ module.exports = {
         };
 
         // let user be the first mention in the message
-        let User = message.guild.member(message.mentions.users.first());
+        let User = message.guild.members.cache.get(message.mentions.users.first().id)
 
         // if the user isn't kickable, tell it and cancel
         if (!User.kickable) {

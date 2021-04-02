@@ -12,7 +12,7 @@ module.exports = {
         }
 
         // Checks if the bot user can manage messages before proceeding
-        if (!message.guild.member(message.author).hasPermission('MANAGE_MESSAGES')) {
+        if (!message.guild.members.cache.get(message.author.id).permissions.has('MANAGE_MESSAGES')) {
             shortcuts.functions.quickEmbed(message, `you don\'t have the permission to do that (Manage Messages perms).`, 'failure');
             return;
         }

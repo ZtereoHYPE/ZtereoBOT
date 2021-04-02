@@ -11,7 +11,7 @@ module.exports = {
         }
 
         // If the member doesn't have perms, say it and cancel
-        if (!(message.guild.member(message.author).hasPermission('BAN_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
+        if (!message.guild.members.cache.get(message.author.id).permissions.has('BAN_MEMBERS')) {
             shortcuts.functions.quickEmbed(message, 'You don\'t have the permission to do that (Ban Members perms).', 'failure')
             return;
         }
@@ -23,7 +23,7 @@ module.exports = {
         };
 
         // let user be the mentioned user
-        let User = message.guild.member(message.mentions.users.first())
+        let User = message.guild.members.cache.get(message.mentions.users.first().id)
 
         // If the user isn't bannable say it and cancel
         if (!User.bannable) {

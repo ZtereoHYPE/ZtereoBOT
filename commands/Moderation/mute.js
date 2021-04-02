@@ -30,10 +30,10 @@ module.exports = {
         }
 
         // TODO: make this work with a timeout argument and all, currently crashes.
-        const User = message.guild.member(message.mentions.users.first())
+        let User = message.guild.members.cache.get(message.mentions.users.first().id)
 
         // if the author doesnt have perms say it and cancel
-        if (!(message.guild.member(message.author).hasPermission('MANAGE_ROLES') || message.guild.member(message.author).id == message.guild.ownerID)) {
+        if (!message.guild.members.cache.get(message.author.id).permissions.has('MANAGE_ROLES')) {
             shortcuts.functions.quickEmbed(message, 'You dont have permissions to do that (Manage Roles perms).', 'failure');
             return;
         }

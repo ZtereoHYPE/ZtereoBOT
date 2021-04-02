@@ -12,36 +12,36 @@ module.exports = {
         }
 
         // if the message author doesn't have permissions to manage members say it and cancel
-        if (!(message.guild.member(message.author).hasPermission('MANAGE_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
+        if (!message.author.hasPermission('MANAGE_MEMBERS')) {
             shortcuts.functions.quickEmbed(message, "You don\'t have the permission to do that (Manage Members perms).", 'failure');
             return;
         }
 
         // of there are no entries in the server's database say it and cancel
         if (Object.entries(database[message.guild.id]['warnings']).length === 0) {
-            shortcuts.functions.quickEmbed(message, 'This server has no infractions for any user.', 'failure');
+            shortcuts.functions.quickEmbed(message, 'This server has no infractions for any user.', 'warning');
             return;
         }
 
         // if the member doesn't mention a user then say it and cancel
         if (!message.mentions.users.first()) {
-            shortcuts.functions.quickEmbed(message, 'Please specify a user whose infractions to remove.', 'failure');
+            shortcuts.functions.quickEmbed(message, 'Please specify a user whose infractions to remove.', 'warning');
             return;
         };
 
         // let user be the mentioned user and warningnumber be the first argument
-        let User = message.guild.member(message.mentions.users.first())
+        let User = message.guild.members.cache.get(message.mentions.users.first().id)
         let warningNumber = args[1]
 
         // if the database doesn't have warnings for that user say it and cancel
         if (!database[message.guild.id]['warnings'][User.id]) {
-            shortcuts.functions.quickEmbed(message, "That user has no infractions in this server.", 'failure');
+            shortcuts.functions.quickEmbed(message, "That user has no infractions in this server.", 'warning');
             return;
         }
 
         // if the database doesnt have that user then say it and cancel
         if (!database[message.guild.id]['warnings'].hasOwnProperty(User.id)) {
-            shortcuts.functions.quickEmbed(message, "That user has no warnings in this server.", 'failure');
+            shortcuts.functions.quickEmbed(message, "That user has no warnings in this server.", 'warning');
             return;
         };
 

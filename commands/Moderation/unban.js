@@ -12,7 +12,7 @@ module.exports = {
         };
 
         // if the member doesn't have permissions, say it and cancel
-        if (!(message.guild.member(message.author).hasPermission('BAN_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
+        if (!message.guild.members.cache.get(message.author.id).permissions.has('BAN_MEMBERS')) {
             shortcuts.functions.quickEmbed(message, `You don\'t have the permission to do that (Ban Members perms).`, 'failure');
             return;
         }
