@@ -14,14 +14,15 @@ module.exports = {
 
         // Send a message and then...
         message.channel.send("Pinging...").then(msg => {
+            let latency = msg.createdTimestamp - message.createdTimestamp;
             // Make a new embed with the information taken from that message
             const embed = new MessageEmbed()
                 .setColor('#660066')
                 .setAuthor('Latency', 'https://i.imgur.com/b04ffHd.png')
                 .addFields(
-                    { name: 'Bot latency:', value: `\`\`\`${msg.createdTimestamp - message.createdTimestamp}ms\`\`\``, inline: true },
+                    { name: 'Bot latency:', value: `\`\`\`${latency}ms\`\`\``, inline: true },
                     { name: '\u200B', value: `\u200B`, inline: true },
-                    { name: 'Discord API latency:', value: `\`\`\`${Math.round(client.ws.ping)}ms\`\`\``, inline: true }
+                    { name: 'WebSocket latency:', value: `\`\`\`${Math.round(client.ws.ping)}ms\`\`\``, inline: true }
                 )
 
             // Delete that message and send the embed
