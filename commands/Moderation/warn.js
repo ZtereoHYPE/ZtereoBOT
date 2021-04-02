@@ -11,7 +11,7 @@ module.exports = {
         }
 
         // if the author doesn't have enough permissions say it and cancel
-        if (!(message.guild.member(message.author).hasPermission('KICK_MEMBERS') || message.guild.member(message.author).id == message.guild.ownerID)) {
+        if (!message.guild.members.cache.get(message.author.id).permissions.has('KICK_MEMBERS')) {
             shortcuts.functions.quickEmbed(message, 'You don\'t have the permission to do that (Kick Members perms)', 'failure');
             return;
         }
@@ -23,7 +23,7 @@ module.exports = {
         };
 
         // let user be the first mention
-        let User = message.guild.member(message.mentions.users.first())
+        let User = message.guild.members.cache.get(message.mentions.users.first().id)
 
         // shift args to remove mention
         args.shift();
