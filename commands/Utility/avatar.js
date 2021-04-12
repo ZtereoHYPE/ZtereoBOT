@@ -17,11 +17,11 @@ module.exports = {
 
         // if there are no args let user be the author
         if (!args.length) {
-            User = message.guild.member(message.author)
+            User = message.guild.members.cache.get(message.author.id)
 
         // else let user be the first mention
         } else {
-            User = message.guild.member(message.mentions.users.first())
+            User = message.guild.members.cache.get(message.mentions.users.first().id)
 
             // if the first mention doesn't exist say it and cancel
             if (!User) {
