@@ -12,7 +12,7 @@ module.exports = {
         }
 
         // if the message author doesn't have permissions to manage members say it and cancel
-        if (!message.author.hasPermission('MANAGE_MEMBERS')) {
+        if (!message.guild.members.cache.get(message.author.id).permissions.has('MANAGE_MEMBERS')) {
             shortcuts.functions.quickEmbed(message, "You don\'t have the permission to do that (Manage Members perms).", 'failure');
             return;
         }
