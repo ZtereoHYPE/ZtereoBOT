@@ -30,6 +30,11 @@ module.exports = {
         }
 
         // TODO: make this work with a timeout argument and all, currently crashes.
+        if (!message.mentions.users.first()) {
+            shortcuts.functions.quickEmbed(message, 'Please specify a user to mute.', 'failure');
+            return;
+        };
+
         let User = message.guild.members.cache.get(message.mentions.users.first().id)
 
         // if the author doesnt have perms say it and cancel
@@ -42,10 +47,6 @@ module.exports = {
         message.guild.channels.cache.forEach(channel => channel.updateOverwrite(muteRole, { SEND_MESSAGES: false }));
 
         // if no user is specified say it and cancel
-        if (!User) {
-            shortcuts.functions.quickEmbed(message, 'Please specify a user to mute.', 'failure');
-            return;
-        };
 
         // shift args to remove name
         args.shift()
