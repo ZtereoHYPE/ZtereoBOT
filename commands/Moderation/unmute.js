@@ -18,6 +18,10 @@ module.exports = {
         }
         
         // TODO: make this work with a timeout argument and all, currently crashes.
+        if (!message.mentions.users.first()) {
+            shortcuts.functions.quickEmbed(message, 'Please specify a user to unmute.', 'failure');
+            return;
+        };
         let User = message.guild.members.cache.get(message.mentions.users.first().id)
 
         // if the member doesn't have permissions, say it and cancel
@@ -27,10 +31,6 @@ module.exports = {
         }
 
         // if the message doesn't specify a user, say it and cancel
-        if (!User) {
-            shortcuts.functions.quickEmbed(message, 'Please specify a user to unmute.', 'failure');
-            return;
-        };
 
         // if the user does not have the muted role, say it and cancel
         if (!User.roles.cache.some((role)=> role === muteRole)) {
