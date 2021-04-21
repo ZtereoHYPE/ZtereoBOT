@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 const { MessageEmbed } = require('discord.js');
 module.exports = {
 	name: 'help',
@@ -9,9 +9,10 @@ module.exports = {
 		const { commands } = message.client;
 
 		let embedArray = [];
-		let commandsArray = commands.map(command => command)
+		let commandsArray = commands.map(command => command).filter((command) => !command.hidden);
 		let categoryArray = commands.map(command => command.category).filter((value, index, array) => array.indexOf(value) === index);
-		for (var i = 0; i < categoryArray.length; ++i) {
+
+		for (var i = 0; i < categoryArray.length; i++) {
 			embedArray[i] = new MessageEmbed()
 				.setColor('#8EB9FE')
 				.setAuthor(categoryArray[i] + ':', 'https://i.imgur.com/dSTYnIF.png')
