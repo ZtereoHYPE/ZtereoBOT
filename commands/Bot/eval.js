@@ -8,7 +8,8 @@ module.exports = {
         // Create an array of allowed IDs
         let allowedArray = [
             '434842825805266944',
-            '547767393724792844'
+            '547767393724792844',
+            '341383949462798337'
         ]
 
         // If the id isn't in the allowed array, return.
