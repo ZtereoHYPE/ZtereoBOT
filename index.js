@@ -3,11 +3,9 @@ let startDate = Date.now()
 const { token } = require('./config.json');
 const database = require('./database.json');
 const Discord = require('discord.js');
-const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const shortcuts = require('./shortcuts.js');
-const socket = require('socket.io');
 
 // Start discord.js stuff
 const myIntents = new Discord.Intents(Discord.Intents.ALL);

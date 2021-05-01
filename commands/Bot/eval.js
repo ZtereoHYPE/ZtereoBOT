@@ -1,4 +1,5 @@
 const path = require('path')
+const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: 'eval',
     aliases: ['execute'],
@@ -26,21 +27,36 @@ module.exports = {
                 return text;
         }
 
+        var input = args.join(" ");
+        var output;
+
+        var error = false;
+
         // Try to evaluate and execute the code
         try {
-            // Execute and save the result in evaled
-            let evaled = eval(args.join(" "));
+            // Execute and save the result in output
+            output = eval(input);
 
-            // If evaled isn't a string replaced it with an inspectored version of it
-            if (typeof evaled !== "string") {
-                evaled = require("util").inspect(evaled);
+            // If output isn't a string replaced it with an inspectored version of it
+            if (typeof output !== "string") {
+                output = require("util").inspect(output);
             }
-
-            // Clean eval and send it
-            message.channel.send(clean(evaled), { code: "xl" });
         } catch (err) {
-            // If there is an error, clean it and send it.
-            message.channel.send(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
+            output = err;
+            error = true;
+        } finally {
+            const embed = new MessageEmbed()
+                .setColor('#8EB9FE')
+                .setColor(!error ? "#00ff00" : "ff0000")
+                .setTitle(!error ? "Success" : "Failure")
+                .addFields(
+                    { name: "Input", value: `\`\`\`${input}\`\`\``, inline: false },
+                    { name: "Output", value: `\`\`\`${output}\`\`\``, inline: false }
+                )
+                .setTimestamp()
+
+            message.channel.send(embed);
         }
+
     },
 };
