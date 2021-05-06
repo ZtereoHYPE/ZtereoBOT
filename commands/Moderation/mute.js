@@ -65,6 +65,10 @@ module.exports = {
 
             args.unshift(rawTime)
 
+            if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {
+                database[message.guild.id]['warnings'][User.id] = []
+            }
+            
             database[message.guild.id]['warnings'][User.id].push(
                 {
                     "type": "Mute",
