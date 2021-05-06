@@ -46,8 +46,6 @@ module.exports = {
         // iterate over each channel and set the muterole perms to send messages: false
         message.guild.channels.cache.forEach(channel => channel.updateOverwrite(muteRole, { SEND_MESSAGES: false }));
 
-        // if no user is specified say it and cancel
-
         // shift args to remove name
         args.shift()
 
@@ -67,14 +65,25 @@ module.exports = {
 
             args.unshift(rawTime)
 
+            database[message.guild.id]['warnings'][User.id].push(
+                {
+                    "type": "Mute",
+                    "date": `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} at ${date.getHours()}:${date.getMinutes()}`,
+                    "reason": args.join(' ') + ` (for unlimited time)`
+                }
+            )
+
+            // save the databases
+            shortcuts.functions.saveDatabase(database);
+
             User.roles.add(muteRole)
 
             shortcuts.functions.quickEmbed(message, `You muted ${User.user.username} for reason: ${args.join(' ')} (for unlimited time)`, 'success')
             return
         }
 
-        let timeType
-        let computerTime
+        let timeType;
+        let computerTime;
 
         //TODO: add dumb-proof: currelty only checks last character and:
         //
@@ -134,11 +143,9 @@ module.exports = {
             return;
         }
 
-
-
         // add the mute role to the person then...
         var date = new Date();
-        User.roles.add(muteRole, "Mute command used.")
+        User.roles.add(muteRole, `Mute command used by ${message.author.username}.`)
             .then(User => {
                 
                 if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {

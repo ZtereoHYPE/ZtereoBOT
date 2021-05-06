@@ -20,12 +20,12 @@ module.exports = {
         }
 
         // Clean constant to restrain from pinging
-        const clean = text => {
-            if (typeof (text) === "string")
-                return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-            else
-                return text;
-        }
+        // const clean = text => {
+        //     if (typeof (text) === "string")
+        //         return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+        //     else
+        //         return text;
+        // }
 
         var input = args.join(" ");
         var output;
