@@ -69,6 +69,7 @@ module.exports = {
                 database[message.guild.id]['warnings'][User.id] = []
             }
             
+            let date = new Date();
             database[message.guild.id]['warnings'][User.id].push(
                 {
                     "type": "Mute",
@@ -148,9 +149,9 @@ module.exports = {
         }
 
         // add the mute role to the person then...
-        var date = new Date();
         User.roles.add(muteRole, `Mute command used by ${message.author.username}.`)
             .then(User => {
+                var date = new Date();
                 
                 if (!Object.keys(database[message.guild.id]['warnings']).includes(User.id)) {
                     database[message.guild.id]['warnings'][User.id] = []
