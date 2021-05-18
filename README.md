@@ -5,6 +5,7 @@ Next, I work on it whenever I want to and/or have time, so it might not be activ
 Finally, if you want to invite this bot to your server, please contact me here or on discord as I am currently hosting it on a Raspberry Pi zero so yeah, not much power/headroom.
 
 ## note: 
+this is a hot pile of steaming garbage please
 Maybe there is a rewrite coming soon :P
 
 ## License:
