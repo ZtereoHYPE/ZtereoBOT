@@ -9,7 +9,6 @@ module.exports = {
         // Create an array of allowed IDs
         let allowedArray = [
             '434842825805266944',
-            '547767393724792844',
             '341383949462798337'
         ]
 
@@ -20,12 +19,12 @@ module.exports = {
         }
 
         // Clean constant to restrain from pinging
-        // const clean = text => {
-        //     if (typeof (text) === "string")
-        //         return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
-        //     else
-        //         return text;
-        // }
+        const clean = text => {
+            if (typeof (text) === "string")
+                return text.replace(/`/g, "`" + String.fromCharCode(8203)).replace(/@/g, "@" + String.fromCharCode(8203));
+            else
+                return text;
+        }
 
         var input = args.join(" ");
         var output;
