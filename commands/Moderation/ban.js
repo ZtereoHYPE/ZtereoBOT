@@ -61,7 +61,12 @@ module.exports = {
             message.reply(error)
         }
 
-        // send a success message
-        shortcuts.functions.quickEmbed(message, `you banned ${User.user.username} for reason: ${args.join(' ')}`, 'success');
+        // send an easter egg with a 1/100 chance
+        if (Math.random() < 0.01) {
+            shortcuts.functions.quickeEmbed(message, `${User.user.username} fell out of the world`, 'success')
+        } else {
+            // send a success message
+            shortcuts.functions.quickEmbed(message, `you banned ${User.user.username} for reason: ${args.join(' ')}`, 'success');
+        }
     },
 };
