@@ -71,7 +71,7 @@ process.on('unhandledRejection', error => {
 // Login with token (very secret)
 client.login(token);
 
-
+// ODc3NDg0ODE5ODAwNTIyNzky.GpomLa.-mPZOfOWvbhr4Qkaj_EqdSlhcV86Q07zv_eYP0
 
 // Use this link to add ZtereoBOT to your server https://discord.com/oauth2/authorize?client_id=713718980325539910&scope=bot&permissions=8
 // Use this link to add ZtereoBOT Beta to your server https://discord.com/oauth2/authorize?client_id=791744080127197204&scope=bot&permissions=8
